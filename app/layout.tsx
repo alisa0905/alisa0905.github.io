@@ -34,8 +34,14 @@ export const metadata: Metadata = {
     description: "Brand identity, social media, UI/UX and print, designed in Dubai.",
     url: "https://alisabakhareva.me",
     siteName: "Alisa Bakhareva",
-    images: [{ url: "/work/s24-grid.webp", width: 1924, height: 874 }],
+    images: [{ url: "/og.jpg", width: 1200, height: 600, alt: "Alisa Bakhareva — Portfolio" }],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Alisa Bakhareva",
+    description: "Brand identity, social media, UI/UX and print, designed in Dubai.",
+    images: ["/og.jpg"],
   },
 };
 

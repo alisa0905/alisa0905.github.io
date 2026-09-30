@@ -41,6 +41,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-09-30: Set the colourful **Portfolio** graphic as the link preview image (what shows when someone pastes alisabakhareva.me in a chat).
 - 2026-09-30: Replaced the default triangle tab icon with Alisa's pink flower, and shortened the browser tab title to **Alisa Bakhareva**.
 - 2026-09-30: Turned off the screen-recording videos (Cloud Castle and Quotify) for now — they felt choppy. Cards and case studies use still images instead. The video files are still in the project for later.
 - 2026-09-30: Moved the full site into the **alisa0905.github.io** repo so **alisabakhareva.me** serves this portfolio. Added automatic publishing and kept the custom domain (`CNAME`).
