@@ -24,13 +24,13 @@ const londrina = Londrina_Solid({
 export const metadata: Metadata = {
   metadataBase: new URL("https://alisabakhareva.me"),
   title: {
-    default: "Alisa Bakhareva · Brand & Marketing Designer",
+    default: "Alisa Bakhareva",
     template: "%s · Alisa Bakhareva",
   },
   description:
     "Brand & marketing designer in Dubai. Brand identity, social media, UI/UX and print for Jabrni, B1 Properties, Cemex, Amana Homes, Quotify and more.",
   openGraph: {
-    title: "Alisa Bakhareva · Brand & Marketing Designer",
+    title: "Alisa Bakhareva",
     description: "Brand identity, social media, UI/UX and print, designed in Dubai.",
     url: "https://alisabakhareva.me",
     siteName: "Alisa Bakhareva",
