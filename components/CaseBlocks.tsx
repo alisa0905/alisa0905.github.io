@@ -4,9 +4,8 @@ import type { Block, Project } from "@/lib/projects";
 import { Reveal } from "./Reveal";
 import { ScrollMotion } from "./ScrollMotion";
 import { Shot } from "./Shot";
-import { SiteVideo } from "./SiteVideo";
 
-type MediaBlock = Extract<Block, { type: "image" | "video" }>;
+type MediaBlock = Extract<Block, { type: "image" }>;
 type Span = NonNullable<MediaBlock["span"]>;
 
 const SPAN: Record<Span, string> = {
@@ -19,16 +18,6 @@ const SPAN: Record<Span, string> = {
 const SHARE: Record<Span, number> = { full: 1, twoThirds: 0.66, half: 0.5, third: 0.33 };
 
 function Media({ block, i, span }: { block: MediaBlock; i: number; span: Span }) {
-  if (block.type === "video") {
-    return (
-      <ScrollMotion as="figure" index={i} className={`col-span-6 ${SPAN[span]}`}>
-        <div className="flex h-full items-center justify-center rounded-[22px] p-[8%]" style={{ backgroundColor: block.bg }}>
-          <SiteVideo name={block.name} frame={block.frame} label={block.alt} />
-        </div>
-      </ScrollMotion>
-    );
-  }
-
   const a = ASSETS[block.asset];
   return (
     <ScrollMotion as="figure" index={i} zoom={!block.pad} className={`col-span-6 rounded-[22px] ${SPAN[span]}`}>
@@ -45,16 +34,16 @@ function Media({ block, i, span }: { block: MediaBlock; i: number; span: Span })
   );
 }
 
-/** Lays out a case study: text, image/video grids, before/after comparisons and brand elements. */
+/** Lays out a case study: text, image grids, before/after comparisons and brand elements. */
 export function CaseBlocks({ project }: { project: Project }) {
   // The cover already sits at the top of the page, so don't show it again below.
   const blocks = project.blocks.filter((b) => !(b.type === "image" && b.asset === project.cover.asset));
 
-  // Group consecutive images/videos into one grid.
+  // Group consecutive images into one grid.
   const groups: (Block | MediaBlock[])[] = [];
   for (const b of blocks) {
     const last = groups[groups.length - 1];
-    if (b.type === "image" || b.type === "video") {
+    if (b.type === "image") {
       if (Array.isArray(last)) last.push(b);
       else groups.push([b]);
     } else groups.push(b);

@@ -11,7 +11,7 @@
 ## Pages
 - **Home** (`/`): orange hero ("Hi! I'm Alisa.") with her photo, pink blob and flower. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
 - **Work** (`/work`): all 17 projects with filter chips: Jabrni, Freelance, Amana Homes, Quotify, Personal & Uni.
-- **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle has a browser window that scrolls through the whole homepage on hover, plus a grid of the brand elements Alisa designed.
+- **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots plus a grid of the brand elements Alisa designed.
 - **Contact** (`/contact`): enquiry form (name, email, company, services, timeline, message). Sending opens the visitor's email app, addressed to alisabakhareva2902@gmail.com. No account needed.
 
 ## Components
@@ -41,6 +41,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-09-30: Turned off the screen-recording videos (Cloud Castle and Quotify) for now — they felt choppy. Cards and case studies use still images instead. The video files are still in the project for later.
 - 2026-09-30: Moved the full site into the **alisa0905.github.io** repo so **alisabakhareva.me** serves this portfolio. Added automatic publishing and kept the custom domain (`CNAME`).
 - 2026-09-30: Built the multi-page website (Home, Work, 17 case studies, Contact) from the 36-page Figma portfolio. Added Cloud Castle from the PDFs in Downloads. Set the site up for alisabakhareva.me.
 - 2026-09-30: Cloud Castle now leads, shown as a website project (real screenshots of the storefront plus the brand elements). Removed all invented taglines and subheadings. Full name in the header. Phone preview enabled on the local Wi-Fi.

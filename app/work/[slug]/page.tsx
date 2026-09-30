@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { CaseBlocks, CoverImage } from "@/components/CaseBlocks";
 import { Flower } from "@/components/Flower";
 import { Reveal } from "@/components/Reveal";
-import { SiteVideo } from "@/components/SiteVideo";
 import { ToolIcon, TOOLS } from "@/components/ToolIcon";
 import { ASSETS } from "@/lib/assets";
 import { categoryColor, getProject, PROJECTS } from "@/lib/projects";
@@ -117,20 +116,16 @@ export default async function CaseStudy({ params }: Params) {
         </div>
       </Reveal>
 
-      {/* Cover, overlapping the header. Websites show a screen recording instead. */}
+      {/* Cover, overlapping the header */}
       {showCover ? (
         <Reveal as="div" className="relative z-10 mx-auto -mt-28 max-w-7xl px-5 sm:-mt-40 sm:px-8" threshold={0}>
           <div className="rv" style={{ "--d": 300 } as React.CSSProperties}>
-            {project.cover.video ? (
-              <SiteVideo name={project.cover.video} url={project.siteUrl} label={`${project.title} website, scrolling through the homepage`} />
-            ) : (
-              <div
-                className="relative overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgb(0_0_0/0.5)]"
-                style={{ aspectRatio: project.cover.fit === "contain" ? "16 / 8" : `${cover.w} / ${cover.h}`, maxHeight: "80svh", backgroundColor: project.cover.bg ?? project.color }}
-              >
-                <CoverImage project={project} sizes="(min-width: 1280px) 1216px, 100vw" />
-              </div>
-            )}
+            <div
+              className="relative overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgb(0_0_0/0.5)]"
+              style={{ aspectRatio: project.cover.fit === "contain" ? "16 / 8" : `${cover.w} / ${cover.h}`, maxHeight: "80svh", backgroundColor: project.cover.bg ?? project.color }}
+            >
+              <CoverImage project={project} sizes="(min-width: 1280px) 1216px, 100vw" />
+            </div>
           </div>
         </Reveal>
       ) : null}

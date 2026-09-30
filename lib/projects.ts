@@ -1,5 +1,4 @@
 import type { AssetName } from "./assets";
-import type { VideoName } from "./videos";
 import type { Tool } from "@/components/ToolIcon";
 
 /* ------------------------------------------------------------------
@@ -22,8 +21,6 @@ export type Block =
   | { type: "text"; body: string[] }
   | { type: "image"; asset: AssetName; alt: string; span?: "full" | "half" | "third" | "twoThirds"; bg?: string; pad?: boolean }
   | { type: "compare"; before: { asset: AssetName; alt: string; text?: string }; after: { asset: AssetName; alt: string; text?: string } }
-  /** A screen recording of a live site, in a browser window or a phone */
-  | { type: "video"; name: VideoName; frame: "browser" | "phone"; alt: string; span?: "full" | "half" | "third" | "twoThirds"; bg?: string }
   /** A grid of small vector elements on coloured tiles */
   | { type: "elements"; bg: string; items: { asset: AssetName; label: string }[] };
 
@@ -41,9 +38,9 @@ export type Project = {
   color: string;
   /** Text colour on top of `color` */
   ink: string;
-  /** Card + case study cover. `video` plays a screen recording instead of the still image. */
-  cover: { asset: AssetName; fit?: "cover" | "contain"; bg?: string; video?: VideoName };
-  /** Web address shown in the browser frame of website videos */
+  /** Card + case study cover image */
+  cover: { asset: AssetName; fit?: "cover" | "contain"; bg?: string };
+  /** Live site address (shown as a link when set) */
   siteUrl?: string;
   links?: { label: string; href: string }[];
   featured?: boolean;
@@ -62,7 +59,7 @@ export const PROJECTS: Project[] = [
     tools: ["figma"],
     color: "#7c53e8",
     ink: "#ffffff",
-    cover: { asset: "cc-web-home", video: "cc-desktop" },
+    cover: { asset: "cc-web-home" },
     siteUrl: "cloudcastle.co",
     featured: true,
     blocks: [
@@ -75,7 +72,7 @@ export const PROJECTS: Project[] = [
       },
       { type: "image", asset: "cc-web-shop", alt: "Shop page", span: "half" },
       { type: "image", asset: "cc-web-product", alt: "Product page", span: "half" },
-      { type: "video", name: "cc-mobile", frame: "phone", alt: "Scrolling the homepage on a phone", span: "third", bg: "#b9a4f0" },
+      { type: "image", asset: "cc-mob-home", alt: "Homepage on mobile", span: "third", bg: "#b9a4f0", pad: true },
       { type: "image", asset: "cc-mob-shop", alt: "Shop on mobile", span: "third", bg: "#b9a4f0", pad: true },
       { type: "image", asset: "cc-mob-product", alt: "Product page on mobile", span: "third", bg: "#b9a4f0", pad: true },
       { type: "image", asset: "cc-web-about", alt: "Our Story page", span: "full" },
@@ -433,7 +430,7 @@ export const PROJECTS: Project[] = [
     tools: ["figma"],
     color: "#3883de",
     ink: "#ffffff",
-    cover: { asset: "q-web-home", video: "q-desktop" },
+    cover: { asset: "q-web-home" },
     siteUrl: "quotifyx.app",
     links: [
       { label: "quotifyx.app", href: "https://quotifyx.app" },
@@ -449,8 +446,7 @@ export const PROJECTS: Project[] = [
           "Treating design as core to the product rather than an afterthought meant the brand stayed consistent whether someone was using the product or reading up something we'd printed for the final presentation.",
         ],
       },
-      { type: "image", asset: "q-web-pricing", alt: "Pricing page", span: "twoThirds" },
-      { type: "video", name: "q-mobile", frame: "phone", alt: "Scrolling quotifyx.app on a phone", span: "third", bg: "#3883de" },
+      { type: "image", asset: "q-web-pricing", alt: "Pricing page", span: "full" },
       { type: "image", asset: "s31-a", alt: "Dashboard", span: "half" },
       { type: "image", asset: "s31-b", alt: "Clients table", span: "half" },
       { type: "image", asset: "s31-imac", alt: "Login screen on an iMac", span: "half", bg: "#5cb4f3", pad: true },
