@@ -35,7 +35,13 @@
 - **Cloud Castle text** is based on the notes in the Cloud Castle website project. Rewrite it in your own words if you like.
 - **Mystery icons:** two round blue icons from the Figma toolbox are labelled "Motion design" and "Automation", and one is labelled "Zoho". Rename them in `components/ToolIcon.tsx`.
 
+## Where the live site lives
+- **GitHub repo:** [alisa0905.github.io](https://github.com/alisa0905/alisa0905.github.io) — this is what powers **alisabakhareva.me**.
+- **How updates go live:** when changes are pushed to the `main` branch on that repo, GitHub automatically builds the site and publishes it (see `.github/workflows/deploy.yml`).
+- **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
+
 ## Recent Changes
+- 2026-09-30: Moved the full site into the **alisa0905.github.io** repo so **alisabakhareva.me** serves this portfolio. Added automatic publishing and kept the custom domain (`CNAME`).
 - 2026-09-30: Built the multi-page website (Home, Work, 17 case studies, Contact) from the 36-page Figma portfolio. Added Cloud Castle from the PDFs in Downloads. Set the site up for alisabakhareva.me.
 - 2026-09-30: Cloud Castle now leads, shown as a website project (real screenshots of the storefront plus the brand elements). Removed all invented taglines and subheadings. Full name in the header. Phone preview enabled on the local Wi-Fi.
 - 2026-09-30: Updated from the new CV: title is now Brand Designer, Jabrni ended Aug 2026, education added, B1 Instagram moved to Freelance. Quotify now shows the live site (quotifyx.app) and links to the IEEE paper.
