@@ -1,0 +1,37 @@
+<svg width="194" height="165" viewBox="0 0 194 165" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="194" height="165" fill="#1E1E1E" style="fill:#1E1E1E;fill:color(display-p3 0.1176 0.1176 0.1176);fill-opacity:1;"/>
+<g id="Frame">
+<rect width="1920" height="1080" transform="translate(-395.321 -594.247)" fill="#C4B29E" style="fill:#C4B29E;fill:color(display-p3 0.7686 0.6980 0.6196);fill-opacity:1;"/>
+<g id="Frame 5">
+<rect width="193.177" height="164.983" fill="white" style="fill:white;fill-opacity:1;"/>
+<g id="Group 54">
+<g id="Rectangle">
+<rect x="5.67285" y="0.930908" width="40.9853" height="40.9853" fill="black" fill-opacity="0.05" style="fill:black;fill-opacity:0.05;"/>
+<rect x="6.0827" y="1.34076" width="40.1656" height="40.1656" stroke="black" stroke-opacity="0.2" style="stroke:black;stroke-opacity:0.2;" stroke-width="0.819706"/>
+</g>
+<g id="Rectangle_2">
+<rect x="146.519" y="0.930908" width="40.9853" height="40.9853" fill="black" fill-opacity="0.05" style="fill:black;fill-opacity:0.05;"/>
+<rect x="146.929" y="1.34076" width="40.1656" height="40.1656" stroke="black" stroke-opacity="0.2" style="stroke:black;stroke-opacity:0.2;" stroke-width="0.819706"/>
+</g>
+<g id="Rectangle_3">
+<rect x="5.67285" y="123.067" width="40.9853" height="40.9853" fill="black" fill-opacity="0.05" style="fill:black;fill-opacity:0.05;"/>
+<rect x="6.0827" y="123.477" width="40.1656" height="40.1656" stroke="black" stroke-opacity="0.2" style="stroke:black;stroke-opacity:0.2;" stroke-width="0.819706"/>
+</g>
+<g id="Rectangle_4">
+<rect x="146.519" y="123.067" width="40.9853" height="40.9853" fill="black" fill-opacity="0.05" style="fill:black;fill-opacity:0.05;"/>
+<rect x="146.929" y="123.477" width="40.1656" height="40.1656" stroke="black" stroke-opacity="0.2" style="stroke:black;stroke-opacity:0.2;" stroke-width="0.819706"/>
+</g>
+<rect id="Rectangle_5" x="47.0701" y="42.3282" width="99.037" height="80.3271" stroke="black" stroke-opacity="0.35" style="stroke:black;stroke-opacity:0.35;" stroke-width="0.823804"/>
+<rect id="Rectangle_6" x="6.28763" y="1.54569" width="180.602" height="161.892" stroke="black" stroke-opacity="0.7" style="stroke:black;stroke-opacity:0.7;" stroke-width="1.22956" stroke-dasharray="4.1 4.1"/>
+<line id="Line" x1="96.9977" y1="0.930908" x2="96.9977" y2="41.9162" stroke="black" stroke-opacity="0.7" style="stroke:black;stroke-opacity:0.7;" stroke-width="0.819706"/>
+<line id="Line_2" x1="92.4897" y1="41.5064" x2="100.687" y2="41.5064" stroke="black" stroke-opacity="0.7" style="stroke:black;stroke-opacity:0.7;" stroke-width="0.819706"/>
+<path id="X" d="M106.717 20.9696L108.099 18.4556H109.059L107.197 21.6344L109.103 24.866H108.152L106.735 22.3036L105.313 24.866H104.348L106.259 21.6344L104.397 18.4556H105.352L106.717 20.9696Z" fill="#999999" style="fill:#999999;fill:color(display-p3 0.6000 0.6000 0.6000);fill-opacity:1;"/>
+<line id="Line_3" x1="5.67285" y1="82.0818" x2="46.6581" y2="82.0818" stroke="black" stroke-opacity="0.7" style="stroke:black;stroke-opacity:0.7;" stroke-width="0.819706"/>
+<line id="Line_4" x1="6.0827" y1="78.3931" x2="6.0827" y2="86.5901" stroke="black" stroke-opacity="0.7" style="stroke:black;stroke-opacity:0.7;" stroke-width="0.819706"/>
+<line id="Line_5" x1="47.0681" y1="78.3931" x2="47.0681" y2="86.5901" stroke="black" stroke-opacity="0.7" style="stroke:black;stroke-opacity:0.7;" stroke-width="0.819706"/>
+<path id="X_2" d="M26.4578 95.9727L27.8402 93.4588H28.8L26.9376 96.6375L28.844 99.8691H27.893L26.4754 97.3068L25.0533 99.8691H24.0891L25.9999 96.6375L24.1375 93.4588H25.0929L26.4578 95.9727Z" fill="#999999" style="fill:#999999;fill:color(display-p3 0.6000 0.6000 0.6000);fill-opacity:1;"/>
+<path id="Union" d="M120.708 42.7356C129.708 42.7357 135.927 45.899 139.905 50.427C143.9 54.9744 145.699 60.9725 145.699 66.7249C145.699 72.4784 143.899 78.5664 139.9 83.2024C135.919 87.8174 129.701 91.0627 120.708 91.0627H100.646V111.359C100.647 115.782 102.073 118.663 104.699 120.377C106.263 121.398 108.198 121.962 110.374 122.247H76.3535V122.226C78.2427 122.073 79.9843 121.363 81.2861 119.781C82.7486 118.002 83.5478 115.251 83.5479 111.324V42.8245L82.7119 42.8411L70.6748 43.0725C65.1777 43.0726 59.8946 46.433 55.7822 51.2209C51.8299 55.8226 48.8591 61.8521 47.7275 67.8557L47.5898 67.8372L51.3105 42.7356H120.708ZM101.022 43.8762L100.646 72.0461V90.7307H119.534C127.076 90.7307 131.965 87.6129 134.896 82.9729C137.79 78.3898 138.721 72.4085 138.603 66.7083C138.484 61.0952 137.583 55.2044 134.75 50.6965C131.875 46.1219 127.069 43.0679 119.418 43.0676H101.033L101.022 43.8762Z" stroke="black" style="stroke:black;stroke-opacity:1;" stroke-width="1.63941"/>
+</g>
+</g>
+</g>
+</svg>
