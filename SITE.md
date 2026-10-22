@@ -23,7 +23,7 @@
 - **Extras:** click any case-study image to zoom it full screen (`Lightbox`). Smooth scrolling (`SmoothScroll`). A flower cursor on desktop (`Cursor`). Scroll-in animations (`Reveal` plus the CSS in `app/globals.css`).
 
 ## How to Customize
-- **Edit the CV:** all the CV text is in `lib/cv.ts`; section colours are set in `app/cv/page.tsx` (the `accent` on each section) (wrap words in `**double stars**` to make them bold). After editing, ask Claude to "regenerate the CV PDF" so the download matches — the PDF lives at `public/cv/Alisa-Bakhareva-CV.pdf`.
+- **Edit the CV:** all the CV text is in `lib/cv.ts`; section colours are set in `app/cv/page.tsx` (the `accent` on each section) (wrap words in `**double stars**` to make them bold; write `[Cloud Castle:](https://cloudcastle.co/)` for a bold underlined link). After editing, ask Claude to "regenerate the CV PDF" so the download matches — the PDF lives at `public/cv/Alisa-Bakhareva-CV.pdf`.
 - **Edit, add or reorder projects:** everything lives in `lib/projects.ts`. Each project has a title, client, category, year, role, tools, colours, summary, cover image and a list of content blocks. Set `featured: true` to show it on the home page. The order on the home page is set at the top of `app/page.tsx`.
 - **Add images:** put them in `public/work/` and add their size to `lib/assets.ts`.
 - **Change the contact email, LinkedIn or booking link:** `CONTACT_EMAIL`, `LINKEDIN_URL` and `BOOKING_URL` (the Calendly link every "Let's talk" button uses) at the bottom of `lib/projects.ts` (the CV uses the same LinkedIn link).
@@ -43,6 +43,10 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-10-22: CV name flower is now 30px (another 3px bigger) and nudged 1px down.
+- 2026-10-22: Removed the "first proper introduction to accessibility principles" bullet from Tremo on the CV; Tremo now has one bullet.
+- 2026-10-22: Added **Tremo** (Parkinson's spiralometry app, research paper presented at ISDIA 2026) to the CV's Projects, framed around accessibility: Alisa's first proper introduction to accessibility principles. The flower next to the name on the CV is now an outline, 3px bigger. PDF spacing tightened slightly so it still fits on one page.
+- 2026-10-22: CV rewritten in a shorter, plainer style. Added **Freelance — Brand Designer (Aug 2026 – Present)** as the first job, with Cloud Castle and B1 Properties as linked highlights under it. New titles: Jabrni "Product Designer (Web & Branding)", Amana "Creative Marketing Intern", Quotify "Design Co-founder". Sections now go Experience → Education → Projects → Skills & Tools → Languages → Additional Info. Each job shows "Dubai, UAE" next to its dates. PDF regenerated (still one page, reads cleanly for hiring software).
 - 2026-10-22: Fixed failing pushes. The portfolio copy kept trying to publish (which is only switched on for alisa0905.github.io), so every push showed as failed and the live site stopped updating after Sep 30. Now one push updates both copies and the live site.
 - 2026-10-22: Every "Let's talk" button (top menu, phone menu, home page, footer) now opens Calendly (calendly.com/alisabakhareva2902) in a new tab to book a call. The Contact page and form are still there via the footer.
 - 2026-10-22: Removed the 3D lanyard badge section from the home page, along with its files and the 3D add-ons it needed.

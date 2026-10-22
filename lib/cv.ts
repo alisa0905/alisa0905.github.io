@@ -3,11 +3,13 @@ import { LINKEDIN_URL } from "@/lib/projects";
 /**
  * Everything on the CV page (/cv). Edit the text here.
  * Wrap words in **double stars** to make them bold.
+ * Write [label](https://link) to make a bold, underlined link.
  */
 
 export type CvEntry = {
   title: string;
   subtitle: string;
+  location?: string;
   dates: string;
   href: string;
   bullets: string[];
@@ -24,86 +26,48 @@ export const CV = {
 
   experience: [
     {
+      title: "Freelance",
+      subtitle: "Brand Designer",
+      location: "Dubai, UAE",
+      dates: "Aug 2026 - Present",
+      href: "https://alisabakhareva.me/work",
+      bullets: [
+        "Brand identities, social creative and websites for **4 clients** in real estate, fashion and food & bev.",
+        "[Cloud Castle:](https://cloudcastle.co/) turned a stock Shopify template into a custom, castle-themed storefront, designing every page, component and accessibility setting. Live now.",
+        "[B1 Properties:](https://www.instagram.com/b1properties/) 2 months of Instagram creatives, in multiple variations, for a luxury real estate brokerage. Approved with minimal revisions.",
+      ],
+    },
+    {
       title: "Jabrni",
-      subtitle: "Product Designer",
-      dates: "Mar 2026 - Aug 2026 (6 months)",
+      subtitle: "Product Designer (Web & Branding)",
+      location: "Dubai, UAE",
+      dates: "Mar 2026 - Aug 2026",
       href: "https://www.jabrni.com/",
       bullets: [
-        "Delivered **15+ branding, web, and marketing** projects for businesses across construction, technology, food & beverage, and personal brands, including 5 repeat engagements for Cemex.",
-        "Maintained **long-term client relationships** by delivering consistent, high-quality creative solutions.",
+        "Designed all **15+ projects** the company delivered, mostly web design, plus brand identity, document redesigns and shirt designs.",
+        "Delivered **5 repeat engagements for Cemex** and worked with a developer on web projects.",
       ],
     },
     {
       title: "Amana Homes Real Estate",
-      subtitle: "Marketing Intern",
-      dates: "Jul 2025 - Mar 2026 (9 months)",
+      subtitle: "Creative Marketing Intern",
+      location: "Dubai, UAE",
+      dates: "Jul 2025 - Mar 2026",
       href: "https://www.linkedin.com/company/amana-homes-real-estate/home/",
       bullets: [
-        "Built Amana’s social presence, growing **LinkedIn from 0 to 600+** and **Instagram from 20 to 200+** followers.",
-        "Designed luxury real estate sales collateral and bilingual advertising campaigns.",
-        "Produced creative for **10+ marketing campaigns** across Meta, email, and WhatsApp.",
+        "Designed luxury real estate collateral and creative for **10+ bilingual (Arabic and English) campaigns**.",
+        "Grew **LinkedIn from 0 to 600+** followers and **Instagram from 20 to 200+**.",
       ],
     },
     {
       title: "UOWD Clubs",
       subtitle: "Graphic Designer",
-      dates: "Jan 2024 - Oct 2025 (1.8 years)",
+      location: "Dubai, UAE",
+      dates: "Jan 2024 - Oct 2025",
       href: "https://www.instagram.com/uowdwomeninstem/",
-      bullets: [
-        "Designed **branding for 20+ university events** across 3 university clubs (Women in STEM, E-Sports, Anime Club) reaching 300+ attendees.",
-      ],
+      bullets: ["Branding for **20+ events** across 3 clubs (Women in STEM, E-Sports, Anime Club), reaching 300+ attendees."],
     },
   ] satisfies CvEntry[],
-
-  projects: [
-    {
-      title: "Cloud Castle Website",
-      subtitle: "Freelance Project",
-      dates: "Sep 2026",
-      href: "https://cloudcastle.co/",
-      bullets: [
-        "Redesigned a fashion brand’s website from a stock Shopify template into a custom, castle-themed storefront that reflects the brand, designing every page, component and accessibility setting.",
-      ],
-    },
-    {
-      title: "B1 Properties Instagram",
-      subtitle: "Freelance Project",
-      dates: "Aug 2026",
-      href: "https://www.instagram.com/b1properties/?hl=en",
-      bullets: [
-        "Designed Instagram creatives in multiple variations for B1 Properties, a Dubai luxury real estate brokerage.",
-      ],
-    },
-    {
-      title: "Quotify",
-      subtitle: "Academic Project & Publication",
-      dates: "Sep 2025 - May 2026",
-      href: "https://quotifyx.app/",
-      bullets: [
-        "Created the brand identity, UI/UX, and marketing assets for an AI-powered call-to-quotation platform; co-authored an IEEE published research paper.",
-      ],
-    },
-  ] satisfies CvEntry[],
-
-  tools: [
-    "Figma",
-    "Adobe Photoshop",
-    "Adobe Illustrator",
-    "Adobe Lightroom",
-    "Adobe Premiere Pro",
-    "Meta Business Suite",
-    "Canva",
-    "CapCut",
-  ],
-
-  skills: [
-    "Social Media Design",
-    "Print Design",
-    "Interaction Design",
-    "Visual Design",
-    "Communication and Collaboration",
-    "Adaptability and Continuous Learning",
-  ],
 
   education: {
     title: "University of Wollongong in Dubai",
@@ -113,5 +77,50 @@ export const CV = {
     href: "https://www.uowdubai.ac.ae/",
   },
 
-  additional: ["UAE Driving License", "Family-sponsored Golden Visa", "English (C1), Russian (Native)"],
+  projects: [
+    {
+      title: "Quotify",
+      subtitle: "Design Co-founder",
+      dates: "Sep 2025 - May 2026",
+      href: "https://quotifyx.app/",
+      bullets: [
+        "Brand identity, UI/UX and marketing assets for an AI-powered call-to-quotation platform. Co-authored an **IEEE-published research paper**.",
+      ],
+    },
+    {
+      title: "Tremo",
+      subtitle: "Product Designer & Research Co-author",
+      dates: "2026",
+      href: "https://alisabakhareva.me/work/tremo",
+      bullets: [
+        "Designed and built a mobile app that turns a clinical hand-tremor test into something people with Parkinson's can use on their own. Co-authored the research paper and presented it at **ISDIA 2026**.",
+      ],
+    },
+  ] satisfies CvEntry[],
+
+  skills: [
+    "Brand identity",
+    "Web design",
+    "UI/UX design",
+    "Social media design",
+    "Print design",
+    "Visual design",
+    "Paid social ads",
+  ],
+
+  // "Adobe" kept in front so hiring software matches either way people search.
+  tools: [
+    "Figma",
+    "Adobe Photoshop",
+    "Adobe Illustrator",
+    "Adobe Lightroom",
+    "Adobe Premiere Pro",
+    "Canva",
+    "CapCut",
+    "Meta Business Suite",
+  ],
+
+  languages: ["English (C1)", "Russian (Native)"],
+
+  additional: ["UAE Driving License", "UAE Golden Visa"],
 };
