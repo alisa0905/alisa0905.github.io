@@ -39,10 +39,11 @@
 
 ## Where the live site lives
 - **GitHub repo:** [alisa0905.github.io](https://github.com/alisa0905/alisa0905.github.io) — this is what powers **alisabakhareva.me**.
-- **How updates go live:** when changes are pushed to the `main` branch on that repo, GitHub automatically builds the site and publishes it (see `.github/workflows/deploy.yml`).
+- **How updates go live:** pushing from Ship Studio sends changes to both GitHub copies at once (set up on this computer). The **alisa0905.github.io** copy builds and publishes the site automatically, usually within 2 minutes. The **portfolio** copy only checks that the site builds; a red cross there means something is broken.
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-10-22: Fixed failing pushes. The portfolio copy kept trying to publish (which is only switched on for alisa0905.github.io), so every push showed as failed and the live site stopped updating after Sep 30. Now one push updates both copies and the live site.
 - 2026-10-22: Every "Let's talk" button (top menu, phone menu, home page, footer) now opens Calendly (calendly.com/alisabakhareva2902) in a new tab to book a call. The Contact page and form are still there via the footer.
 - 2026-10-22: Removed the 3D lanyard badge section from the home page, along with its files and the 3D add-ons it needed.
 - 2026-10-02: Added Alisa's LinkedIn to the footer on every page ("LinkedIn ↗" next to Work/About/Contact) and to the dark contact card on the Contact page. The CV already links to it.
