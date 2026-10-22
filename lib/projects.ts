@@ -66,12 +66,13 @@ export const PROJECTS: Project[] = [
     year: "2026",
     when: "Sep 2026",
     start: "2026-09",
-    role: ["Website design", "Development", "Brand elements"],
+    role: ["Website design", "Development"],
     tools: ["figma"],
     color: "#7c53e8",
     ink: "#ffffff",
     cover: { asset: "cc-mock-devices" },
     siteUrl: "cloudcastle.co",
+    links: [{ label: "cloudcastle.co", href: "https://cloudcastle.co" }],
     featured: true,
     blocks: [
       {
@@ -85,24 +86,6 @@ export const PROJECTS: Project[] = [
       { type: "image", asset: "cc-web-product", alt: "Product page", span: "half" },
       { type: "image", asset: "cc-mock-phones", alt: "Homepage, shop and product page on mobile", span: "full" },
       { type: "image", asset: "cc-web-about", alt: "Our Story page", span: "full" },
-      {
-        type: "text",
-        body: ["New brand elements for the site: balcony railings and balusters, pointed and round arches, oval frames, sparkles, the castle outline that frames every page, and the scalloped footer."],
-      },
-      {
-        type: "elements",
-        bg: "linear-gradient(#c8b8f3, #7c53e8)",
-        items: [
-          { asset: "cc-el-railing", label: "Railing" },
-          { asset: "cc-el-baluster", label: "Baluster" },
-          { asset: "cc-el-arch-pointed", label: "Pointed arch" },
-          { asset: "cc-el-arch-round", label: "Arch" },
-          { asset: "cc-el-oval-ring", label: "Oval frame" },
-          { asset: "cc-el-sparkle-big", label: "Sparkle" },
-          { asset: "cc-el-castle-outline", label: "Castle outline" },
-          { asset: "cc-el-footer-scallop", label: "Footer" },
-        ],
-      },
     ],
   },
   {

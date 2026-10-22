@@ -11,7 +11,7 @@
 ## Pages
 - **Home** (`/`): orange hero ("Hi! I'm Alisa.") with her photo, pink blob and flower. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
 - **Work** (`/work`): all 17 projects with filter chips: Jabrni, Freelance, Amana Homes, Quotify, Personal & Uni.
-- **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots plus a grid of the brand elements Alisa designed.
+- **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots and a button linking to the live site, cloudcastle.co.
 - **CV** (`/cv`): Alisa's CV, built from the Figma CV design. On screen it looks like the Figma page, and every company and project name links out. The "Download PDF" button gives a one-page A4 PDF laid out so hiring software (ATS) can read it cleanly.
 - **Contact** (`/contact`): enquiry form (name, email, company, services, timeline, message). Sending opens the visitor's email app, addressed to alisabakhareva2902@gmail.com. No account needed.
 
@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-10-22: Cloud Castle case study: added a "cloudcastle.co ↗" button under the project details, and removed the brand elements grid (and its intro text and "Brand elements" role tag). The element images are still in `public/work/` if you want them back.
 - 2026-10-22: La Torta now leads with Alisa's high-fidelity redesign (desktop + mobile mockups: cover, story section on a laptop, three phones), with the earlier pink packaging-box explorations below as process. Labelled "design, not used".
 - 2026-10-22: Added **La Torta** (`/work/la-torta`, Jabrni, May – Jun 2026): website for Zein Fayek's cake studio, with the packaging-box hero in a browser mockup, four hero options, the seasonal collection on a laptop, three section variations and the annotated wireframe. Removed Timetable Designer.
 - 2026-10-22: Months added to the Work timeline for every project, from Alisa's Notion tracker where it had dates (SIDANI.ART Apr – Jun, Sandspire Apr – Jun, AI renders May, Cemex Apr – Aug, Jabrni Mar, B1 / Theorem Partners / Marco Oro Aug, Cloud Castle Sep).
