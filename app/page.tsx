@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Art } from "@/components/Art";
 import { Flower } from "@/components/Flower";
+import { LanyardBadge } from "@/components/LanyardBadge";
 import { Marquee } from "@/components/Marquee";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/Reveal";
@@ -59,9 +60,11 @@ export default function Home() {
         <Art name="whoami" hideTitle className="-z-10" />
 
         <div className="mx-auto w-full max-w-7xl px-5 pt-32 sm:px-8 lg:pt-44">
-          <p className="rv-text inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 text-sm font-semibold backdrop-blur-sm">
-            <span className="h-2 w-2 animate-pulse rounded-full bg-sun" />
-            Brand & marketing designer · Dubai, UAE
+          <p className="rv-text inline-flex items-center gap-2 text-sm font-semibold text-cream/90">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="currentColor" aria-hidden>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
+            </svg>
+            Dubai, UAE
           </p>
 
           <h1 className="mt-6 font-display text-[clamp(4.2rem,12.5vw,11.5rem)] font-black leading-[0.82] tracking-tight" aria-label={HELLO}>
@@ -243,6 +246,18 @@ export default function Home() {
           </div>
         </div>
       </Reveal>
+
+      {/* --------------------------- Lanyard badge --------------------------- */}
+      <section className="relative overflow-hidden bg-ink text-cream" aria-label="Conference badge">
+        <div className="mx-auto grid max-w-7xl items-end gap-2 px-5 pt-16 sm:px-8 lg:grid-cols-12 lg:pt-10">
+          <p className="pb-4 text-sm font-semibold text-cream/55 lg:col-span-4 lg:pb-20">
+            Drag the badge
+          </p>
+          <div className="relative h-[min(72svh,680px)] lg:col-span-8 lg:col-start-5">
+            <LanyardBadge className="absolute inset-0" />
+          </div>
+        </div>
+      </section>
 
       <Marquee
         items={["Cemex", "B1 Properties", "Amana Homes", "Binghatti", "wasl", "Theorem Partners", "Marco Oro", "Cloud Castle", "Quotify"]}

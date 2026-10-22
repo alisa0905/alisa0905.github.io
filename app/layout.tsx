@@ -51,8 +51,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${figtree.variable} ${londrina.variable}`}>
-      <body className="antialiased">
+    <html lang="en" className={`${figtree.variable} ${londrina.variable} print:bg-white`}>
+      <body className="antialiased print:bg-white">
         {/* Author (body copy font from the Figma portfolio). React moves this into <head>. */}
         <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=author@400,500&display=swap" precedence="default" />
         <SmoothScroll />

@@ -47,7 +47,7 @@ export function Cursor() {
   return (
     <motion.div
       aria-hidden
-      className="pointer-events-none fixed left-0 top-0 z-[100] mix-blend-difference"
+      className="pointer-events-none fixed left-0 top-0 z-[100] mix-blend-difference print:hidden"
       style={{ x: sx, y: sy }}
     >
       <motion.svg

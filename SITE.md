@@ -12,6 +12,7 @@
 - **Home** (`/`): orange hero ("Hi! I'm Alisa.") with her photo, pink blob and flower. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
 - **Work** (`/work`): all 17 projects with filter chips: Jabrni, Freelance, Amana Homes, Quotify, Personal & Uni.
 - **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots plus a grid of the brand elements Alisa designed.
+- **CV** (`/cv`): Alisa's CV, built from the Figma CV design. On screen it looks like the Figma page, and every company and project name links out. The "Download PDF" button gives a one-page A4 PDF laid out so hiring software (ATS) can read it cleanly.
 - **Contact** (`/contact`): enquiry form (name, email, company, services, timeline, message). Sending opens the visitor's email app, addressed to alisabakhareva2902@gmail.com. No account needed.
 
 ## Components
@@ -22,9 +23,10 @@
 - **Extras:** click any case-study image to zoom it full screen (`Lightbox`). Smooth scrolling (`SmoothScroll`). A flower cursor on desktop (`Cursor`). Scroll-in animations (`Reveal` plus the CSS in `app/globals.css`).
 
 ## How to Customize
+- **Edit the CV:** all the CV text is in `lib/cv.ts`; section colours are set in `app/cv/page.tsx` (the `accent` on each section) (wrap words in `**double stars**` to make them bold). After editing, ask Claude to "regenerate the CV PDF" so the download matches — the PDF lives at `public/cv/Alisa-Bakhareva-CV.pdf`.
 - **Edit, add or reorder projects:** everything lives in `lib/projects.ts`. Each project has a title, client, category, year, role, tools, colours, summary, cover image and a list of content blocks. Set `featured: true` to show it on the home page. The order on the home page is set at the top of `app/page.tsx`.
 - **Add images:** put them in `public/work/` and add their size to `lib/assets.ts`.
-- **Change the contact email:** `CONTACT_EMAIL` at the bottom of `lib/projects.ts`.
+- **Change the contact email or LinkedIn link:** `CONTACT_EMAIL` and `LINKEDIN_URL` at the bottom of `lib/projects.ts` (the CV uses the same LinkedIn link).
 - **Change colours:** the palette is at the top of `app/globals.css`.
 
 ## Writing style
@@ -41,6 +43,12 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-10-02: Added Alisa's LinkedIn to the footer on every page ("LinkedIn ↗" next to Work/About/Contact) and to the dark contact card on the Contact page. The CV already links to it.
+- 2026-09-30: Made the CV more colourful to match the brand: a sky/pink/sun/tangerine/green stripe across the top, a pink flower next to the name, each section heading in its own coloured pill (Experience sky, Projects pink, Skills & Tools sun, Education tangerine, Additional Info mustard) with matching bullet dots, and a pink Portfolio button. Still Space Grotesk (no Londrina). The PDF was regenerated and still reads cleanly for hiring software.
+- 2026-09-30: Added a **CV page** (`/cv`, also in the top menu) built from the Figma CV, plus a one-page ATS-friendly PDF download. In the PDF, each job's bullets sit under its title, tools and skills are plain comma lists, and the LinkedIn and portfolio links are written out. The old Figma-exported PDF scrambled when read by hiring software (split words like "B uilt", titles after their bullets).
+- 2026-09-30: Fixed code errors in the new 3D lanyard badge on the home page that stopped the site from building.
+- 2026-09-30: Replaced the hero status pill with plain “📍 Dubai, UAE” text (location pin + city, no pill).
+- 2026-09-30: Wrote a full portfolio audit report (accessibility, SEO, AIEO, UX, and the 21 portfolio tips). Open `audit/report.html` in a browser.
 - 2026-09-30: Set the colourful **Portfolio** graphic as the link preview image (what shows when someone pastes alisabakhareva.me in a chat).
 - 2026-09-30: Replaced the default triangle tab icon with Alisa's pink flower, and shortened the browser tab title to **Alisa Bakhareva**.
 - 2026-09-30: Turned off the screen-recording videos (Cloud Castle and Quotify) for now — they felt choppy. Cards and case studies use still images instead. The video files are still in the project for later.

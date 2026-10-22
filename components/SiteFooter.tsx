@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Flower } from "./Flower";
 import { Reveal } from "./Reveal";
-import { CONTACT_EMAIL } from "@/lib/projects";
+import { CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 
 /** Big "let's work together" footer shown on every page. */
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <Reveal as="div" className="relative overflow-hidden bg-ink text-cream" threshold={0.2}>
+    <Reveal as="div" className="relative overflow-hidden bg-ink text-cream print:hidden" threshold={0.2}>
       <footer>
         <Flower color="#e173ae" className="absolute -right-10 -top-10 w-56 sm:w-72" pop />
         <Flower color="#3883de" className="absolute bottom-24 left-[46%] hidden w-24 md:block" reverse pop style={{ "--d": 800 } as React.CSSProperties} />
@@ -35,10 +35,13 @@ export function SiteFooter() {
               <p className="text-sm text-cream/50">Based in</p>
               <p className="mt-1 text-lg font-semibold">Dubai, UAE</p>
             </div>
-            <nav className="rv-text flex gap-6 text-lg font-semibold sm:justify-end" aria-label="Footer" style={{ "--d": 450 } as React.CSSProperties}>
+            <nav className="rv-text flex flex-wrap gap-x-6 gap-y-2 text-lg font-semibold sm:justify-end" aria-label="Footer" style={{ "--d": 450 } as React.CSSProperties}>
               <Link href="/work" className="hover:text-sun">Work</Link>
               <Link href="/#about" className="hover:text-sun">About</Link>
               <Link href="/contact" className="hover:text-sun">Contact</Link>
+              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="hover:text-sun">
+                LinkedIn ↗
+              </a>
             </nav>
           </div>
 

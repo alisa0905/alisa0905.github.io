@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/", label: "Home" },
   { href: "/work", label: "Work" },
   { href: "/#about", label: "About" },
+  { href: "/cv", label: "CV" },
 ];
 
 /** Floating pill header. Solid background once you start scrolling; "Let's talk" is always one tap away. */
@@ -40,7 +41,7 @@ export function SiteHeader() {
     href === "/" ? pathname === "/" : href.startsWith("/#") ? false : pathname.startsWith(href);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4">
+    <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4 print:hidden">
       <div
         className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border py-1.5 pl-2 pr-1.5 transition-all duration-500 ${
           scrolled

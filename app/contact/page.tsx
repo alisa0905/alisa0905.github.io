@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Art } from "@/components/Art";
 import { ContactForm } from "@/components/ContactForm";
 import { Reveal } from "@/components/Reveal";
-import { CONTACT_EMAIL } from "@/lib/projects";
+import { CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -32,6 +32,10 @@ export default function ContactPage() {
             <p className="text-sm text-cream/60">Email</p>
             <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 block break-all text-lg font-semibold hover:text-pink">
               {CONTACT_EMAIL}
+            </a>
+            <p className="mt-4 text-sm text-cream/60">LinkedIn</p>
+            <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="mt-1 block text-lg font-semibold hover:text-pink">
+              linkedin.com/in/alisa-bakhareva ↗
             </a>
             <p className="mt-4 text-sm text-cream/60">Dubai, UAE</p>
           </div>

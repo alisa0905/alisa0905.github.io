@@ -1,0 +1,14 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame" clip-path="url(#clip0_0_8)">
+<path id="Vector" d="M8.25001 5.24994C8.25001 6.04559 7.93394 6.80866 7.37133 7.37126C6.80872 7.93387 6.04566 8.24994 5.25001 8.24994" stroke="#454545" style="stroke:#454545;stroke:color(display-p3 0.2706 0.2706 0.2706);stroke-opacity:1;" stroke-width="0.346154" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6.75001 4.12494V3.74994C6.75001 3.55103 6.67099 3.36027 6.53034 3.21961C6.38968 3.07896 6.19892 2.99994 6.00001 2.99994C5.80109 2.99994 5.61033 3.07896 5.46968 3.21961C5.32902 3.36027 5.25001 3.55103 5.25001 3.74994" stroke="#454545" style="stroke:#454545;stroke:color(display-p3 0.2706 0.2706 0.2706);stroke-opacity:1;" stroke-width="0.346154" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M5.24999 3.75006V3.37506C5.24999 3.17614 5.17098 2.98538 5.03032 2.84473C4.88967 2.70407 4.69891 2.62506 4.49999 2.62506C4.30108 2.62506 4.11032 2.70407 3.96966 2.84473C3.82901 2.98538 3.74999 3.17614 3.74999 3.37506V3.75006" stroke="#454545" style="stroke:#454545;stroke:color(display-p3 0.2706 0.2706 0.2706);stroke-opacity:1;" stroke-width="0.346154" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_4" d="M3.75 3.56244V1.49994C3.75 1.30103 3.67098 1.11027 3.53033 0.969614C3.38968 0.828961 3.19891 0.749944 3 0.749944C2.80109 0.749944 2.61032 0.828961 2.46967 0.969614C2.32902 1.11027 2.25 1.30103 2.25 1.49994V5.24994" stroke="#454545" style="stroke:#454545;stroke:color(display-p3 0.2706 0.2706 0.2706);stroke-opacity:1;" stroke-width="0.346154" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_5" d="M6.75 4.125C6.75 3.92609 6.82902 3.73532 6.96967 3.59467C7.11033 3.45402 7.30109 3.375 7.5 3.375C7.69892 3.375 7.88968 3.45402 8.03033 3.59467C8.17099 3.73532 8.25 3.92609 8.25 4.125V5.25C8.25 6.04565 7.93393 6.80871 7.37132 7.37132C6.80871 7.93393 6.04565 8.25 5.25 8.25H4.5C3.45 8.25 2.8125 7.9275 2.25375 7.3725L0.903753 6.0225C0.774729 5.8796 0.705599 5.69256 0.710675 5.5001C0.715751 5.30764 0.794646 5.12451 0.931024 4.98861C1.0674 4.85271 1.25082 4.77447 1.44329 4.77007C1.63577 4.76568 1.82256 4.83547 1.965 4.965L2.625 5.625" stroke="#454545" style="stroke:#454545;stroke:color(display-p3 0.2706 0.2706 0.2706);stroke-opacity:1;" stroke-width="0.346154" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_0_8">
+<rect width="9" height="9" fill="white" style="fill:white;fill-opacity:1;"/>
+</clipPath>
+</defs>
+</svg>

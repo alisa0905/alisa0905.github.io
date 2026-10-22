@@ -38,14 +38,16 @@
   --font-author: "Author", var(--font-figtree);
 }
 
-html {
-  background: var(--paper);
-}
+@layer base {
+  html {
+    background: var(--paper);
+  }
 
-body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-figtree), system-ui, sans-serif;
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-figtree), system-ui, sans-serif;
+  }
 }
 
 ::selection {
@@ -206,4 +208,10 @@ html.lenis body {
   .art-spin {
     animation: none;
   }
+}
+
+/* CV page (/cv) prints onto one A4 sheet with no browser margins. */
+@page {
+  size: A4;
+  margin: 0;
 }
