@@ -235,7 +235,6 @@ export const PROJECTS: Project[] = [
     color: "#110d3c",
     ink: "#ffffff",
     cover: { asset: "shams-mock-devices" },
-    links: [{ label: "Original site", href: "https://shams.tv" }],
     blocks: [
       {
         type: "text",

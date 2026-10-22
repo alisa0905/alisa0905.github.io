@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-10-22: Removed the "Original site" button (to shams.tv) from the Shams TV case study, since the live Shams site isn't Alisa's work.
 - 2026-10-22: Cloud Castle case study: added a "cloudcastle.co ↗" button under the project details, and removed the brand elements grid (and its intro text and "Brand elements" role tag). The element images are still in `public/work/` if you want them back.
 - 2026-10-22: La Torta now leads with Alisa's high-fidelity redesign (desktop + mobile mockups: cover, story section on a laptop, three phones), with the earlier pink packaging-box explorations below as process. Labelled "design, not used".
 - 2026-10-22: Added **La Torta** (`/work/la-torta`, Jabrni, May – Jun 2026): website for Zein Fayek's cake studio, with the packaging-box hero in a browser mockup, four hero options, the seasonal collection on a laptop, three section variations and the annotated wireframe. Removed Timetable Designer.
