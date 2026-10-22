@@ -654,6 +654,171 @@ export const ASSETS = {
   "src": "/work/whoami-cutout.webp",
   "w": 1534,
   "h": 1173
+ },
+ "alisa-portrait": {
+  "src": "/work/alisa-portrait.webp",
+  "w": 640,
+  "h": 640
+ },
+ "shams-home": {
+  "src": "/work/shams-home.webp",
+  "w": 1440,
+  "h": 900
+ },
+ "shams-before-home": {
+  "src": "/work/shams-before-home.webp",
+  "w": 1440,
+  "h": 900
+ },
+ "shams-trending": {
+  "src": "/work/shams-trending.webp",
+  "w": 1440,
+  "h": 1200
+ },
+ "shams-manifesto": {
+  "src": "/work/shams-manifesto.webp",
+  "w": 1440,
+  "h": 810
+ },
+ "shams-bento": {
+  "src": "/work/shams-bento.webp",
+  "w": 1440,
+  "h": 850
+ },
+ "shams-live": {
+  "src": "/work/shams-live.webp",
+  "w": 1440,
+  "h": 840
+ },
+ "shams-before-mobile": {
+  "src": "/work/shams-before-mobile.webp",
+  "w": 600,
+  "h": 1298
+ },
+ "shams-mobile": {
+  "src": "/work/shams-mobile.webp",
+  "w": 600,
+  "h": 1298
+ },
+ "sidani-mock-hero": {
+  "src": "/work/sidani-mock-hero.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "sidani-mock-columns": {
+  "src": "/work/sidani-mock-columns.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "sidani-mock-laptop": {
+  "src": "/work/sidani-mock-laptop.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "sidani-wireframes": {
+  "src": "/work/sidani-wireframes.webp",
+  "w": 2400,
+  "h": 2967
+ },
+ "sidani-ideas": {
+  "src": "/work/sidani-ideas.webp",
+  "w": 2122,
+  "h": 2664
+ },
+ "sidani-inspiration": {
+  "src": "/work/sidani-inspiration.webp",
+  "w": 2122,
+  "h": 1167
+ },
+ "sidani-concept2": {
+  "src": "/work/sidani-concept2.webp",
+  "w": 2400,
+  "h": 1968
+ },
+ "sidani-client-refs": {
+  "src": "/work/sidani-client-refs.webp",
+  "w": 2400,
+  "h": 1202
+ },
+ "sandspire-mock-hero": {
+  "src": "/work/sandspire-mock-hero.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "sandspire-mock-columns": {
+  "src": "/work/sandspire-mock-columns.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "sandspire-mock-laptop": {
+  "src": "/work/sandspire-mock-laptop.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "sandspire-mock-services": {
+  "src": "/work/sandspire-mock-services.webp",
+  "w": 2400,
+  "h": 1700
+ },
+ "sandspire-mock-projects": {
+  "src": "/work/sandspire-mock-projects.webp",
+  "w": 2400,
+  "h": 1700
+ },
+ "cc-mock-devices": {
+  "src": "/work/cc-mock-devices.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "cc-mock-phones": {
+  "src": "/work/cc-mock-phones.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "q-mock-devices": {
+  "src": "/work/q-mock-devices.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "shams-mock-devices": {
+  "src": "/work/shams-mock-devices.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "latorta-mock-laptop": {
+  "src": "/work/latorta-mock-laptop.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "latorta-heroes": {
+  "src": "/work/latorta-heroes.webp",
+  "w": 2400,
+  "h": 1609
+ },
+ "latorta-variations": {
+  "src": "/work/latorta-variations.webp",
+  "w": 2400,
+  "h": 1190
+ },
+ "latorta-wireframe": {
+  "src": "/work/latorta-wireframe.webp",
+  "w": 770,
+  "h": 4000
+ },
+ "latorta-mock-devices": {
+  "src": "/work/latorta-mock-devices.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "latorta-mock-phones": {
+  "src": "/work/latorta-mock-phones.webp",
+  "w": 2400,
+  "h": 1500
+ },
+ "latorta-mock-story": {
+  "src": "/work/latorta-mock-story.webp",
+  "w": 2400,
+  "h": 1500
  }
 } as const;
 

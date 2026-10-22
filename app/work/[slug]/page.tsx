@@ -48,7 +48,7 @@ export default async function CaseStudy({ params }: Params) {
 
   const meta = [
     { label: "Client", value: project.client },
-    { label: "Year", value: project.year },
+    { label: project.when ? "When" : "Year", value: project.when ?? project.year },
     { label: "What I did", value: project.role.join(", ") },
   ];
 
@@ -85,6 +85,7 @@ export default async function CaseStudy({ params }: Params) {
                 <dd className="mt-2 text-lg font-semibold leading-snug">{m.value}</dd>
               </div>
             ))}
+            {(project.tools.length > 0 || project.stack) && (
             <div className="rv-text" style={{ "--d": 540 } as React.CSSProperties}>
               <dt className="text-xs font-bold uppercase tracking-[0.18em] opacity-60">Tools</dt>
               <dd className="mt-2 flex flex-wrap gap-2">
@@ -94,8 +95,14 @@ export default async function CaseStudy({ params }: Params) {
                     {TOOLS[t].label}
                   </span>
                 ))}
+                {project.stack?.map((t) => (
+                  <span key={t} className="rounded-full bg-white/90 px-3 py-1.5 text-sm font-semibold text-ink">
+                    {t}
+                  </span>
+                ))}
               </dd>
             </div>
+            )}
           </dl>
 
           {project.links && (

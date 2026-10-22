@@ -32,8 +32,17 @@ export type Project = {
   client: string;
   category: Category;
   year: string;
+  /**
+   * When the project happened, shown on the Work timeline, e.g. "Sep 2026" or "Sep 2025 – May 2026".
+   * Leave out if unknown: the timeline then shows just the year.
+   */
+  when?: string;
+  /** Start month as "YYYY-MM", used to order the timeline. */
+  start?: string;
   role: string[];
   tools: Tool[];
+  /** Extra tools without an icon, shown as plain labels (e.g. "Claude Code", "Next.js"). */
+  stack?: string[];
   /** Main colour used for the card and the case study header */
   color: string;
   /** Text colour on top of `color` */
@@ -55,11 +64,13 @@ export const PROJECTS: Project[] = [
     client: "Cloud Castle",
     category: "Freelance",
     year: "2026",
+    when: "Sep 2026",
+    start: "2026-09",
     role: ["Website design", "Development", "Brand elements"],
     tools: ["figma"],
     color: "#7c53e8",
     ink: "#ffffff",
-    cover: { asset: "cc-web-home" },
+    cover: { asset: "cc-mock-devices" },
     siteUrl: "cloudcastle.co",
     featured: true,
     blocks: [
@@ -72,9 +83,7 @@ export const PROJECTS: Project[] = [
       },
       { type: "image", asset: "cc-web-shop", alt: "Shop page", span: "half" },
       { type: "image", asset: "cc-web-product", alt: "Product page", span: "half" },
-      { type: "image", asset: "cc-mob-home", alt: "Homepage on mobile", span: "third", bg: "#b9a4f0", pad: true },
-      { type: "image", asset: "cc-mob-shop", alt: "Shop on mobile", span: "third", bg: "#b9a4f0", pad: true },
-      { type: "image", asset: "cc-mob-product", alt: "Product page on mobile", span: "third", bg: "#b9a4f0", pad: true },
+      { type: "image", asset: "cc-mock-phones", alt: "Homepage, shop and product page on mobile", span: "full" },
       { type: "image", asset: "cc-web-about", alt: "Our Story page", span: "full" },
       {
         type: "text",
@@ -103,6 +112,8 @@ export const PROJECTS: Project[] = [
     client: "B1 Properties",
     category: "Freelance",
     year: "2026",
+    when: "Aug 2026",
+    start: "2026-08",
     role: ["Interim design support", "Instagram templates", "Website audit"],
     tools: ["figma"],
     color: "#111110",
@@ -142,6 +153,8 @@ export const PROJECTS: Project[] = [
     client: "B1 Properties",
     category: "Freelance",
     year: "2026",
+    when: "Aug 2026",
+    start: "2026-08",
     role: ["Editorial design"],
     tools: ["figma"],
     color: "#9cc3e0",
@@ -170,6 +183,8 @@ export const PROJECTS: Project[] = [
     client: "Theorem Partners",
     category: "Freelance",
     year: "2026",
+    when: "Aug 2026",
+    start: "2026-08",
     role: ["Logo", "Brand identity", "Mini style guide"],
     tools: ["figma", "illustrator"],
     color: "#08322b",
@@ -202,6 +217,8 @@ export const PROJECTS: Project[] = [
     client: "Marco Oro Tailoring",
     category: "Freelance",
     year: "2026",
+    when: "Aug 2026",
+    start: "2026-08",
     role: ["Business card", "Roll-up banner", "Brochure"],
     tools: ["illustrator"],
     color: "#f9f3e7",
@@ -221,12 +238,65 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    slug: "shams-tv",
+    title: "Shams TV",
+    type: "Website redesign · Prototype",
+    client: "Shams TV (شمس) · concept, not used",
+    category: "Jabrni",
+    year: "2026",
+    when: "May – Jul 2026",
+    start: "2026-05",
+    role: ["Research", "Art direction", "UI/UX", "Copy direction", "Front-end build (with Claude Code)"],
+    tools: [],
+    stack: ["Claude Code", "Next.js", "Tailwind CSS", "Three.js"],
+    color: "#110d3c",
+    ink: "#ffffff",
+    cover: { asset: "shams-mock-devices" },
+    links: [{ label: "Original site", href: "https://shams.tv" }],
+    blocks: [
+      {
+        type: "text",
+        body: [
+          "Shams TV (شمس) is an Arabic-language satellite and digital news channel based in Erbil. Its on-air graphics are strong: midnight navy, yellow, confident Arabic type. Its website wasn't. The homepage is a stack of same-sized card grids, the \u201cEn\u201d button opens a different company's site, and the live-stream page is one small video in an empty page.",
+          "The goal was a website as good as the broadcast: premium, editorial and cinematic. Arabic first, with English and Sorani Kurdish to follow, and fast on the mid-range Android phones most of the audience uses.",
+        ],
+      },
+      {
+        type: "compare",
+        before: { asset: "shams-before-home", alt: "The original Shams TV homepage" },
+        after: { asset: "shams-home", alt: "The redesigned homepage hero: a bazaar video behind the headline \u201cWhere truth rises\u201d" },
+      },
+      {
+        type: "text",
+        body: [
+          "I kept the navy, gold and sun instead of rebranding. Every regional competitor (Rudaw, Kurdistan24, Al Jazeera, Al Arabiya, BBC Arabic) is white with red or orange accents, so Shams's dark navy and gold already stood out. The direction was \u201cthe broadcast, grown up\u201d.",
+          "The site is built on one idea: Shams means \u201csun\u201d. The headline is حيثُ تُشرقُ الحقيقة, \u201cWhere truth rises\u201d, and gold only appears where light would fall. Arabic gets the same weight as English, never a small caption underneath. And instead of repeating one grid, the homepage tells a story: no two sections in a row share a layout.",
+        ],
+      },
+      { type: "image", asset: "shams-trending", alt: "Trending section with a rotating regional weather widget", span: "full" },
+      { type: "image", asset: "shams-manifesto", alt: "The manifesto: Journalism that doesn't wait for permission", span: "half" },
+      { type: "image", asset: "shams-live", alt: "Live Now: five channels, one newsroom", span: "half" },
+      { type: "image", asset: "shams-bento", alt: "Sections bento with large Arabic letters as background art", span: "full" },
+      { type: "image", asset: "shams-before-mobile", alt: "Original homepage on mobile", span: "half", bg: "#e9e7f3", pad: true },
+      { type: "image", asset: "shams-mobile", alt: "Redesigned homepage on mobile", span: "half", bg: "#2a2363", pad: true },
+      {
+        type: "text",
+        body: [
+          "Research came before building: an audit of the live site, teardowns of 6 regional competitors and 7 global editorial sites, plus type, accessibility and performance research. One finding changed the plan. Tajawal, the Arabic font I started with, is missing 8 of the 9 letters Sorani Kurdish needs, so the type system has to change before Kurdish goes live.",
+          "I designed and built a working prototype of the homepage with Claude Code, plus a 14-document research library for the full rebuild. The redesign wasn't used in the end, but the research shaped how I approach multi-language design. The biggest lesson: test fonts against every language before designing with them.",
+        ],
+      },
+    ],
+  },
+  {
     slug: "jabrni-brand-identity",
     title: "Jabrni",
     type: "Brand identity",
     client: "Jabrni",
     category: "Jabrni",
     year: "2026",
+    when: "Mar 2026",
+    start: "2026-03",
     role: ["Brand identity", "Logo system", "Stationery", "Social media"],
     tools: ["figma", "motion"],
     color: "#141211",
@@ -260,26 +330,43 @@ export const PROJECTS: Project[] = [
   {
     slug: "sidani-art",
     title: "SIDANI.ART",
-    type: "Website",
-    client: "Nemr Sidani",
+    type: "Website concepts · Not used",
+    client: "Nemr Sidani · concepts, not used",
     category: "Jabrni",
     year: "2026",
+    when: "Apr – Jun 2026",
+    start: "2026-04",
     role: ["Visual identity", "Web design"],
     tools: ["figma"],
     color: "#e6dcd4",
     ink: "#191717",
-    cover: { asset: "s19-b" },
+    cover: { asset: "sidani-mock-hero" },
     blocks: [
       {
         type: "text",
         body: [
-          "For this multimedia artist's portfolio website, I started with a bold, colorful direction. Since his work leans heavily on doodles and sketches, I built the landing experience as an \"artist's table,\" sketches, notes, and photos scattered across a desk, so scrolling in felt like peeking straight into his sketchbook.",
-          "He wanted something more refined instead, closer to a gallery, so I pivoted the whole direction: a minimal, gallery-style layout built from his references, framed pieces on clean walls, generous whitespace, and micro-animations layered throughout to keep it from feeling static.",
-          "The final site has a gallery-led homepage that puts the work first, a categorised browse structure across drawings, paintings, studies and prints, and a scrapbook-styled About page built to feel handmade rather than corporate.",
+          "For this multimedia artist's portfolio website, I started with a bold, colorful direction. Since his work leans heavily on doodles and sketches, I built the landing experience as an \u201cartist's table\u201d: sketches, notes and photos scattered across a desk, so scrolling in felt like peeking straight into his sketchbook.",
         ],
       },
-      { type: "image", asset: "s19-a", alt: "First direction: the artist's table", span: "third" },
-      { type: "image", asset: "s19-b", alt: "Final direction: gallery-style homepage", span: "twoThirds" },
+      { type: "image", asset: "sidani-ideas", alt: "Concept board: core interaction, tagging system and interaction sketches", span: "full" },
+      { type: "image", asset: "sidani-inspiration", alt: "Visual inspiration: collage, positioning, colours and type", span: "full" },
+      { type: "image", asset: "sidani-wireframes", alt: "Concept 1 wireframes with notes on each section's animation", span: "full" },
+      { type: "image", asset: "sidani-mock-laptop", alt: "Concept 1: featured work section", span: "half" },
+      { type: "image", asset: "sidani-mock-columns", alt: "Concept 1: the full homepage", span: "half" },
+      {
+        type: "text",
+        body: [
+          "He wanted something more refined instead, closer to a gallery, and sent references of grand gallery halls. So I pivoted the whole direction: a minimal, gallery-style layout built from his references, framed pieces on clean walls and generous whitespace.",
+        ],
+      },
+      { type: "image", asset: "sidani-client-refs", alt: "The client's gallery references", span: "full" },
+      { type: "image", asset: "sidani-concept2", alt: "Concept 2: low-fidelity gallery plans", span: "full" },
+      {
+        type: "text",
+        body: [
+          "In the end, he didn't go with either concept. It taught me to be really specific about what I want from a client brief before I start designing.",
+        ],
+      },
     ],
   },
   {
@@ -289,6 +376,8 @@ export const PROJECTS: Project[] = [
     client: "Cemex",
     category: "Jabrni",
     year: "2026",
+    when: "Apr – Aug 2026",
+    start: "2026-04",
     role: ["Service manifesto redesign", "Exhibition booth", "Campaign visual"],
     tools: ["figma", "illustrator"],
     color: "#0000b3",
@@ -320,19 +409,54 @@ export const PROJECTS: Project[] = [
   {
     slug: "sandspire-website",
     title: "Sandspire Website",
-    type: "Website · Earlier version",
-    client: "Sandspire",
+    type: "Website · Not used",
+    client: "Sandspire · design, not used",
     category: "Jabrni",
     year: "2026",
+    when: "Apr – Jun 2026",
+    start: "2026-04",
     role: ["Web design"],
     tools: ["figma"],
-    color: "#1b1816",
-    ink: "#ecedd8",
-    cover: { asset: "s28-hero" },
+    color: "#f9630f",
+    ink: "#0d0d0d",
+    cover: { asset: "sandspire-mock-hero" },
     blocks: [
+      { type: "image", asset: "sandspire-mock-columns", alt: "Homepage, work page and project pages", span: "full" },
+      { type: "image", asset: "sandspire-mock-services", alt: "What we do: the services bento", span: "half" },
+      { type: "image", asset: "sandspire-mock-projects", alt: "Crafting legacy: featured projects", span: "half" },
+      { type: "image", asset: "sandspire-mock-laptop", alt: "The work page: projects that convert", span: "full" },
       { type: "text", body: ["An earlier version of the Sandspire website, before it was redesigned."] },
-      { type: "image", asset: "s28-long-a", alt: "Selected work page, desktop", span: "twoThirds" },
-      { type: "image", asset: "s28-long-b", alt: "Selected work page, mobile", span: "third" },
+      { type: "image", asset: "s28-hero", alt: "Earlier version: homepage and work page", span: "third" },
+      { type: "image", asset: "s28-long-a", alt: "Earlier version: selected work page, desktop", span: "twoThirds" },
+    ],
+  },
+  {
+    slug: "la-torta",
+    title: "La Torta",
+    type: "Website · Not used",
+    client: "La Torta by Zein Fayek · design, not used",
+    category: "Jabrni",
+    year: "2026",
+    when: "May – Jun 2026",
+    start: "2026-05",
+    role: ["Web design"],
+    tools: ["figma"],
+    color: "#f2cdd6",
+    ink: "#4a2a30",
+    cover: { asset: "latorta-mock-devices" },
+    blocks: [
+      {
+        type: "text",
+        body: [
+          "A website for La Torta, Zein Fayek's cake studio. The plan from my wireframe: a hero that looks like a packaging box, the seasonal collection, best sellers, a custom cake game, an about section with a full-page picture and where to find us, with the reviews as part of the story.",
+        ],
+      },
+      { type: "image", asset: "latorta-mock-story", alt: "From Damascus to Dubai: the story section", span: "full" },
+      { type: "image", asset: "latorta-mock-phones", alt: "The homepage on mobile", span: "full" },
+      { type: "image", asset: "latorta-wireframe", alt: "Wireframe with notes", span: "third" },
+      { type: "image", asset: "latorta-heroes", alt: "Earlier version: four options for the packaging-box hero", span: "twoThirds" },
+      { type: "image", asset: "latorta-mock-laptop", alt: "Earlier version: seasonal collection and best sellers", span: "half" },
+      { type: "image", asset: "latorta-variations", alt: "Earlier version: three variations of the collection section", span: "half" },
     ],
   },
   {
@@ -342,6 +466,8 @@ export const PROJECTS: Project[] = [
     client: "In Design Interiors · wasl",
     category: "Jabrni",
     year: "2026",
+    when: "May 2026",
+    start: "2026-05",
     role: ["AI imagery"],
     tools: ["photoshop", "gemini"],
     color: "#c7a78c",
@@ -397,40 +523,19 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    slug: "amana-notion-hq",
-    title: "Marketing HQ",
-    type: "Notion workspace",
-    client: "Amana Homes Real Estate",
-    category: "Amana Homes",
-    year: "2025",
-    role: ["Workflow design"],
-    tools: ["notion"],
-    color: "#2b2b2b",
-    ink: "#ecedd8",
-    cover: { asset: "s22-a" },
-    blocks: [
-      {
-        type: "text",
-        body: [
-          "Created a Teamspace-based Notion workspace designed as a marketing ops hub. An HQ dashboard embeds database views for filming/posting calendars, thematic planning, tasks, docs/assets, and content ideas. Structured schemas + multiple views + reusable templates run the workflow, with links out to Figma and social channels.",
-        ],
-      },
-      { type: "image", asset: "s22-a", alt: "Marketing Department HQ dashboard", span: "full" },
-      { type: "image", asset: "s22-b", alt: "Task board", span: "full" },
-    ],
-  },
-  {
     slug: "quotify",
     title: "Quotify",
     type: "Website · Brand · UI/UX",
     client: "Quotify (co-founder)",
     category: "Quotify",
     year: "2025–2026",
+    when: "Sep 2025 – May 2026",
+    start: "2025-09",
     role: ["Website", "Brand identity", "UI/UX", "Marketing assets", "IEEE paper co-author"],
     tools: ["figma"],
     color: "#3883de",
     ink: "#ffffff",
-    cover: { asset: "q-web-home" },
+    cover: { asset: "q-mock-devices" },
     siteUrl: "quotifyx.app",
     links: [
       { label: "quotifyx.app", href: "https://quotifyx.app" },
@@ -499,30 +604,6 @@ export const PROJECTS: Project[] = [
       { type: "image", asset: "s30-b", alt: "Welcome tutorial prompt", span: "third" },
       { type: "image", asset: "s30-c", alt: "Furniture placement", span: "third" },
       { type: "image", asset: "s30-d", alt: "Movement tutorial panel", span: "third" },
-    ],
-  },
-  {
-    slug: "timetable-designer",
-    title: "Timetable Designer",
-    type: "Figma template",
-    client: "Figma Community",
-    category: "Personal & Uni",
-    year: "2024",
-    role: ["Figma template"],
-    tools: ["figma"],
-    color: "#3883de",
-    ink: "#ecedd8",
-    cover: { asset: "s04-timetable", fit: "contain", bg: "#deba38" },
-    links: [{ label: "Figma Community", href: "https://www.figma.com/community/file/1493878128049841938" }],
-    blocks: [
-      {
-        type: "text",
-        body: [
-          "Born from the inconvenience of the university default timetable view.",
-          "Uses auto layouts and pre-formed time slots to allow you to literally “build” your timetable.",
-        ],
-      },
-      { type: "image", asset: "s04-timetable", alt: "Timetable Designer", span: "full", bg: "#deba38", pad: true },
     ],
   },
   {
