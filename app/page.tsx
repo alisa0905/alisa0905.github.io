@@ -58,7 +58,7 @@ export default function Home() {
       >
         <Art name="whoami" hideTitle className="-z-10" />
 
-        <div className="mx-auto w-full max-w-7xl px-5 pt-32 sm:px-8 lg:pt-44">
+        <div className="mx-auto w-full max-w-7xl px-5 pb-10 pt-32 sm:px-8 lg:flex lg:flex-1 lg:flex-col lg:justify-end lg:pb-[13vh] lg:pt-32">
           <p className="rv-text inline-flex items-center gap-2 text-sm font-semibold text-cream/90">
             <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="currentColor" aria-hidden>
               <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
@@ -114,7 +114,7 @@ export default function Home() {
         </div>
 
         <div
-          className="rv relative mt-10 w-full self-end lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[min(52vw,900px)]"
+          className="rv relative mt-auto w-[min(92%,460px)] self-end sm:w-[min(72%,560px)] lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[min(52vw,900px)]"
           style={{ aspectRatio: `${photo.w} / ${photo.h}`, "--d": 400 } as React.CSSProperties}
         >
           <Image src={photo.src} alt="Alisa Bakhareva" fill priority sizes="(min-width: 1024px) 52vw, 100vw" className="object-contain object-bottom" />
@@ -174,6 +174,14 @@ export default function Home() {
 
         <div className="relative mx-auto grid max-w-7xl gap-16 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:py-32">
           <div className="lg:col-span-5">
+            <Image
+              src={ASSETS["alisa-portrait"].src}
+              alt="Portrait of Alisa Bakhareva"
+              width={ASSETS["alisa-portrait"].w}
+              height={ASSETS["alisa-portrait"].h}
+              sizes="(min-width: 640px) 176px, 144px"
+              className="rv mb-8 h-36 w-36 -rotate-3 rounded-full ring-4 ring-cream shadow-[0_14px_30px_-12px_rgb(0_0_0/0.35)] sm:h-44 sm:w-44"
+            />
             <h2 className="rv-text font-display text-[clamp(3.5rem,8vw,7rem)] font-black leading-[0.85]">Who am I?</h2>
             <div className="mt-8 space-y-5 font-author text-lg leading-relaxed sm:text-xl">
               <p className="rv-text" style={{ "--d": 150 } as React.CSSProperties}>

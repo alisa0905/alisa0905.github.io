@@ -66,12 +66,15 @@ function Section({ label, accent, children }: { label: string; accent: Accent; c
 function EntryMeta({ entry }: { entry: Omit<CvEntry, "bullets"> }) {
   return (
     <a href={entry.href} target="_blank" rel="noreferrer" className="group block text-black">
-      <h3 className="flex items-center gap-[7px] whitespace-nowrap text-[13.5px] font-bold leading-[22.5px] print:gap-[5pt] print:text-[9pt] print:leading-[14pt]">
-        <span className="group-hover:underline">{entry.title}</span>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/cv/external.svg" alt="" width={9} height={9} className="size-[13.5px] shrink-0 print:size-[9pt]" />
-      </h3>
-      <p className="text-[13.5px] leading-[22.5px] print:text-[9pt] print:leading-[14pt]">{entry.subtitle}</p>
+      {/* In the PDF, company and role share one line to keep the page airy. */}
+      <div className="print:flex print:items-baseline print:gap-x-[6pt]">
+        <h3 className="flex items-center gap-[7px] whitespace-nowrap text-[13.5px] font-bold leading-[22.5px] print:text-[10pt] print:leading-[15pt]">
+          <span className="group-hover:underline">{entry.title}</span>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/cv/external.svg" alt="" width={9} height={9} className="size-[13.5px] shrink-0 print:hidden" />
+        </h3>
+        <p className="text-[13.5px] leading-[22.5px] print:text-[9.5pt] print:leading-[15pt]">{entry.subtitle}</p>
+      </div>
       <p className="text-[10.5px] leading-[16.5px] print:text-[7pt] print:leading-[11pt]">
         {entry.location ? `${entry.location} · ${entry.dates}` : entry.dates}
       </p>
@@ -81,13 +84,13 @@ function EntryMeta({ entry }: { entry: Omit<CvEntry, "bullets"> }) {
 
 function Entries({ items }: { items: CvEntry[] }) {
   return (
-    <div className="flex flex-col gap-6 print:gap-[8pt]">
+    <div className="flex flex-col gap-6 print:gap-[14pt]">
       {items.map((e) => (
-        <article key={e.title} className="flex flex-col gap-2 sm:flex-row sm:gap-[30px] print:flex-col print:gap-[3pt]">
+        <article key={e.title} className="flex flex-col gap-2 sm:flex-row sm:gap-[30px] print:flex-col print:gap-[4pt]">
           <div className="shrink-0 sm:w-[182px] print:w-auto">
             <EntryMeta entry={e} />
           </div>
-          <ul className="flex-1 list-disc pl-[20px] marker:text-[var(--accent)] text-[13.5px] leading-[18px] tracking-[-0.01em] text-[#454545] print:pl-[13.5pt] print:text-[9pt] print:leading-[11.5pt]">
+          <ul className="flex-1 list-disc pl-[20px] marker:text-[var(--accent)] text-[13.5px] leading-[18px] tracking-[-0.01em] text-[#454545] print:pl-[13.5pt] print:text-[9pt] print:leading-[12.5pt]">
             {e.bullets.map((b) => (
               <li key={b}>
                 <Rich text={b} />
@@ -145,7 +148,7 @@ export default function CvPage() {
       </div>
 
       <article
-        className={`${grotesk.className} relative mx-auto max-w-[893px] overflow-hidden rounded-2xl bg-[#fbfbfb] [print-color-adjust:exact] px-5 py-12 text-black shadow-[0_20px_60px_-30px_rgb(0_0_0/0.35)] sm:px-[75px] sm:py-[90px] print:max-w-none print:rounded-none print:bg-white print:px-[50pt] print:pb-0 print:pt-[24pt] print:shadow-none`}
+        className={`${grotesk.className} relative mx-auto max-w-[893px] overflow-hidden rounded-2xl bg-[#fbfbfb] [print-color-adjust:exact] px-5 py-12 text-black shadow-[0_20px_60px_-30px_rgb(0_0_0/0.35)] sm:px-[75px] sm:py-[90px] print:max-w-none print:rounded-none print:bg-white print:px-[50pt] print:pb-0 print:pt-[62pt] print:shadow-none`}
       >
         {/* Brand colour stripe across the top */}
         <div className="absolute inset-x-0 top-0 flex h-[10px] print:h-[6pt]" aria-hidden>
@@ -167,8 +170,8 @@ export default function CvPage() {
             <p className="text-[21px] leading-tight print:text-[14pt]">{CV.role}</p>
             {/* In the PDF the buttons become written-out links, so hiring software can read them. */}
             <p className="mt-[6pt] hidden gap-[10pt] text-[9pt] font-medium print:flex">
-              <a href={CV.linkedin}>{bare(CV.linkedin)}</a>
-              <a href={CV.portfolio}>{bare(CV.portfolio)}</a>
+              <a href={CV.linkedin} className="underline underline-offset-2">{bare(CV.linkedin)}</a>
+              <a href={CV.portfolio} className="underline underline-offset-2">{bare(CV.portfolio)}</a>
             </p>
             <div className="mt-[10px] flex items-center gap-[7.5px] print:hidden">
               <a
@@ -200,7 +203,7 @@ export default function CvPage() {
         </header>
 
         {/* ----------------------------- Body ----------------------------- */}
-        <div className="mt-14 flex flex-col gap-10 sm:mt-[80px] sm:gap-[36px] print:mt-[12pt] print:gap-[11pt]">
+        <div className="mt-14 flex flex-col gap-10 sm:mt-[80px] sm:gap-[36px] print:mt-[34pt] print:gap-[21pt]">
           <Section label="Experience" accent="sky">
             <Entries items={CV.experience} />
           </Section>

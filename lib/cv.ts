@@ -87,15 +87,6 @@ export const CV = {
         "Brand identity, UI/UX and marketing assets for an AI-powered call-to-quotation platform. Co-authored an **IEEE-published research paper**.",
       ],
     },
-    {
-      title: "Tremo",
-      subtitle: "Product Designer & Research Co-author",
-      dates: "2026",
-      href: "https://alisabakhareva.me/work/tremo",
-      bullets: [
-        "Designed and built a mobile app that turns a clinical hand-tremor test into something people with Parkinson's can use on their own. Co-authored the research paper and presented it at **ISDIA 2026**.",
-      ],
-    },
   ] satisfies CvEntry[],
 
   skills: [
