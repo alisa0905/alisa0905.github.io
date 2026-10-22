@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Flower } from "./Flower";
 import { Reveal } from "./Reveal";
-import { CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
+import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 
 /** Big "let's work together" footer shown on every page. */
 export function SiteFooter() {
@@ -13,8 +13,10 @@ export function SiteFooter() {
         <Flower color="#3883de" className="absolute bottom-24 left-[46%] hidden w-24 md:block" reverse pop style={{ "--d": 800 } as React.CSSProperties} />
 
         <div className="relative mx-auto max-w-7xl px-5 pb-10 pt-24 sm:px-8 lg:pt-32">
-          <Link
-            href="/contact"
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noreferrer"
             className="rv-text group inline-block font-display text-[clamp(3.5rem,11vw,10rem)] font-black leading-[0.9]"
             style={{ "--d": 150 } as React.CSSProperties}
           >
@@ -22,7 +24,7 @@ export function SiteFooter() {
             <span className="ml-4 inline-block text-pink transition-transform duration-500 group-hover:translate-x-3 group-hover:-rotate-12">
               →
             </span>
-          </Link>
+          </a>
 
           <div className="mt-16 grid gap-10 border-t border-white/10 pt-10 sm:grid-cols-3">
             <div className="rv-text" style={{ "--d": 250 } as React.CSSProperties}>

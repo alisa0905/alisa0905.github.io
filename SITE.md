@@ -16,8 +16,8 @@
 - **Contact** (`/contact`): enquiry form (name, email, company, services, timeline, message). Sending opens the visitor's email app, addressed to alisabakhareva2902@gmail.com. No account needed.
 
 ## Components
-- **Header** (`components/SiteHeader.tsx`): floating pill with Alisa's full name, Home, Work, About and a "Let's talk" button. Turns solid when you scroll. Has a menu on phones.
-- **Footer** (`components/SiteFooter.tsx`): big "Let's talk →", email, location and links.
+- **Header** (`components/SiteHeader.tsx`): floating pill with Alisa's full name, Home, Work, About, CV and a "Let's talk" button (opens Alisa's Calendly to book a call). Turns solid when you scroll. Has a menu on phones.
+- **Footer** (`components/SiteFooter.tsx`): big "Let's talk →" (opens Calendly), email, location and links (Work, About, Contact, LinkedIn).
 - **Project card** (`components/ProjectCard.tsx`): image tile, category chip, title and summary, with hover animation.
 - **Case study layout** (`components/CaseBlocks.tsx`): turns each project's content list into text sections, image grids and before/after blocks.
 - **Extras:** click any case-study image to zoom it full screen (`Lightbox`). Smooth scrolling (`SmoothScroll`). A flower cursor on desktop (`Cursor`). Scroll-in animations (`Reveal` plus the CSS in `app/globals.css`).
@@ -26,7 +26,7 @@
 - **Edit the CV:** all the CV text is in `lib/cv.ts`; section colours are set in `app/cv/page.tsx` (the `accent` on each section) (wrap words in `**double stars**` to make them bold). After editing, ask Claude to "regenerate the CV PDF" so the download matches — the PDF lives at `public/cv/Alisa-Bakhareva-CV.pdf`.
 - **Edit, add or reorder projects:** everything lives in `lib/projects.ts`. Each project has a title, client, category, year, role, tools, colours, summary, cover image and a list of content blocks. Set `featured: true` to show it on the home page. The order on the home page is set at the top of `app/page.tsx`.
 - **Add images:** put them in `public/work/` and add their size to `lib/assets.ts`.
-- **Change the contact email or LinkedIn link:** `CONTACT_EMAIL` and `LINKEDIN_URL` at the bottom of `lib/projects.ts` (the CV uses the same LinkedIn link).
+- **Change the contact email, LinkedIn or booking link:** `CONTACT_EMAIL`, `LINKEDIN_URL` and `BOOKING_URL` (the Calendly link every "Let's talk" button uses) at the bottom of `lib/projects.ts` (the CV uses the same LinkedIn link).
 - **Change colours:** the palette is at the top of `app/globals.css`.
 
 ## Writing style
@@ -43,6 +43,8 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-10-22: Every "Let's talk" button (top menu, phone menu, home page, footer) now opens Calendly (calendly.com/alisabakhareva2902) in a new tab to book a call. The Contact page and form are still there via the footer.
+- 2026-10-22: Removed the 3D lanyard badge section from the home page, along with its files and the 3D add-ons it needed.
 - 2026-10-02: Added Alisa's LinkedIn to the footer on every page ("LinkedIn ↗" next to Work/About/Contact) and to the dark contact card on the Contact page. The CV already links to it.
 - 2026-09-30: Made the CV more colourful to match the brand: a sky/pink/sun/tangerine/green stripe across the top, a pink flower next to the name, each section heading in its own coloured pill (Experience sky, Projects pink, Skills & Tools sun, Education tangerine, Additional Info mustard) with matching bullet dots, and a pink Portfolio button. Still Space Grotesk (no Londrina). The PDF was regenerated and still reads cleanly for hiring software.
 - 2026-09-30: Added a **CV page** (`/cv`, also in the top menu) built from the Figma CV, plus a one-page ATS-friendly PDF download. In the PDF, each job's bullets sit under its title, tools and skills are plain comma lists, and the LinkedIn and portfolio links are written out. The old Figma-exported PDF scrambled when read by hiring software (split words like "B uilt", titles after their bullets).

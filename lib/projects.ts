@@ -558,4 +558,6 @@ export const getProject = (slug: string) => PROJECTS.find((p) => p.slug === slug
 export const categoryColor = (c: Category) => CATEGORIES.find((x) => x.name === c)?.color ?? "#ecedd8";
 
 export const CONTACT_EMAIL = "alisabakhareva2902@gmail.com";
+/** Where every "Let's talk" button goes. */
+export const BOOKING_URL = "https://calendly.com/alisabakhareva2902/";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/alisa-bakhareva/";

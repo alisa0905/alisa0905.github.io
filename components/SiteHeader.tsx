@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { BOOKING_URL } from "@/lib/projects";
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -78,18 +79,20 @@ export function SiteHeader() {
               <span className="relative">{l.label}</span>
             </Link>
           ))}
-          <Link
-            href="/contact"
+          <a
+            href={BOOKING_URL}
+            target="_blank"
+            rel="noreferrer"
             className="ml-2 rounded-full bg-ink px-5 py-2.5 text-[15px] font-semibold text-cream transition-transform hover:-rotate-2 hover:scale-105"
           >
             Let&apos;s talk
-          </Link>
+          </a>
         </nav>
 
         <div className="flex items-center gap-1.5 md:hidden">
-          <Link href="/contact" className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-cream">
+          <a href={BOOKING_URL} target="_blank" rel="noreferrer" className="rounded-full bg-ink px-4 py-2 text-sm font-semibold text-cream">
             Let&apos;s talk
-          </Link>
+          </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}

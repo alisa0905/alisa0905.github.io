@@ -2,13 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Art } from "@/components/Art";
 import { Flower } from "@/components/Flower";
-import { LanyardBadge } from "@/components/LanyardBadge";
 import { Marquee } from "@/components/Marquee";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Reveal } from "@/components/Reveal";
 import { ToolIcon, type Tool } from "@/components/ToolIcon";
 import { ASSETS } from "@/lib/assets";
-import { getProject } from "@/lib/projects";
+import { BOOKING_URL, getProject } from "@/lib/projects";
 
 const FEATURED_ORDER = [
   { slug: "cloud-castle", span: "lg:col-span-12", size: "xl" },
@@ -103,12 +102,14 @@ export default function Home() {
             >
               See my work <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
             </Link>
-            <Link
-              href="/contact"
+            <a
+              href={BOOKING_URL}
+              target="_blank"
+              rel="noreferrer"
               className="rounded-full border-2 border-cream px-7 py-4 text-lg font-bold transition-colors hover:bg-cream hover:text-ink"
             >
               Let&apos;s talk
-            </Link>
+            </a>
           </div>
         </div>
 
@@ -246,18 +247,6 @@ export default function Home() {
           </div>
         </div>
       </Reveal>
-
-      {/* --------------------------- Lanyard badge --------------------------- */}
-      <section className="relative overflow-hidden bg-ink text-cream" aria-label="Conference badge">
-        <div className="mx-auto grid max-w-7xl items-end gap-2 px-5 pt-16 sm:px-8 lg:grid-cols-12 lg:pt-10">
-          <p className="pb-4 text-sm font-semibold text-cream/55 lg:col-span-4 lg:pb-20">
-            Drag the badge
-          </p>
-          <div className="relative h-[min(72svh,680px)] lg:col-span-8 lg:col-start-5">
-            <LanyardBadge className="absolute inset-0" />
-          </div>
-        </div>
-      </section>
 
       <Marquee
         items={["Cemex", "B1 Properties", "Amana Homes", "Binghatti", "wasl", "Theorem Partners", "Marco Oro", "Cloud Castle", "Quotify"]}
