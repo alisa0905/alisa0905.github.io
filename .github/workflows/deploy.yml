@@ -29,7 +29,10 @@ jobs:
         with:
           path: out
 
+  # The live site (alisabakhareva.me) is published from the alisa0905.github.io repo.
+  # The "portfolio" copy only checks that the site builds.
   deploy:
+    if: github.repository == 'alisa0905/alisa0905.github.io'
     needs: build
     runs-on: ubuntu-latest
     environment:
