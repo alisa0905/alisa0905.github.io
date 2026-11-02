@@ -32,7 +32,7 @@ type Body = {
  * circles cover (lower = fewer flowers, so phones don't get a crowded pile).
  */
 const AREAS = {
-  desktop: { a: [0.409, 1], b: [0.738, 0], size: 1.1, fill: 1.1 },
+  desktop: { a: [0.409, 1], b: [0.738, 0], size: 0.95, fill: 0.62 },
   tablet: { a: [0, 0.96], b: [1, 0.2], size: 1.25, fill: 0.85 },
   phone: { a: [0, 1], b: [1, 0.45], size: 1.6, fill: 0.95 },
 };

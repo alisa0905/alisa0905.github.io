@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: Fewer hero flowers on laptops: they now fill roughly 60% of the flower area instead of all of it (change `fill` for `desktop` in `AREAS` to adjust).
 - 2026-11-02: Hero flowers now fill the exact shapes Alisa sketched for each screen: on laptops a slanted strip down the right side (top to bottom), on tablets and phones a triangle in the bottom-right corner. The shapes are the `AREAS` list at the top of `components/BouncingFlowers.tsx`. Flowers are bigger and there are as many as fit. Footer flowers are bigger too.
 - 2026-11-02: Home hero now fits exactly one screen on computers; "Hi! I'm Alisa." is a little smaller on big screens with the two lines slightly closer. The number of flowers adapts to the space (more on big screens so they fill the pink shape, fewer on phones so they don't stack), and a slanted invisible wall keeps them on the pink. Footer "Let's Talk" uses the bigger centred size Alisa liked, and the hill always spans the full screen width.
 - 2026-11-02: Footer rebuilt from Alisa's Figma design and made a sticky reveal footer. "Let's Talk" is centred. On the home page the "Who am I?" section is now sky blue (dark text, pink Freelance dot) with extra bottom space, and the scrolling client-names ribbon was removed.
