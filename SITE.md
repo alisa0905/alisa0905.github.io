@@ -9,7 +9,7 @@
 - **Signature details:** wavy blobs, five-petal flowers that spin, curved titles. All of them are real vector art exported from the Figma file.
 
 ## Pages
-- **Home** (`/`): orange hero with a huge two-line "Hi! I'm / Alisa." headline (letters swell when the mouse moves near them, on computers only), two buttons, and the pink blob and flower (her photo is hidden for now). Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
+- **Home** (`/`): orange hero with a huge two-line "Hi! I'm / Alisa." headline (letters swell when the mouse moves near them, on computers only), two buttons, the pink blob and flower (her photo is hidden for now), and 10 big cream balls: on computers they drop in on the right and bounce off the mouse; on phones they sit as a still pile at the bottom. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
 - **Work** (`/work`): all 17 projects with filter chips: Jabrni, Freelance, Amana Homes, Quotify, Personal & Uni.
 - **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots and a button linking to the live site, cloudcastle.co.
 - **CV** (`/cv`): Alisa's CV, built from the Figma CV design. On screen it looks like the Figma page, and every company and project name links out. The "Download PDF" button gives a one-page A4 PDF laid out so hiring software (ATS) can read it cleanly.
@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: Added 10 big bouncing balls to the home hero (`components/BouncingBalls.tsx`), in the same cream as the text. Desktop: right side, they fall in, bounce and get pushed by the mouse. Phones and tablets: drawn once as a still pile at the bottom, so nothing keeps running. No extra libraries, so the page still loads fast; the animation also pauses when the hero is scrolled out of view.
 - 2026-11-02: Removed Alisa's photo from the home hero for now; the headline and buttons sit in the middle of the orange area on desktop and near the top on phones. The photo file (`public/work/whoami-cutout.webp`) is still there to bring back later.
 - 2026-11-02: Home hero: removed the "Dubai, UAE" tag and the description, made the headline much bigger (two lines, wider letter spacing) and lifted the text up to sit beside the photo on desktop. Letters now swell when the mouse is near them (`components/ProximityHeadline.tsx`), inspired by fancycomponents.dev's cursor proximity effect.
 - 2026-10-22: Removed the "Original site" button (to shams.tv) from the Shams TV case study, since the live Shams site isn't Alisa's work.

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Art } from "@/components/Art";
+import { BouncingBalls } from "@/components/BouncingBalls";
 import { Flower } from "@/components/Flower";
 import { Marquee } from "@/components/Marquee";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -54,6 +55,7 @@ export default function Home() {
         threshold={0}
       >
         <Art name="whoami" hideTitle className="-z-10" />
+        <BouncingBalls className="absolute inset-x-0 bottom-0 h-[38%] w-full lg:inset-x-auto lg:right-0 lg:top-24 lg:h-[calc(100%-6rem)] lg:w-[46%]" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-start px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-[12vh] lg:pt-28">
           <ProximityHeadline
