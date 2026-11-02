@@ -43,6 +43,8 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: Footer "Let's talk →" is bigger and curves along the top of the hill. Every footer flower now sits on the green grass (placed relative to the hill's edge). Footer info stacks in the centre on tablets so the email never breaks.
+- 2026-11-02: Hero flowers no longer look stretched when the screen size changes; on tablets they stay in the right-hand part so they don't cover the buttons.
 - 2026-11-02: New footer on every page: a green hill under a sky-blue sky, with outline flowers in pink, yellow, blue, cream and red dotted around the edges (separate layouts for computers and phones so they never cover text). Centred, slightly tilted "Let's talk →" and the email / location / links underneath.
 - 2026-11-02: Hero flowers on phones and tablets: a bit bigger, piled into the bottom-right corner, and they give a little bounce when you scroll (the animation stops by itself a few seconds later, so it doesn't drain battery).
 - 2026-11-02: Gentler hover on the "Let's talk" buttons (hero, top bar, footer): a soft lift and tint instead of a sudden colour flip or wobble.

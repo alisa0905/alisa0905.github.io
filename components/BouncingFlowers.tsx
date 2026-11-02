@@ -368,11 +368,21 @@ export function BouncingFlowers({ className }: { className?: string }) {
         if (!frame) frame = requestAnimationFrame(run);
       };
       window.addEventListener("scroll", onScroll, { passive: true });
-      window.addEventListener("resize", settle);
+      // Redo the pile whenever the box changes size (not just the window), so the
+      // picture is never stretched out of shape
+      let lastSize = `${Math.round(w)}x${Math.round(h)}`;
+      const ro = new ResizeObserver(() => {
+        const r = canvas.getBoundingClientRect();
+        const size = `${Math.round(r.width)}x${Math.round(r.height)}`;
+        if (size === lastSize) return;
+        lastSize = size;
+        settle();
+      });
+      ro.observe(canvas);
       return () => {
         cancelAnimationFrame(frame);
         window.removeEventListener("scroll", onScroll);
-        window.removeEventListener("resize", settle);
+        ro.disconnect();
       };
     }
 
@@ -429,7 +439,8 @@ export function BouncingFlowers({ className }: { className?: string }) {
     io.observe(canvas);
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
-    window.addEventListener("resize", onResize);
+    const ro = new ResizeObserver(onResize);
+    ro.observe(canvas);
     frame = requestAnimationFrame(loop);
 
     return () => {
@@ -437,7 +448,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
-      window.removeEventListener("resize", onResize);
+      ro.disconnect();
     };
   }, []);
 
