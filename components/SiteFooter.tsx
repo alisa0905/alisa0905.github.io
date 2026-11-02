@@ -12,50 +12,38 @@ import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 const BLOOMS = [
   {
     color: "#e173ae",
-    left: "calc(50% - var(--u) * 46)",
-    top: "calc(var(--u) * 15)",
-    size: "calc(var(--u) * 12.6)",
+    left: "calc(50% - var(--u) * 49)",
+    top: "calc(var(--u) * 12)",
+    size: "calc(var(--u) * 17)",
     turn: -14,
   },
   {
     color: "#3883de",
-    left: "calc(50% + var(--u) * 22)",
-    top: "calc(var(--u) * 41)",
-    size: "calc(var(--u) * 12.6)",
+    left: "calc(50% + var(--u) * 21)",
+    top: "calc(var(--u) * 39)",
+    size: "calc(var(--u) * 17)",
     turn: 18,
   },
   {
     color: "#f3c11b",
-    left: "calc(var(--u) * -5.9)",
-    top: "calc(var(--u) * 43.5)",
-    size: "calc(var(--u) * 25)",
+    left: "calc(var(--u) * -9)",
+    top: "calc(var(--u) * 40)",
+    size: "calc(var(--u) * 33)",
     turn: 0,
   },
   {
     color: "#e77f23",
-    left: "calc(100% - var(--u) * 11.7)",
-    top: "calc(var(--u) * 33)",
-    size: "calc(var(--u) * 19)",
+    left: "calc(100% - var(--u) * 14)",
+    top: "calc(var(--u) * 30)",
+    size: "calc(var(--u) * 25)",
     turn: -20,
   },
 ];
 const BLOOMS_SMALL = [
-  { color: "#e173ae", left: "8%", top: "7rem", size: "3.5rem", turn: -14 },
-  { color: "#3883de", left: "80%", top: "8.5rem", size: "3.5rem", turn: 18 },
-  {
-    color: "#f3c11b",
-    left: "-10%",
-    top: "calc(100% - 7rem)",
-    size: "7.5rem",
-    turn: 0,
-  },
-  {
-    color: "#e77f23",
-    left: "88%",
-    top: "calc(100% - 8.5rem)",
-    size: "5.5rem",
-    turn: -20,
-  },
+  { color: "#e173ae", left: "5%", top: "6rem", size: "max(4.75rem, 11vw)", turn: -14 },
+  { color: "#3883de", left: "78%", top: "8rem", size: "max(4.75rem, 11vw)", turn: 18 },
+  { color: "#f3c11b", left: "-14%", top: "calc(100% - max(8.5rem, 21vw))", size: "max(10rem, 28vw)", turn: 0 },
+  { color: "#e77f23", left: "84%", top: "calc(100% - max(9.5rem, 24vw))", size: "max(7.5rem, 19vw)", turn: -20 },
 ];
 
 function Bloom({ b, i }: { b: (typeof BLOOMS)[number]; i: number }) {

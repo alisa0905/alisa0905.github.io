@@ -55,7 +55,7 @@ export default function Home() {
         threshold={0}
       >
         <Art name="whoami" hideTitle hideFlowers className="-z-10" />
-        <BouncingFlowers className="absolute bottom-0 right-0 h-[46%] w-full sm:w-[62%] lg:top-24 lg:h-[calc(100%-6rem)] lg:w-[42%]" />
+        <BouncingFlowers className="absolute inset-0 h-full w-full" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-start px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-[12vh] lg:pt-28">
           <ProximityHeadline

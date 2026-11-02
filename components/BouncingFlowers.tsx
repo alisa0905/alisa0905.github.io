@@ -25,10 +25,18 @@ type Body = {
   sprite?: HTMLCanvasElement;
 };
 
-// How much of the box the flowers' circles should cover. Computers fill the
-// whole pink area; phones fill the corner triangle (half the box).
-const FILL = 0.42;
-const MAX_COUNT = 24;
+/**
+ * Where the flowers live, per screen size (Alisa's sketches): everything below
+ * a slanted line from `a` to `b`, given as fractions of the hero's width and
+ * height. `size` scales the flowers and `fill` is how much of that area their
+ * circles cover (lower = fewer flowers, so phones don't get a crowded pile).
+ */
+const AREAS = {
+  desktop: { a: [0.409, 1], b: [0.738, 0], size: 1.1, fill: 1.1 },
+  tablet: { a: [0, 0.96], b: [1, 0.2], size: 1.25, fill: 0.85 },
+  phone: { a: [0, 1], b: [1, 0.45], size: 1.6, fill: 0.95 },
+};
+const MAX_COUNT = 60;
 const COLORS = ["#7cb9e4", "#f3c11b", "#3883de", "#ecedd8", "#518c2d", "#b83244"];
 // Tuned for a fixed 60 steps a second, so it feels the same on 60Hz and 120Hz screens
 const STEP_MS = 1000 / 60;
@@ -90,25 +98,58 @@ export function BouncingFlowers({ className }: { className?: string }) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
+    // The slanted edge of the flower area, in px: the line through (ax, ay) and
+    // (bx, by); flowers stay on the side below it
+    let area = AREAS.desktop;
+    let ax = 0, ay = 0, slope = 0;
+    const lineY = (x: number) => ay + slope * (x - ax);
+    const pickArea = () => {
+      const vw = window.innerWidth;
+      area = vw >= 1024 ? AREAS.desktop : vw >= 640 ? AREAS.tablet : AREAS.phone;
+      ax = area.a[0] * w;
+      ay = area.a[1] * h;
+      slope = (area.b[1] * h - ay) / (area.b[0] * w - ax);
+    };
+    const inArea = (x: number, y: number) => y >= lineY(x);
+
     const spawn = () => {
-      const unit = Math.min(w, h * 1.2);
+      pickArea();
+      // Size of the flower area, measured column by column
+      let areaPx = 0;
+      for (let i = 0; i < 100; i++) {
+        const x = ((i + 0.5) / 100) * w;
+        areaPx += (h - Math.max(0, Math.min(h, lineY(x)))) * (w / 100);
+      }
+      const unit = Math.sqrt(areaPx) * area.size;
       // As many flowers as fit the space, so small screens get fewer and they
       // don't pile on top of each other
-      const room = w * h * (live ? 1 : 0.5) * FILL;
+      const room = areaPx * area.fill;
       const radii: number[] = [];
       for (let i = 0, used = 0; i < MAX_COUNT; i++) {
-        // A bit bigger on phones, where the space is small
-        const r = unit * (0.068 + ((i * 7) % 5) * 0.014) * (live ? 1 : 1.3);
+        const r = unit * (0.068 + ((i * 7) % 5) * 0.014);
         if (i >= 3 && used + Math.PI * r * r > room) break;
         used += Math.PI * r * r;
         radii.push(r);
       }
+      // Highest x where the area reaches the top, for dropping flowers in
+      const topX = Math.min(w, Math.max(0, ax + (0 - ay) / slope));
       bodies = radii.map((r, i) => {
+        // Phones: start somewhere inside the area
+        let sx = w - r, sy = h - r;
+        for (let t = 0; t < 40; t++) {
+          const x = r + Math.random() * (w - 2 * r);
+          const y = r + Math.random() * (h - 2 * r);
+          if (inArea(x, y - r)) {
+            sx = x;
+            sy = y;
+            break;
+          }
+        }
         return {
           r,
-          // Computers: drop in from above. Phones: start inside the corner.
-          x: live ? w * 0.35 + Math.random() * Math.max(1, w * 0.65 - r * REACH) : w * (0.55 + Math.random() * 0.4),
-          y: live ? -r - i * r * 1.5 : h * (0.5 + Math.random() * 0.45),
+          // Computers: drop in from above where the area meets the top
+          x: live ? topX + Math.random() * Math.max(1, w - topX - r * REACH) : sx,
+          y: live ? -r - i * r * 1.2 : sy,
           vx: (Math.random() - 0.5) * 3,
           vy: 0,
           color: COLORS[i % COLORS.length],
@@ -192,14 +233,12 @@ export function BouncingFlowers({ className }: { className?: string }) {
         }
         b.y = h - b.r;
       }
-      // A slanted wall from the bottom-left corner keeps the flowers on the pink
-      // shape: corner to corner on phones, roughly the pink edge on computers
+      // The slanted edge of the flower area works like a wall
       {
-        const gx = h / (w * (live ? 0.8 : 1));
-        const len = Math.hypot(gx, 1);
-        const d = (b.y - h + gx * b.x) / len;
+        const len = Math.hypot(slope, 1);
+        const d = (b.y - lineY(b.x)) / len;
         if (d < b.r) {
-          const nx = gx / len;
+          const nx = -slope / len;
           const ny = 1 / len;
           b.x += nx * (b.r - d);
           b.y += ny * (b.r - d);
@@ -231,7 +270,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
           const mb = b.r * b.r;
           // Move apart a little at a time over several passes. Capping it stops a
           // flower squeezed in a pile from being shot out and kicking everything again.
-          const overlap = Math.min((min - d) * 0.5, 2);
+          const overlap = Math.min((min - d) * 0.5, 4);
           a.x -= nx * overlap * (mb / (ma + mb));
           a.y -= ny * overlap * (mb / (ma + mb));
           b.x += nx * overlap * (ma / (ma + mb));
@@ -438,6 +477,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
       const oldW = w;
       const oldH = h;
       resize();
+      pickArea();
       if (!oldW || !oldH) return;
       for (const b of bodies) {
         b.x *= w / oldW;
