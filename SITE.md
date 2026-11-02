@@ -17,7 +17,7 @@
 
 ## Components
 - **Header** (`components/SiteHeader.tsx`): floating pill with Alisa's full name, Home, Work, About, CV and a "Let's talk" button (opens Alisa's Calendly to book a call). Turns solid when you scroll. Has a menu on phones.
-- **Footer** (`components/SiteFooter.tsx`): big "Let's talk →" (opens Calendly), email, location and links (Work, About, Contact, LinkedIn).
+- **Footer** (`components/SiteFooter.tsx`): a green hill under a blue sky with a field of outline flowers; big "Let's talk →" (opens Calendly), email, location and links (Work, About, Contact, LinkedIn). To move or recolour flowers, edit the `FIELD_WIDE` (computers) and `FIELD_SMALL` (phones) lists at the top of the file.
 - **Project card** (`components/ProjectCard.tsx`): image tile, category chip, title and summary, with hover animation.
 - **Case study layout** (`components/CaseBlocks.tsx`): turns each project's content list into text sections, image grids and before/after blocks.
 - **Extras:** click any case-study image to zoom it full screen (`Lightbox`). Smooth scrolling (`SmoothScroll`). A flower cursor on desktop (`Cursor`). Scroll-in animations (`Reveal` plus the CSS in `app/globals.css`).
@@ -43,6 +43,10 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: New footer on every page: a green hill under a sky-blue sky, with outline flowers in pink, yellow, blue, cream and red dotted around the edges (separate layouts for computers and phones so they never cover text). Centred, slightly tilted "Let's talk →" and the email / location / links underneath.
+- 2026-11-02: Hero flowers on phones and tablets: a bit bigger, piled into the bottom-right corner, and they give a little bounce when you scroll (the animation stops by itself a few seconds later, so it doesn't drain battery).
+- 2026-11-02: Gentler hover on the "Let's talk" buttons (hero, top bar, footer): a soft lift and tint instead of a sudden colour flip or wobble.
+- 2026-11-02: The Freelance row in "Who am I?" now has a visible sky-blue dot (it was pink on pink).
 - 2026-11-02: Back to squishing the whole flower (not petal by petal), but now from any direction, and hits from several sides at once add up. Less wobble afterwards. The calmer corner/pile behaviour stays.
 - 2026-11-02: Hero flowers: each of the five petals now squishes on its own, so a flower squeezes in from whichever side it's hit (several at once in a pile). Piles in corners settle and stay still instead of jittering or flicking flowers back up.
 - 2026-11-02: Hero flowers run smoother (each flower is drawn once and reused, instead of redrawn every frame) and squish about half as much. Flowers resting in a pile no longer jiggle.

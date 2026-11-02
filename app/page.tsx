@@ -22,7 +22,7 @@ const FEATURED_ORDER = [
 ] as const;
 
 const ROLES = [
-  { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", color: "#e173ae" },
+  { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", color: "#7cb9e4" },
   { role: "Product Designer", org: "Jabrni", when: "Mar 2026 – Aug 2026", color: "#f3c11b" },
   { role: "Creative Marketing & Media Intern", org: "Amana Homes Real Estate", when: "Jul 2025 – Mar 2026", color: "#b83244" },
   { role: "President, Women in STEM Society", org: "UOWD", when: "Apr 2025 – Oct 2025", color: "#3883de" },
@@ -55,7 +55,7 @@ export default function Home() {
         threshold={0}
       >
         <Art name="whoami" hideTitle hideFlowers className="-z-10" />
-        <BouncingFlowers className="absolute inset-x-0 bottom-0 h-[38%] w-full lg:inset-x-auto lg:right-0 lg:top-24 lg:h-[calc(100%-6rem)] lg:w-[46%]" />
+        <BouncingFlowers className="absolute inset-x-0 bottom-0 h-[46%] w-full lg:inset-x-auto lg:right-0 lg:top-24 lg:h-[calc(100%-6rem)] lg:w-[46%]" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-start px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-[12vh] lg:pt-28">
           <ProximityHeadline
@@ -74,7 +74,7 @@ export default function Home() {
               href={BOOKING_URL}
               target="_blank"
               rel="noreferrer"
-              className="rounded-full border-2 border-cream px-7 py-4 text-lg font-bold transition-colors hover:bg-cream hover:text-ink"
+              className="rounded-full border-2 border-cream px-7 py-4 text-lg font-bold transition-all duration-500 ease-out hover:-translate-y-0.5 hover:bg-cream/15"
             >
               Let&apos;s talk
             </a>

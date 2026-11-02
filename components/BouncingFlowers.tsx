@@ -90,11 +90,13 @@ export function BouncingFlowers({ className }: { className?: string }) {
     const spawn = () => {
       const unit = Math.min(w, h * 1.2);
       bodies = Array.from({ length: COUNT }, (_, i) => {
-        const r = unit * (0.068 + ((i * 7) % 5) * 0.014);
+        // A bit bigger on phones, where the space is small
+        const r = unit * (0.068 + ((i * 7) % 5) * 0.014) * (live ? 1 : 1.3);
         return {
           r,
-          x: r * REACH + Math.random() * Math.max(1, w - 2 * r * REACH),
-          y: -r - i * r * 1.5,
+          // Computers: drop in from above. Phones: start inside the corner.
+          x: live ? r * REACH + Math.random() * Math.max(1, w - 2 * r * REACH) : w * (0.55 + Math.random() * 0.4),
+          y: live ? -r - i * r * 1.5 : h * (0.5 + Math.random() * 0.45),
           vx: (Math.random() - 0.5) * 3,
           vy: 0,
           color: COLORS[i % COLORS.length],
@@ -177,6 +179,27 @@ export function BouncingFlowers({ className }: { className?: string }) {
           b.vx *= 0.96;
         }
         b.y = h - b.r;
+      }
+      // Phones: a slanted wall from bottom-left to top-right tucks the pile into
+      // the bottom-right corner
+      if (!live) {
+        const gx = h / w;
+        const len = Math.hypot(gx, 1);
+        const d = (b.y - h + gx * b.x) / len;
+        if (d < b.r) {
+          const nx = gx / len;
+          const ny = 1 / len;
+          b.x += nx * (b.r - d);
+          b.y += ny * (b.r - d);
+          // Stop moving into the wall, and let friction stop sliding along it
+          const into = b.vx * nx + b.vy * ny;
+          if (into < 0) {
+            b.vx -= into * nx;
+            b.vy -= into * ny;
+          }
+          b.vx *= 0.9;
+          b.vy *= 0.9;
+        }
       }
     };
 
@@ -311,8 +334,46 @@ export function BouncingFlowers({ className }: { className?: string }) {
 
     if (!live) {
       settle();
+      // Phones: scrolling gives the pile a little bounce. The animation only
+      // runs until they settle again, then stops, so it costs almost nothing.
+      const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let lastScroll = window.scrollY;
+      let still = 0;
+      let ticks = 0;
+      const run = () => {
+        ticks++;
+        step();
+        draw();
+        const moving = bodies.some(
+          (b) => Math.hypot(b.vx, b.vy) > 0.3 || Math.abs(b.sq[0]) + Math.abs(b.sq[1]) + Math.abs(b.sq[2]) > 0.004,
+        );
+        still = moving ? 0 : still + 1;
+        // Always switch off a few seconds after the last scroll, even if a flower is still creeping
+        frame = still > 20 || ticks > 240 ? 0 : requestAnimationFrame(run);
+      };
+      const onScroll = () => {
+        const dy = window.scrollY - lastScroll;
+        lastScroll = window.scrollY;
+        if (calm || !dy) return;
+        const rect = canvas.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        // Scrolling down jolts them up a little, like shaking a box
+        const kick = Math.max(-6, Math.min(6, dy * 0.12));
+        for (const b of bodies) {
+          b.vy -= kick * (0.6 + Math.random() * 0.4);
+          b.vx += (Math.random() - 0.5) * Math.abs(kick) * 0.4;
+        }
+        still = 0;
+        ticks = 0;
+        if (!frame) frame = requestAnimationFrame(run);
+      };
+      window.addEventListener("scroll", onScroll, { passive: true });
       window.addEventListener("resize", settle);
-      return () => window.removeEventListener("resize", settle);
+      return () => {
+        cancelAnimationFrame(frame);
+        window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("resize", settle);
+      };
     }
 
     const onMove = (e: PointerEvent) => {

@@ -83,7 +83,7 @@ export function SiteHeader() {
             href={BOOKING_URL}
             target="_blank"
             rel="noreferrer"
-            className="ml-2 rounded-full bg-ink px-5 py-2.5 text-[15px] font-semibold text-cream transition-transform hover:-rotate-2 hover:scale-105"
+            className="ml-2 rounded-full bg-ink px-5 py-2.5 text-[15px] font-semibold text-cream transition-all duration-500 ease-out hover:-translate-y-0.5 hover:bg-ink/85"
           >
             Let&apos;s talk
           </a>
