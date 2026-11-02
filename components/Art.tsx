@@ -7,13 +7,15 @@ type Props = {
   hideTitle?: boolean;
   /** Leave out the small curved subtitle (dates, taglines). */
   hideSub?: boolean;
+  /** Leave out the spinning flowers. */
+  hideFlowers?: boolean;
 };
 
 /**
  * The hand-drawn vector art from the Figma slides: wavy blobs, spinning
  * flowers, dots and the big curved Londrina titles. Animates in via globals.css.
  */
-export function Art({ name, className = "", hideTitle = false, hideSub = false }: Props) {
+export function Art({ name, className = "", hideTitle = false, hideSub = false, hideFlowers = false }: Props) {
   const art = ART[name];
   let flowerIndex = 0;
 
@@ -52,6 +54,7 @@ export function Art({ name, className = "", hideTitle = false, hideSub = false }
               />
             );
           case "flower": {
+            if (hideFlowers) return null;
             const n = flowerIndex++;
             return (
               <g key={i} className="art-flower" style={{ "--d": 500 + n * 250 } as React.CSSProperties}>
