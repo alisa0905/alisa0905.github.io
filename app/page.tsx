@@ -22,7 +22,7 @@ const FEATURED_ORDER = [
 ] as const;
 
 const ROLES = [
-  { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", color: "#7cb9e4" },
+  { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", color: "#e173ae" },
   { role: "Product Designer", org: "Jabrni", when: "Mar 2026 – Aug 2026", color: "#f3c11b" },
   { role: "Creative Marketing & Media Intern", org: "Amana Homes Real Estate", when: "Jul 2025 – Mar 2026", color: "#b83244" },
   { role: "President, Women in STEM Society", org: "UOWD", when: "Apr 2025 – Oct 2025", color: "#3883de" },
@@ -129,11 +129,11 @@ export default function Home() {
       </Reveal>
 
       {/* ------------------------------ About ------------------------------ */}
-      <Reveal as="section" id="about" className="relative overflow-hidden bg-pink text-cream" threshold={0.1}>
+      <Reveal as="section" id="about" className="relative overflow-hidden bg-sky text-ink" threshold={0.1}>
         <Flower color="#3883de" className="absolute -right-16 top-10 w-64 opacity-90 lg:w-96" pop />
-        <Flower color="#f3c11b" className="absolute -bottom-10 left-[40%] w-40" reverse pop style={{ "--d": 900 } as React.CSSProperties} />
+        <Flower color="#f3c11b" className="absolute bottom-10 left-[40%] w-32 lg:w-40" reverse pop style={{ "--d": 900 } as React.CSSProperties} />
 
-        <div className="relative mx-auto grid max-w-7xl gap-16 px-5 py-24 sm:px-8 lg:grid-cols-12 lg:py-32">
+        <div className="relative mx-auto grid max-w-7xl gap-16 px-5 pb-40 pt-24 sm:px-8 lg:grid-cols-12 lg:pb-56 lg:pt-32">
           <div className="lg:col-span-5">
             <Image
               src={ASSETS["alisa-portrait"].src}
@@ -161,8 +161,8 @@ export default function Home() {
           </div>
 
           <div className="lg:col-span-6 lg:col-start-7">
-            <p className="rv-text text-sm font-bold uppercase tracking-[0.2em] text-cream/70">Experience</p>
-            <ul className="mt-4 divide-y divide-white/25 border-y border-white/25">
+            <p className="rv-text text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Experience</p>
+            <ul className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
               {ROLES.map((r, i) => (
                 <li key={r.role} className="rv-text flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-5" style={{ "--d": 200 + i * 100 } as React.CSSProperties}>
                   <div className="flex items-center gap-3">
@@ -176,19 +176,19 @@ export default function Home() {
               ))}
             </ul>
 
-            <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-cream/70">Publications</p>
+            <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Publications</p>
             <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {PUBLICATIONS.map((p, i) => (
                 <li key={p.name} className="rv" style={{ "--d": 300 + i * 100 } as React.CSSProperties}>
                   {p.href ? (
-                    <a href={p.href} target="_blank" rel="noreferrer" className="group block h-full rounded-2xl bg-white/15 p-5 transition-colors hover:bg-white/25">
+                    <a href={p.href} target="_blank" rel="noreferrer" className="group block h-full rounded-2xl bg-white/35 p-5 transition-colors hover:bg-white/55">
                       <p className="text-lg font-semibold leading-tight">
                         {p.name} <span className="inline-block transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5">↗</span>
                       </p>
                       <p className="mt-1 text-sm opacity-80">{p.note}</p>
                     </a>
                   ) : (
-                    <div className="h-full rounded-2xl bg-white/15 p-5">
+                    <div className="h-full rounded-2xl bg-white/35 p-5">
                       <p className="text-lg font-semibold leading-tight">{p.name}</p>
                       <p className="mt-1 text-sm opacity-80">{p.note}</p>
                     </div>
@@ -197,15 +197,15 @@ export default function Home() {
               ))}
             </ul>
 
-            <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-cream/70">Education</p>
-            <div className="rv-text mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-y border-white/25 py-5" style={{ "--d": 350 } as React.CSSProperties}>
+            <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Education</p>
+            <div className="rv-text mt-4 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-y border-ink/15 py-5" style={{ "--d": 350 } as React.CSSProperties}>
               <p className="text-xl font-semibold sm:text-2xl">
                 BCS with Distinction <span className="font-normal opacity-80">· University of Wollongong in Dubai</span>
               </p>
               <p className="text-sm font-semibold opacity-80">Sep 2023 – May 2026</p>
             </div>
 
-            <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-cream/70">Toolbox</p>
+            <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Toolbox</p>
             <div className="mt-4 flex flex-wrap gap-3">
               {TOOLS.map((t, i) => (
                 <div key={t} className="rv h-12 w-12 sm:h-14 sm:w-14" style={{ "--d": 400 + i * 50 } as React.CSSProperties}>
@@ -217,11 +217,6 @@ export default function Home() {
         </div>
       </Reveal>
 
-      <Marquee
-        items={["Cemex", "B1 Properties", "Amana Homes", "Binghatti", "wasl", "Theorem Partners", "Marco Oro", "Cloud Castle", "Quotify"]}
-        bg="#f3c11b"
-        ink="#1e1e1e"
-      />
     </>
   );
 }

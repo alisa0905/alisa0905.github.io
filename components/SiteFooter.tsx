@@ -1,135 +1,236 @@
 import Link from "next/link";
 import { Flower } from "./Flower";
 import { Reveal } from "./Reveal";
+import { StickyReveal } from "./StickyReveal";
 import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 
 /**
- * Outline flowers on the grass. `x` is % across the footer, `depth` is how far
- * below the hill's edge (in % of the hill's height), so every flower lands on
- * the green. Computers and phones get their own layouts.
+ * Big filled flowers on the hill, from Alisa's Figma footer (Things, node 989:1229).
+ * Desktop positions are in vw so the layout scales like the design; two of them
+ * hang off the edges on purpose.
  */
-type Bloom = { color: string; x: number; depth: number; size: number; turn: number };
-
-const FIELD_WIDE: Bloom[] = [
-  { color: "#e173ae", x: 6, depth: 10, size: 88, turn: -12 },
-  { color: "#3883de", x: 13, depth: 4, size: 56, turn: 20 },
-  { color: "#f3c11b", x: 15, depth: 18, size: 66, turn: 20 },
-  { color: "#ecedd8", x: 5, depth: 26, size: 60, turn: 8 },
-  { color: "#b83244", x: 17, depth: 35, size: 50, turn: 35 },
-  { color: "#ecedd8", x: 29, depth: 3, size: 54, turn: -30 },
-  { color: "#e173ae", x: 71, depth: 3, size: 60, turn: 10 },
-  { color: "#f3c11b", x: 94, depth: 10, size: 84, turn: -18 },
-  { color: "#3883de", x: 87, depth: 4, size: 58, turn: 24 },
-  { color: "#e173ae", x: 86, depth: 18, size: 64, turn: 40 },
-  { color: "#b83244", x: 95, depth: 27, size: 62, turn: -25 },
-  { color: "#ecedd8", x: 84, depth: 36, size: 52, turn: 15 },
+const BLOOMS = [
+  {
+    color: "#e173ae",
+    left: "calc(50% - var(--u) * 36.7)",
+    top: "calc(var(--u) * 20)",
+    size: "calc(var(--u) * 12.6)",
+    turn: -14,
+  },
+  {
+    color: "#3883de",
+    left: "calc(50% + var(--u) * 15.2)",
+    top: "calc(var(--u) * 38)",
+    size: "calc(var(--u) * 12.6)",
+    turn: 18,
+  },
+  {
+    color: "#f3c11b",
+    left: "calc(var(--u) * -5.9)",
+    top: "calc(var(--u) * 43.5)",
+    size: "calc(var(--u) * 25)",
+    turn: 0,
+  },
+  {
+    color: "#e77f23",
+    left: "calc(100% - var(--u) * 11.7)",
+    top: "calc(var(--u) * 33)",
+    size: "calc(var(--u) * 19)",
+    turn: -20,
+  },
 ];
-const FIELD_SMALL: Bloom[] = [
-  { color: "#e173ae", x: 9, depth: 2.5, size: 46, turn: -12 },
-  { color: "#f3c11b", x: 30, depth: 1.5, size: 36, turn: 20 },
-  { color: "#ecedd8", x: 70, depth: 1.5, size: 40, turn: -30 },
-  { color: "#b83244", x: 91, depth: 2.5, size: 44, turn: 10 },
-  { color: "#3883de", x: 10, depth: 41, size: 46, turn: 24 },
-  { color: "#f3c11b", x: 50, depth: 42, size: 36, turn: -18 },
-  { color: "#e173ae", x: 90, depth: 41, size: 50, turn: 40 },
+const BLOOMS_SMALL = [
+  { color: "#e173ae", left: "8%", top: "7rem", size: "3.5rem", turn: -14 },
+  { color: "#3883de", left: "80%", top: "8.5rem", size: "3.5rem", turn: 18 },
+  {
+    color: "#f3c11b",
+    left: "-10%",
+    top: "calc(100% - 7rem)",
+    size: "7.5rem",
+    turn: 0,
+  },
+  {
+    color: "#e77f23",
+    left: "88%",
+    top: "calc(100% - 8.5rem)",
+    size: "5.5rem",
+    turn: -20,
+  },
 ];
 
-// Hill width as % of the footer (must match the hill's classes below)
-const HILL_WIDE = 140;
-const HILL_SMALL = 260;
-
-/** Turn a footer position into a spot inside the hill oval, just under its edge. */
-function onHill(f: Bloom, hillWidth: number) {
-  const left = ((f.x + (hillWidth - 100) / 2) / hillWidth) * 100;
-  const dx = (left - 50) / 50;
-  const edge = 50 - 50 * Math.sqrt(Math.max(0, 1 - dx * dx));
-  return { left, top: edge + f.depth };
+function Bloom({ b, i }: { b: (typeof BLOOMS)[number]; i: number }) {
+  return (
+    <div
+      aria-hidden
+      className="pointer-events-none absolute"
+      style={{
+        left: b.left,
+        top: b.top,
+        width: b.size,
+        rotate: `${b.turn}deg`,
+      }}
+    >
+      <Flower
+        color={b.color}
+        spin={false}
+        filled
+        pop
+        className="block w-full"
+        style={{ "--d": 250 + i * 150 } as React.CSSProperties}
+      />
+    </div>
+  );
 }
 
-/** "Let's talk" footer on every page: a green hill with a field of flowers. */
+/** "Let's Talk" bent into a gentle rising curve, like the Figma text-on-path. */
+function TalkArc({ id, className }: { id: string; className?: string }) {
+  return (
+    <a
+      href={BOOKING_URL}
+      target="_blank"
+      rel="noreferrer"
+      aria-label="Let's talk"
+      className={`rv-text block transition-transform duration-700 ease-out hover:-translate-y-1 ${className ?? ""}`}
+      style={{ "--d": 150 } as React.CSSProperties}
+    >
+      <svg
+        viewBox="0 0 900 170"
+        className="w-full overflow-visible font-display font-black"
+        aria-hidden
+      >
+        <path id={id} d="M 10 150 Q 420 70 890 105" fill="none" />
+        <text fill="currentColor" fontSize="150" textAnchor="middle">
+          <textPath href={`#${id}`} startOffset="50%">
+            Let&apos;s Talk →
+          </textPath>
+        </text>
+      </svg>
+    </a>
+  );
+}
+
+const NAV = [
+  { label: "Work", href: "/work" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "/contact" },
+];
+
+/** "Let's talk" footer on every page: blue sky, a green hill and big flowers. */
 export function SiteFooter() {
   const year = new Date().getFullYear();
-  return (
-    <Reveal as="div" className="relative overflow-hidden text-cream print:hidden" threshold={0.15}>
-      <footer className="relative bg-sky pt-16 sm:pt-24">
-        {/* The hill: a huge oval whose top edge makes the curve. Flowers live inside it. */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-16 h-[200%] w-[260%] -translate-x-1/2 rounded-[50%] bg-green sm:top-24 lg:w-[140%]"
+  const links = (
+    <>
+      {NAV.map((l) => (
+        <Link
+          key={l.label}
+          href={l.href}
+          className="transition-colors hover:text-sun"
         >
-          {[
-            { list: FIELD_WIDE, hill: HILL_WIDE, show: "hidden lg:block" },
-            { list: FIELD_SMALL, hill: HILL_SMALL, show: "lg:hidden" },
-          ].map(({ list, hill, show }) =>
-            list.map((f, i) => {
-              const at = onHill(f, hill);
-              return (
-                <div
-                  key={`${show}-${i}`}
-                  className={`absolute ${show}`}
-                  style={{ left: `${at.left}%`, top: `${at.top}%`, width: f.size, rotate: `${f.turn}deg`, translate: "-50% -50%" }}
-                >
-                  <Flower
-                    color={f.color}
-                    spin={false}
-                    pop
-                    className="block w-full"
-                    style={{ "--d": 200 + i * 90 } as React.CSSProperties}
-                  />
-                </div>
-              );
-            }),
-          )}
-        </div>
+          {l.label}
+        </Link>
+      ))}
+      <a
+        href={LINKEDIN_URL}
+        target="_blank"
+        rel="noreferrer"
+        className="transition-colors hover:text-sun"
+      >
+        LinkedIn→
+      </a>
+    </>
+  );
 
-        <div className="relative mx-auto max-w-6xl px-5 pb-24 pt-20 text-center sm:px-8 sm:pt-28 lg:pb-10 lg:pt-28">
-          <a
-            href={BOOKING_URL}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="Let's talk"
-            className="rv-text group mx-auto block max-w-5xl transition-transform duration-700 ease-out hover:-translate-y-1"
-            style={{ "--d": 150 } as React.CSSProperties}
-          >
-            {/* Text bent along an arc that follows the hill */}
-            <svg viewBox="0 0 1000 215" className="w-full overflow-visible font-display font-black" aria-hidden>
-              <path id="hill-arc" d="M 30 200 Q 500 100 970 200" fill="none" />
-              <text fill="currentColor" fontSize="168" textAnchor="middle">
-                <textPath href="#hill-arc" startOffset="50%">
-                  Let&apos;s talk →
-                </textPath>
-              </text>
-            </svg>
-          </a>
+  return (
+    <Reveal as="div" className="print:hidden" threshold={0.1}>
+      <StickyReveal>
+        <footer className="relative overflow-hidden bg-sky text-cream">
+          {/*
+          ---------- Computers: the Figma layout ----------
+          --u is 1% of the design's width: the screen width, but capped by the
+          screen height so the whole footer always fits on screen.
+        */}
+          <div className="relative hidden h-[calc(var(--u)*71)] [--u:min(1vw,1.25svh)] lg:block">
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-[calc(var(--u)*8)] h-[calc(var(--u)*105)] w-[calc(var(--u)*142.8)] -translate-x-1/2 rounded-[50%] bg-green"
+            />
+            {BLOOMS.map((b, i) => (
+              <Bloom key={i} b={b} i={i} />
+            ))}
 
-          <div className="mx-auto mt-10 grid max-w-4xl gap-8 border-t border-cream/20 pt-10 lg:grid-cols-[1.4fr_1fr_1.4fr] lg:text-left">
-            <div className="rv-text" style={{ "--d": 250 } as React.CSSProperties}>
-              <p className="text-sm text-cream/60">Email</p>
-              <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 block break-all text-lg font-semibold hover:text-sun">
+            <TalkArc
+              id="talk-arc-wide"
+              className="absolute left-1/2 top-[calc(var(--u)*27)] w-[calc(var(--u)*59)] -translate-x-1/2"
+            />
+
+            <div className="absolute inset-x-0 top-[calc(var(--u)*44.3)] text-center text-[max(1.1rem,calc(var(--u)*2.1))] leading-tight">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="rv-text inline-block transition-colors hover:text-sun"
+                style={{ "--d": 300 } as React.CSSProperties}
+              >
                 {CONTACT_EMAIL}
               </a>
+              <p
+                className="rv-text mt-[calc(var(--u)*1.2)]"
+                style={{ "--d": 380 } as React.CSSProperties}
+              >
+                Based in Dubai, UAE
+              </p>
             </div>
-            <div className="rv-text" style={{ "--d": 350 } as React.CSSProperties}>
-              <p className="text-sm text-cream/60">Based in</p>
-              <p className="mt-1 text-lg font-semibold">Dubai, UAE</p>
-            </div>
+
             <nav
-              className="rv-text flex flex-wrap justify-center gap-x-6 gap-y-2 text-lg font-semibold lg:justify-end"
               aria-label="Footer"
-              style={{ "--d": 450 } as React.CSSProperties}
+              className="rv-text absolute left-1/2 top-[calc(var(--u)*60.3)] flex w-[calc(var(--u)*67.3)] -translate-x-1/2 justify-between text-[max(1.1rem,calc(var(--u)*2.1))]"
+              style={{ "--d": 460 } as React.CSSProperties}
             >
-              <Link href="/work" className="hover:text-sun">Work</Link>
-              <Link href="/#about" className="hover:text-sun">About</Link>
-              <Link href="/contact" className="hover:text-sun">Contact</Link>
-              <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="hover:text-sun">
-                LinkedIn ↗
-              </a>
+              {links}
             </nav>
+
+            <p className="absolute inset-x-0 top-[calc(var(--u)*66.5)] text-center text-[max(0.8rem,calc(var(--u)*1.2))] text-cream/60">
+              © {year} Alisa Bakhareva • alisabakhareva.me
+            </p>
           </div>
 
-          <p className="mt-14 text-sm text-cream/60">© {year} Alisa Bakhareva · alisabakhareva.me</p>
-        </div>
-      </footer>
+          {/* ---------- Phones and tablets: same picture, stacked ---------- */}
+          <div className="relative pt-16 lg:hidden">
+            <div
+              aria-hidden
+              className="absolute left-1/2 top-16 h-[200%] w-[260%] -translate-x-1/2 rounded-[50%] bg-green"
+            />
+            {BLOOMS_SMALL.map((b, i) => (
+              <Bloom key={i} b={b} i={i} />
+            ))}
+
+            <div className="relative px-5 pb-32 pt-24 text-center sm:px-8">
+              <TalkArc id="talk-arc-small" className="mx-auto max-w-xl" />
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="rv-text mt-12 inline-block break-all text-lg transition-colors hover:text-sun sm:text-xl"
+                style={{ "--d": 300 } as React.CSSProperties}
+              >
+                {CONTACT_EMAIL}
+              </a>
+              <p
+                className="rv-text mt-2 text-lg sm:text-xl"
+                style={{ "--d": 380 } as React.CSSProperties}
+              >
+                Based in Dubai, UAE
+              </p>
+              <nav
+                aria-label="Footer"
+                className="rv-text mx-auto mt-12 flex max-w-md flex-wrap justify-center gap-x-7 gap-y-2 text-lg"
+                style={{ "--d": 460 } as React.CSSProperties}
+              >
+                {links}
+              </nav>
+              <p className="mt-8 text-sm text-cream/60">
+                © {year} Alisa Bakhareva • alisabakhareva.me
+              </p>
+            </div>
+          </div>
+        </footer>
+      </StickyReveal>
     </Reveal>
   );
 }

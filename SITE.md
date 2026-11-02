@@ -9,7 +9,7 @@
 - **Signature details:** wavy blobs, five-petal flowers that spin, curved titles. All of them are real vector art exported from the Figma file.
 
 ## Pages
-- **Home** (`/`): orange hero with a huge two-line "Hi! I'm / Alisa." headline (letters swell when the mouse moves near them, on computers only), two buttons, the pink blob (her photo and the spinning blue flower are hidden for now), and 10 colourful squishy flowers in her flower shape: on computers they drop in on the right, squish (the whole flower) when they land or bump, and drift away from the mouse; on phones they sit as a still pile at the bottom. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
+- **Home** (`/`): orange hero with a huge two-line "Hi! I'm / Alisa." headline (letters swell when the mouse moves near them, on computers only), two buttons, the pink blob (her photo and the spinning blue flower are hidden for now), and 10 colourful squishy flowers in her flower shape: on computers they drop in on the right, squish (the whole flower) when they land or bump, and drift away from the mouse; on phones they sit as a still pile at the bottom. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" on sky blue with dark text (bio, experience, publications with the IEEE paper link, education, toolbox) and extra space at the bottom, so the footer's hill rises out of the same blue.
 - **Work** (`/work`): all 17 projects with filter chips: Jabrni, Freelance, Amana Homes, Quotify, Personal & Uni.
 - **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots and a button linking to the live site, cloudcastle.co.
 - **CV** (`/cv`): Alisa's CV, built from the Figma CV design. On screen it looks like the Figma page, and every company and project name links out. The "Download PDF" button gives a one-page A4 PDF laid out so hiring software (ATS) can read it cleanly.
@@ -17,7 +17,7 @@
 
 ## Components
 - **Header** (`components/SiteHeader.tsx`): floating pill with Alisa's full name, Home, Work, About, CV and a "Let's talk" button (opens Alisa's Calendly to book a call). Turns solid when you scroll. Has a menu on phones.
-- **Footer** (`components/SiteFooter.tsx`): a green hill under a blue sky with a field of outline flowers; big "Let's talk →" (opens Calendly), email, location and links (Work, About, Contact, LinkedIn). To move or recolour flowers, edit the `FIELD_WIDE` (computers) and `FIELD_SMALL` (phones) lists at the top of the file.
+- **Footer** (`components/SiteFooter.tsx`): matches Alisa's Figma footer (Things file, frame 989:1229): blue sky, a green hill, four big filled flowers (pink, blue, yellow and orange, two hanging off the edges), a curved "Let's Talk →" (opens Calendly), email, "Based in Dubai, UAE", links and copyright. It's a **sticky footer**: it stays pinned at the bottom of the screen and the page slides up off it (`components/StickyReveal.tsx`). On computers everything is sized from the design so it always fits on one screen.
 - **Project card** (`components/ProjectCard.tsx`): image tile, category chip, title and summary, with hover animation.
 - **Case study layout** (`components/CaseBlocks.tsx`): turns each project's content list into text sections, image grids and before/after blocks.
 - **Extras:** click any case-study image to zoom it full screen (`Lightbox`). Smooth scrolling (`SmoothScroll`). A flower cursor on desktop (`Cursor`). Scroll-in animations (`Reveal` plus the CSS in `app/globals.css`).
@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: Footer rebuilt from Alisa's Figma design and made a sticky reveal footer. "Let's Talk" is centred. On the home page the "Who am I?" section is now sky blue (dark text, pink Freelance dot) with extra bottom space, and the scrolling client-names ribbon was removed.
 - 2026-11-02: Footer "Let's talk →" is bigger and curves along the top of the hill. Every footer flower now sits on the green grass (placed relative to the hill's edge). Footer info stacks in the centre on tablets so the email never breaks.
 - 2026-11-02: Hero flowers no longer look stretched when the screen size changes; on tablets they stay in the right-hand part so they don't cover the buttons.
 - 2026-11-02: New footer on every page: a green hill under a sky-blue sky, with outline flowers in pink, yellow, blue, cream and red dotted around the edges (separate layouts for computers and phones so they never cover text). Centred, slightly tilted "Let's talk →" and the email / location / links underneath.
