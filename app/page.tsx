@@ -55,7 +55,7 @@ export default function Home() {
       >
         <Art name="whoami" hideTitle className="-z-10" />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-16 pt-28 sm:px-8 lg:pb-[12vh]">
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-start px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-[12vh] lg:pt-28">
           <ProximityHeadline
             lines={["Hi! I'm", "Alisa."]}
             className="font-display text-[clamp(6rem,30vw,11rem)] font-black leading-[0.9] tracking-[0.05em] sm:text-[clamp(9rem,24vw,14rem)] lg:text-[min(19vw,23rem)]"

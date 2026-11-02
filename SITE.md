@@ -43,7 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
-- 2026-11-02: Removed Alisa's photo from the home hero for now; the headline and buttons now sit in the middle of the orange area on every screen size. The photo file (`public/work/whoami-cutout.webp`) is still there to bring back later.
+- 2026-11-02: Removed Alisa's photo from the home hero for now; the headline and buttons sit in the middle of the orange area on desktop and near the top on phones. The photo file (`public/work/whoami-cutout.webp`) is still there to bring back later.
 - 2026-11-02: Home hero: removed the "Dubai, UAE" tag and the description, made the headline much bigger (two lines, wider letter spacing) and lifted the text up to sit beside the photo on desktop. Letters now swell when the mouse is near them (`components/ProximityHeadline.tsx`), inspired by fancycomponents.dev's cursor proximity effect.
 - 2026-10-22: Removed the "Original site" button (to shams.tv) from the Shams TV case study, since the live Shams site isn't Alisa's work.
 - 2026-10-22: Cloud Castle case study: added a "cloudcastle.co ↗" button under the project details, and removed the brand elements grid (and its intro text and "Brand elements" role tag). The element images are still in `public/work/` if you want them back.
