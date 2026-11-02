@@ -25,7 +25,10 @@ type Body = {
   sprite?: HTMLCanvasElement;
 };
 
-const COUNT = 10;
+// How much of the box the flowers' circles should cover. Computers fill the
+// whole pink area; phones fill the corner triangle (half the box).
+const FILL = 0.42;
+const MAX_COUNT = 24;
 const COLORS = ["#7cb9e4", "#f3c11b", "#3883de", "#ecedd8", "#518c2d", "#b83244"];
 // Tuned for a fixed 60 steps a second, so it feels the same on 60Hz and 120Hz screens
 const STEP_MS = 1000 / 60;
@@ -89,13 +92,22 @@ export function BouncingFlowers({ className }: { className?: string }) {
 
     const spawn = () => {
       const unit = Math.min(w, h * 1.2);
-      bodies = Array.from({ length: COUNT }, (_, i) => {
+      // As many flowers as fit the space, so small screens get fewer and they
+      // don't pile on top of each other
+      const room = w * h * (live ? 1 : 0.5) * FILL;
+      const radii: number[] = [];
+      for (let i = 0, used = 0; i < MAX_COUNT; i++) {
         // A bit bigger on phones, where the space is small
         const r = unit * (0.068 + ((i * 7) % 5) * 0.014) * (live ? 1 : 1.3);
+        if (i >= 3 && used + Math.PI * r * r > room) break;
+        used += Math.PI * r * r;
+        radii.push(r);
+      }
+      bodies = radii.map((r, i) => {
         return {
           r,
           // Computers: drop in from above. Phones: start inside the corner.
-          x: live ? r * REACH + Math.random() * Math.max(1, w - 2 * r * REACH) : w * (0.55 + Math.random() * 0.4),
+          x: live ? w * 0.35 + Math.random() * Math.max(1, w * 0.65 - r * REACH) : w * (0.55 + Math.random() * 0.4),
           y: live ? -r - i * r * 1.5 : h * (0.5 + Math.random() * 0.45),
           vx: (Math.random() - 0.5) * 3,
           vy: 0,
@@ -180,10 +192,10 @@ export function BouncingFlowers({ className }: { className?: string }) {
         }
         b.y = h - b.r;
       }
-      // Phones: a slanted wall from bottom-left to top-right tucks the pile into
-      // the bottom-right corner
-      if (!live) {
-        const gx = h / w;
+      // A slanted wall from the bottom-left corner keeps the flowers on the pink
+      // shape: corner to corner on phones, roughly the pink edge on computers
+      {
+        const gx = h / (w * (live ? 0.8 : 1));
         const len = Math.hypot(gx, 1);
         const d = (b.y - h + gx * b.x) / len;
         if (d < b.r) {

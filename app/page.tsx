@@ -50,17 +50,17 @@ export default function Home() {
     <>
       {/* ------------------------------ Hero ------------------------------ */}
       <Reveal
-        className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-orange text-cream"
+        className="relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-orange text-cream lg:h-[100svh] lg:min-h-[640px]"
         data-hero-ink="light"
         threshold={0}
       >
         <Art name="whoami" hideTitle hideFlowers className="-z-10" />
-        <BouncingFlowers className="absolute bottom-0 right-0 h-[46%] w-full sm:w-[62%] lg:top-24 lg:h-[calc(100%-6rem)] lg:w-[46%]" />
+        <BouncingFlowers className="absolute bottom-0 right-0 h-[46%] w-full sm:w-[62%] lg:top-24 lg:h-[calc(100%-6rem)] lg:w-[42%]" />
 
         <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-start px-5 pb-16 pt-32 sm:px-8 lg:justify-center lg:pb-[12vh] lg:pt-28">
           <ProximityHeadline
             lines={["Hi! I'm", "Alisa."]}
-            className="font-display text-[clamp(6rem,30vw,11rem)] font-black leading-[0.9] tracking-[0.05em] sm:text-[clamp(9rem,24vw,14rem)] lg:text-[min(19vw,23rem)]"
+            className="font-display text-[clamp(6rem,30vw,11rem)] font-black leading-[0.84] tracking-[0.05em] sm:text-[clamp(9rem,24vw,14rem)] lg:text-[min(16vw,26svh)]"
           />
 
           <div className="rv-text mt-10 flex flex-wrap gap-3 lg:mt-12" style={{ "--d": 750 } as React.CSSProperties}>

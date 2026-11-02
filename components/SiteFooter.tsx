@@ -12,15 +12,15 @@ import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 const BLOOMS = [
   {
     color: "#e173ae",
-    left: "calc(50% - var(--u) * 36.7)",
-    top: "calc(var(--u) * 20)",
+    left: "calc(50% - var(--u) * 46)",
+    top: "calc(var(--u) * 15)",
     size: "calc(var(--u) * 12.6)",
     turn: -14,
   },
   {
     color: "#3883de",
-    left: "calc(50% + var(--u) * 15.2)",
-    top: "calc(var(--u) * 38)",
+    left: "calc(50% + var(--u) * 22)",
+    top: "calc(var(--u) * 41)",
     size: "calc(var(--u) * 12.6)",
     turn: 18,
   },
@@ -94,12 +94,12 @@ function TalkArc({ id, className }: { id: string; className?: string }) {
       style={{ "--d": 150 } as React.CSSProperties}
     >
       <svg
-        viewBox="0 0 900 170"
+        viewBox="0 0 1000 215"
         className="w-full overflow-visible font-display font-black"
         aria-hidden
       >
-        <path id={id} d="M 10 150 Q 420 70 890 105" fill="none" />
-        <text fill="currentColor" fontSize="150" textAnchor="middle">
+        <path id={id} d="M 30 200 Q 500 100 970 200" fill="none" />
+        <text fill="currentColor" fontSize="168" textAnchor="middle">
           <textPath href={`#${id}`} startOffset="50%">
             Let&apos;s Talk →
           </textPath>
@@ -152,7 +152,7 @@ export function SiteFooter() {
           <div className="relative hidden h-[calc(var(--u)*71)] [--u:min(1vw,1.25svh)] lg:block">
             <div
               aria-hidden
-              className="absolute left-1/2 top-[calc(var(--u)*8)] h-[calc(var(--u)*105)] w-[calc(var(--u)*142.8)] -translate-x-1/2 rounded-[50%] bg-green"
+              className="absolute left-1/2 top-[calc(var(--u)*8)] h-[calc(var(--u)*105)] w-[max(calc(var(--u)*142.8),118vw)] -translate-x-1/2 rounded-[50%] bg-green"
             />
             {BLOOMS.map((b, i) => (
               <Bloom key={i} b={b} i={i} />
@@ -160,7 +160,7 @@ export function SiteFooter() {
 
             <TalkArc
               id="talk-arc-wide"
-              className="absolute left-1/2 top-[calc(var(--u)*27)] w-[calc(var(--u)*59)] -translate-x-1/2"
+              className="absolute left-1/2 top-[calc(var(--u)*21)] w-[min(64rem,calc(var(--u)*85))] -translate-x-1/2"
             />
 
             <div className="absolute inset-x-0 top-[calc(var(--u)*44.3)] text-center text-[max(1.1rem,calc(var(--u)*2.1))] leading-tight">
