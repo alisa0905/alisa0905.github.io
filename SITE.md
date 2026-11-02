@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: Hero flowers run smoother (each flower is drawn once and reused, instead of redrawn every frame) and squish about half as much. Flowers resting in a pile no longer jiggle.
 - 2026-11-02: The hero balls are now 10 flowers (the portfolio's five-petal shape) in sky blue, sun yellow, blue, cream, green and red (`components/BouncingFlowers.tsx`). They squish and wobble when they hit something, are a bit smaller, and move more gently: softer gravity, slower mouse pushes, and the same speed on every screen. Removed the spinning blue flower from the hero.
 - 2026-11-02: Added 10 big bouncing balls to the home hero (later swapped for flowers), in the same cream as the text. Desktop: right side, they fall in, bounce and get pushed by the mouse. Phones and tablets: drawn once as a still pile at the bottom, so nothing keeps running. No extra libraries, so the page still loads fast; the animation also pauses when the hero is scrolled out of view.
 - 2026-11-02: Removed Alisa's photo from the home hero for now; the headline and buttons sit in the middle of the orange area on desktop and near the top on phones. The photo file (`public/work/whoami-cutout.webp`) is still there to bring back later.

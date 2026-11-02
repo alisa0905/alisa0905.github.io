@@ -18,6 +18,8 @@ type Body = {
   sqAngle: number;
   /** Has dropped into the box (the ceiling only applies after this) */
   inside: boolean;
+  /** The flower pre-drawn once as an image, so each frame just stamps it */
+  sprite?: HTMLCanvasElement;
 };
 
 const COUNT = 10;
@@ -59,10 +61,11 @@ export function BouncingFlowers({ className }: { className?: string }) {
     let h = 0;
     let bodies: Body[] = [];
     let frame = 0;
+    let dpr = 1;
     const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, tx: -9999, ty: -9999 };
 
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.getBoundingClientRect();
       w = rect.width;
       h = rect.height;
@@ -91,11 +94,40 @@ export function BouncingFlowers({ className }: { className?: string }) {
       });
     };
 
+    // Petals reach a little past the hit circle so neighbours tuck together
+    const drawR = (b: Body) => b.r * 1.12;
+    // Half the sprite's width, with room for the outline
+    const half = (b: Body) => (drawR(b) * (FLOWER_R + FLOWER.strokeWidth)) / FLOWER_R;
+
+    const makeSprites = () => {
+      for (const b of bodies) {
+        const px = Math.ceil(half(b) * 2 * dpr);
+        const c = document.createElement("canvas");
+        c.width = c.height = px;
+        const g = c.getContext("2d");
+        if (!g) continue;
+        const s = (drawR(b) * dpr) / FLOWER_R;
+        g.translate(px / 2, px / 2);
+        g.scale(s, s);
+        g.translate(-FLOWER_CX, -FLOWER_CY);
+        g.fillStyle = b.color;
+        g.strokeStyle = b.color;
+        g.lineWidth = FLOWER.strokeWidth;
+        g.lineJoin = "round";
+        for (const p of petals) {
+          g.fill(p);
+          g.stroke(p);
+        }
+        b.sprite = c;
+      }
+    };
+
     // A hit squashes the flower along the direction of the hit; harder hits squash more
     const squish = (b: Body, speed: number, nx: number, ny: number) => {
-      if (speed < 1) return;
+      // Ignore the tiny nudges of flowers resting in a pile
+      if (speed < 2) return;
       b.sqAngle = Math.atan2(ny, nx);
-      b.sqv -= Math.min(speed, 14) * 0.016;
+      b.sqv -= Math.min(speed, 12) * 0.008;
     };
 
     const walls = (b: Body) => {
@@ -202,24 +234,18 @@ export function BouncingFlowers({ className }: { className?: string }) {
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
       for (const b of bodies) {
-        // Petals reach a little past the hit circle so neighbours tuck together
-        const s = (b.r * 1.12) / FLOWER_R;
-        const sq = Math.max(-0.3, Math.min(0.3, b.sq));
+        if (!b.sprite) continue;
+        const sq = Math.max(-0.16, Math.min(0.16, b.sq));
+        const hw = half(b);
         ctx.save();
         ctx.translate(b.x, b.y);
-        ctx.rotate(b.sqAngle);
-        ctx.scale(1 + sq, 1 - sq * 0.7);
-        ctx.rotate(b.angle - b.sqAngle);
-        ctx.scale(s, s);
-        ctx.translate(-FLOWER_CX, -FLOWER_CY);
-        ctx.fillStyle = b.color;
-        ctx.strokeStyle = b.color;
-        ctx.lineWidth = FLOWER.strokeWidth;
-        ctx.lineJoin = "round";
-        for (const p of petals) {
-          ctx.fill(p);
-          ctx.stroke(p);
+        if (Math.abs(sq) > 0.002) {
+          ctx.rotate(b.sqAngle);
+          ctx.scale(1 + sq, 1 - sq * 0.7);
+          ctx.rotate(-b.sqAngle);
         }
+        ctx.rotate(b.angle);
+        ctx.drawImage(b.sprite, -hw, -hw, hw * 2, hw * 2);
         ctx.restore();
       }
     };
@@ -227,6 +253,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
     const settle = () => {
       resize();
       spawn();
+      makeSprites();
       for (let i = 0; i < 900; i++) step();
       for (const b of bodies) b.sq = b.sqv = 0;
       draw();
@@ -287,6 +314,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
 
     resize();
     spawn();
+    makeSprites();
     io.observe(canvas);
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
