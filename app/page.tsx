@@ -45,8 +45,6 @@ const TOOLS: Tool[] = ["figma", "illustrator", "photoshop", "premiere", "lightro
 const SKILLS = ["Social Media", "Ad Campaigns", "UI/UX Design", "Graphic Design", "Print Design", "Video Editing"];
 
 export default function Home() {
-  const photo = ASSETS["whoami-cutout"];
-
   return (
     <>
       {/* ------------------------------ Hero ------------------------------ */}
@@ -57,7 +55,7 @@ export default function Home() {
       >
         <Art name="whoami" hideTitle className="-z-10" />
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-10 pt-32 sm:px-8 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:pb-[12vh] lg:pt-28">
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-16 pt-28 sm:px-8 lg:pb-[12vh]">
           <ProximityHeadline
             lines={["Hi! I'm", "Alisa."]}
             className="font-display text-[clamp(6rem,30vw,11rem)] font-black leading-[0.9] tracking-[0.05em] sm:text-[clamp(9rem,24vw,14rem)] lg:text-[min(19vw,23rem)]"
@@ -79,13 +77,6 @@ export default function Home() {
               Let&apos;s talk
             </a>
           </div>
-        </div>
-
-        <div
-          className="rv relative mt-auto w-[min(92%,460px)] self-end sm:w-[min(72%,560px)] lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[min(52vw,900px)]"
-          style={{ aspectRatio: `${photo.w} / ${photo.h}`, "--d": 400 } as React.CSSProperties}
-        >
-          <Image src={photo.src} alt="Alisa Bakhareva" fill priority sizes="(min-width: 1024px) 52vw, 100vw" className="object-contain object-bottom" />
         </div>
       </Reveal>
 
