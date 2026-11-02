@@ -3,16 +3,6 @@
 import { useEffect, useRef } from "react";
 import { FLOWER } from "@/lib/flower";
 
-type Petal = {
-  /** Pre-drawn image of this one petal */
-  img: HTMLCanvasElement;
-  /** Where the image sits relative to the flower's centre, in screen px */
-  ox: number;
-  oy: number;
-  w: number;
-  h: number;
-};
-
 type Body = {
   x: number;
   y: number;
@@ -23,14 +13,16 @@ type Body = {
   /** Rotation and its speed, so flowers roll as they move */
   angle: number;
   spin: number;
-  /** Squish spring per petal: amount (negative = pressed in) and its speed */
-  sq: number[];
-  sqv: number[];
+  /**
+   * Squish as a stretch in x, y and diagonal (so hits from several sides add
+   * up), plus how fast each part is springing back
+   */
+  sq: [number, number, number];
+  sqv: [number, number, number];
   /** Has dropped into the box (the ceiling only applies after this) */
   inside: boolean;
-  /** The whole flower pre-drawn once, used when nothing is squished */
-  whole?: HTMLCanvasElement;
-  petals?: Petal[];
+  /** The flower pre-drawn once, so each frame just stamps it */
+  sprite?: HTMLCanvasElement;
 };
 
 const COUNT = 10;
@@ -50,33 +42,18 @@ const REACH = 1.12;
 const PETAL_POINTS = FLOWER.petals.map((d) => (d.match(/-?\d+(\.\d+)?/g) ?? []).map(Number));
 const CX = PETAL_POINTS.reduce((s, p) => s + p[0], 0) / PETAL_POINTS.length;
 const CY = PETAL_POINTS.reduce((s, p) => s + p[1], 0) / PETAL_POINTS.length;
-// Each petal's bounds and the direction it points, measured from the centre
-const PETAL_BOXES = PETAL_POINTS.map((nums) => {
-  const xs = nums.filter((_, i) => i % 2 === 0);
-  const ys = nums.filter((_, i) => i % 2 === 1);
-  const pad = FLOWER.strokeWidth;
-  const box = {
-    x0: Math.min(...xs) - pad,
-    y0: Math.min(...ys) - pad,
-    x1: Math.max(...xs) + pad,
-    y1: Math.max(...ys) + pad,
-  };
-  const mx = xs.reduce((s, v) => s + v, 0) / xs.length;
-  const my = ys.reduce((s, v) => s + v, 0) / ys.length;
-  return { ...box, dir: Math.atan2(my - CY, mx - CX) };
-});
-// Sprite size (petal bounds, with room for the outline)
-const FLOWER_R = Math.max(
-  ...PETAL_BOXES.flatMap((b) => [CX - b.x0, b.x1 - CX, CY - b.y0, b.y1 - CY]),
-);
+// Sprite size: furthest point from the centre, with room for the outline
+const FLOWER_R =
+  Math.max(...PETAL_POINTS.flatMap((n) => n.map((v, i) => Math.abs(v - (i % 2 ? CY : CX))))) +
+  FLOWER.strokeWidth;
 // How big the flower looks, used to size it against its hit circle
 const [, , VB_W, VB_H] = FLOWER.viewBox.split(" ").map(Number);
 const FLOWER_LOOK_R = Math.max(VB_W, VB_H) / 2;
 
 /**
  * Ten colourful, squishy flowers in the home hero. On computers they drop in,
- * bounce and drift away from the cursor; each petal squishes on its own when
- * it's hit. On phones the same physics runs once, instantly, and the settled
+ * bounce, drift away from the cursor and squish from whichever side they're
+ * hit. On phones the same physics runs once, instantly, and the settled
  * pile is drawn as a still picture, so nothing keeps running.
  */
 export function BouncingFlowers({ className }: { className?: string }) {
@@ -123,66 +100,48 @@ export function BouncingFlowers({ className }: { className?: string }) {
           color: COLORS[i % COLORS.length],
           angle: Math.random() * Math.PI * 2,
           spin: 0,
-          sq: PETAL_BOXES.map(() => 0),
-          sqv: PETAL_BOXES.map(() => 0),
+          sq: [0, 0, 0],
+          sqv: [0, 0, 0],
           inside: false,
         };
       });
     };
 
-    // Draw each flower (and each of its petals) once, so frames only stamp images
-    const paint = (g: CanvasRenderingContext2D, color: string, scale: number, which: number[]) => {
-      g.scale(scale, scale);
-      g.fillStyle = color;
-      g.strokeStyle = color;
-      g.lineWidth = FLOWER.strokeWidth;
-      g.lineJoin = "round";
-      for (const k of which) {
-        g.fill(paths[k]);
-        g.stroke(paths[k]);
-      }
-    };
-
+    // Draw each flower once, so frames only stamp an image
     const makeSprites = () => {
       for (const b of bodies) {
         const unitPx = (b.r * REACH) / FLOWER_LOOK_R; // screen px per flower unit
         const px = Math.ceil(FLOWER_R * 2 * unitPx * dpr);
-        const whole = document.createElement("canvas");
-        whole.width = whole.height = px;
-        const g = whole.getContext("2d");
+        const c = document.createElement("canvas");
+        c.width = c.height = px;
+        const g = c.getContext("2d");
         if (!g) continue;
         g.translate(px / 2, px / 2);
-        g.scale(dpr, dpr);
-        g.translate(-CX * unitPx, -CY * unitPx);
-        paint(g, b.color, unitPx, PETAL_BOXES.map((_, k) => k));
-        b.whole = whole;
-
-        b.petals = PETAL_BOXES.map((box, k) => {
-          const pw = (box.x1 - box.x0) * unitPx;
-          const ph = (box.y1 - box.y0) * unitPx;
-          const img = document.createElement("canvas");
-          img.width = Math.ceil(pw * dpr);
-          img.height = Math.ceil(ph * dpr);
-          const pg = img.getContext("2d")!;
-          pg.scale(dpr, dpr);
-          pg.translate(-box.x0 * unitPx, -box.y0 * unitPx);
-          paint(pg, b.color, unitPx, [k]);
-          return { img, ox: (box.x0 - CX) * unitPx, oy: (box.y0 - CY) * unitPx, w: pw, h: ph };
-        });
+        g.scale(dpr * unitPx, dpr * unitPx);
+        g.translate(-CX, -CY);
+        g.fillStyle = b.color;
+        g.strokeStyle = b.color;
+        g.lineWidth = FLOWER.strokeWidth;
+        g.lineJoin = "round";
+        for (const p of paths) {
+          g.fill(p);
+          g.stroke(p);
+        }
+        b.sprite = c;
       }
     };
 
-    // A hit presses in the petals facing it (and puffs out the opposite ones a touch)
+    // A hit flattens the whole flower along the hit and bulges it out sideways
     const squish = (b: Body, speed: number, towardX: number, towardY: number) => {
       // Ignore the tiny nudges of flowers resting in a pile
       if (speed < 2) return;
-      const hit = Math.atan2(towardY, towardX);
-      const strength = Math.min(speed, 12) * 0.01;
-      PETAL_BOXES.forEach((p, k) => {
-        const facing = Math.cos(p.dir + b.angle - hit);
-        if (facing > 0) b.sqv[k] -= strength * facing * facing;
-        else b.sqv[k] += strength * 0.3 * facing * facing;
-      });
+      const k = Math.min(speed, 12) * 0.008;
+      const nx = towardX;
+      const ny = towardY;
+      // Press in along the hit (n·nᵀ), puff out across it (t·tᵀ, t = n turned 90°)
+      b.sqv[0] += -k * nx * nx + 0.6 * k * ny * ny;
+      b.sqv[1] += -k * ny * ny + 0.6 * k * nx * nx;
+      b.sqv[2] += -k * nx * ny - 0.6 * k * nx * ny;
     };
 
     // Keeps a flower inside the box. Only the first pass bounces and squishes;
@@ -302,10 +261,10 @@ export function BouncingFlowers({ className }: { className?: string }) {
           squish(b, Math.hypot(mouse.vx, mouse.vy) * 0.5, -nx, -ny);
         }
 
-        // Each petal springs back with a little wobble
-        for (let k = 0; k < b.sq.length; k++) {
+        // Springs back with one soft wobble, not a jiggle
+        for (let k = 0; k < 3; k++) {
           b.sqv[k] += -b.sq[k] * 0.16;
-          b.sqv[k] *= 0.84;
+          b.sqv[k] *= 0.76;
           b.sq[k] += b.sqv[k];
         }
       }
@@ -328,28 +287,15 @@ export function BouncingFlowers({ className }: { className?: string }) {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
+      const lim = (v: number) => Math.max(-0.16, Math.min(0.16, v));
       for (const b of bodies) {
-        if (!b.whole || !b.petals) continue;
+        if (!b.sprite) continue;
+        const half = b.sprite.width / dpr / 2;
         ctx.save();
         ctx.translate(b.x, b.y);
+        ctx.transform(1 + lim(b.sq[0]), lim(b.sq[2]), lim(b.sq[2]), 1 + lim(b.sq[1]), 0, 0);
         ctx.rotate(b.angle);
-        const squished = b.sq.some((v) => Math.abs(v) > 0.003);
-        if (!squished) {
-          const half = b.whole.width / dpr / 2;
-          ctx.drawImage(b.whole, -half, -half, half * 2, half * 2);
-        } else {
-          b.petals.forEach((p, k) => {
-            // Pressed-in petals get shorter and a little wider, like squeezing a cushion
-            const s = Math.max(-0.28, Math.min(0.14, b.sq[k]));
-            const dir = PETAL_BOXES[k].dir;
-            ctx.save();
-            ctx.rotate(dir);
-            ctx.scale(1 + s, 1 - s * 0.5);
-            ctx.rotate(-dir);
-            ctx.drawImage(p.img, p.ox, p.oy, p.w, p.h);
-            ctx.restore();
-          });
-        }
+        ctx.drawImage(b.sprite, -half, -half, half * 2, half * 2);
         ctx.restore();
       }
     };
@@ -359,7 +305,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
       spawn();
       makeSprites();
       for (let i = 0; i < 900; i++) step();
-      for (const b of bodies) b.sq.fill(0);
+      for (const b of bodies) b.sq = [0, 0, 0];
       draw();
     };
 

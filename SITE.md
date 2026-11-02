@@ -9,7 +9,7 @@
 - **Signature details:** wavy blobs, five-petal flowers that spin, curved titles. All of them are real vector art exported from the Figma file.
 
 ## Pages
-- **Home** (`/`): orange hero with a huge two-line "Hi! I'm / Alisa." headline (letters swell when the mouse moves near them, on computers only), two buttons, the pink blob (her photo and the spinning blue flower are hidden for now), and 10 colourful squishy flowers in her flower shape: on computers they drop in on the right, squish petal by petal when they land or bump, and drift away from the mouse; on phones they sit as a still pile at the bottom. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
+- **Home** (`/`): orange hero with a huge two-line "Hi! I'm / Alisa." headline (letters swell when the mouse moves near them, on computers only), two buttons, the pink blob (her photo and the spinning blue flower are hidden for now), and 10 colourful squishy flowers in her flower shape: on computers they drop in on the right, squish (the whole flower) when they land or bump, and drift away from the mouse; on phones they sit as a still pile at the bottom. Then a skills ribbon, Selected work (Cloud Castle first, full width), "Who am I?" (bio, experience, publications with the IEEE paper link, education, toolbox), and a scrolling client ribbon.
 - **Work** (`/work`): all 17 projects with filter chips: Jabrni, Freelance, Amana Homes, Quotify, Personal & Uni.
 - **Case studies** (`/work/[project]`): one page per project, with a coloured header, client/year/role/tools, cover image, story text, image galleries, before/after comparisons and a "Next project" link. Cloud Castle includes website screenshots and a button linking to the live site, cloudcastle.co.
 - **CV** (`/cv`): Alisa's CV, built from the Figma CV design. On screen it looks like the Figma page, and every company and project name links out. The "Download PDF" button gives a one-page A4 PDF laid out so hiring software (ATS) can read it cleanly.
@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-02: Back to squishing the whole flower (not petal by petal), but now from any direction, and hits from several sides at once add up. Less wobble afterwards. The calmer corner/pile behaviour stays.
 - 2026-11-02: Hero flowers: each of the five petals now squishes on its own, so a flower squeezes in from whichever side it's hit (several at once in a pile). Piles in corners settle and stay still instead of jittering or flicking flowers back up.
 - 2026-11-02: Hero flowers run smoother (each flower is drawn once and reused, instead of redrawn every frame) and squish about half as much. Flowers resting in a pile no longer jiggle.
 - 2026-11-02: The hero balls are now 10 flowers (the portfolio's five-petal shape) in sky blue, sun yellow, blue, cream, green and red (`components/BouncingFlowers.tsx`). They squish and wobble when they hit something, are a bit smaller, and move more gently: softer gravity, slower mouse pushes, and the same speed on every screen. Removed the spinning blue flower from the hero.
