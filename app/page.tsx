@@ -4,6 +4,7 @@ import { Art } from "@/components/Art";
 import { Flower } from "@/components/Flower";
 import { Marquee } from "@/components/Marquee";
 import { ProjectCard } from "@/components/ProjectCard";
+import { ProximityHeadline } from "@/components/ProximityHeadline";
 import { Reveal } from "@/components/Reveal";
 import { ToolIcon, type Tool } from "@/components/ToolIcon";
 import { ASSETS } from "@/lib/assets";
@@ -43,8 +44,6 @@ const TOOLS: Tool[] = ["figma", "illustrator", "photoshop", "premiere", "lightro
 
 const SKILLS = ["Social Media", "Ad Campaigns", "UI/UX Design", "Graphic Design", "Print Design", "Video Editing"];
 
-const HELLO = "Hi! I'm Alisa.";
-
 export default function Home() {
   const photo = ASSETS["whoami-cutout"];
 
@@ -58,44 +57,13 @@ export default function Home() {
       >
         <Art name="whoami" hideTitle className="-z-10" />
 
-        <div className="mx-auto w-full max-w-7xl px-5 pb-10 pt-32 sm:px-8 lg:flex lg:flex-1 lg:flex-col lg:justify-end lg:pb-[13vh] lg:pt-32">
-          <p className="rv-text inline-flex items-center gap-2 text-sm font-semibold text-cream/90">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0" fill="currentColor" aria-hidden>
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5z" />
-            </svg>
-            Dubai, UAE
-          </p>
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-10 pt-32 sm:px-8 lg:flex lg:flex-1 lg:flex-col lg:justify-center lg:pb-[12vh] lg:pt-28">
+          <ProximityHeadline
+            lines={["Hi! I'm", "Alisa."]}
+            className="font-display text-[clamp(6rem,30vw,11rem)] font-black leading-[0.9] tracking-[0.05em] sm:text-[clamp(9rem,24vw,14rem)] lg:text-[min(19vw,23rem)]"
+          />
 
-          <h1 className="mt-6 font-display text-[clamp(4.2rem,12.5vw,11.5rem)] font-black leading-[0.82] tracking-tight" aria-label={HELLO}>
-            {HELLO.split(" ").map((word, w, words) => {
-              const offset = words.slice(0, w).join(" ").length + (w ? 1 : 0);
-              return (
-                <span key={w} className="inline-block whitespace-nowrap">
-                  {word.split("").map((ch, c) => {
-                    const i = offset + c;
-                    return (
-                      <span
-                        key={c}
-                        aria-hidden
-                        className="rv inline-block"
-                        style={{ "--d": 150 + i * 45, rotate: `${((i % 3) - 1) * 2}deg` } as React.CSSProperties}
-                      >
-                        {ch}
-                      </span>
-                    );
-                  })}
-                  {w < words.length - 1 && "\u00a0"}
-                </span>
-              );
-            })}
-          </h1>
-
-          <p className="rv-text mt-8 max-w-xl text-lg font-medium leading-snug sm:text-2xl" style={{ "--d": 700 } as React.CSSProperties}>
-            A brand designer who likes to go deep before I design, researching the brand, the market, and the
-            audience before I open Figma, not after.
-          </p>
-
-          <div className="rv-text mt-10 flex flex-wrap gap-3" style={{ "--d": 850 } as React.CSSProperties}>
+          <div className="rv-text mt-10 flex flex-wrap gap-3 lg:mt-12" style={{ "--d": 750 } as React.CSSProperties}>
             <Link
               href="/work"
               className="group rounded-full bg-cream px-7 py-4 text-lg font-bold text-ink shadow-[0_6px_0_#1e1e1e] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_0_#1e1e1e] active:translate-y-1 active:shadow-[0_2px_0_#1e1e1e]"
