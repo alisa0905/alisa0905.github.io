@@ -6,6 +6,7 @@ import { SmoothScroll } from "@/components/SmoothScroll";
 import { Cursor } from "@/components/Cursor";
 import { LightboxProvider } from "@/components/Lightbox";
 import { SiteHeader } from "@/components/SiteHeader";
+import { BrowserTint } from "@/components/BrowserTint";
 import { SiteFooter } from "@/components/SiteFooter";
 
 const figtree = Figtree({
@@ -56,6 +57,7 @@ export default function RootLayout({
         {/* Author (body copy font from the Figma portfolio). React moves this into <head>. */}
         <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=author@400,500&display=swap" precedence="default" />
         <SmoothScroll />
+        <BrowserTint />
         <LightboxProvider>
           <SiteHeader />
           <main>{children}</main>
