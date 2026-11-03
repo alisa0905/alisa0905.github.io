@@ -3,6 +3,7 @@ import { Flower } from "./Flower";
 import { Reveal } from "./Reveal";
 import { StickyReveal } from "./StickyReveal";
 import { TalkArc } from "./TalkArc";
+import { FooterHill } from "./FooterHill";
 import { CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 
 /**
@@ -14,7 +15,7 @@ const BLOOMS = [
   {
     color: "#e173ae",
     left: "calc(50% - var(--u) * 49)",
-    top: "calc(var(--u) * 12)",
+    top: "calc(var(--u) * 18)",
     size: "calc(var(--u) * 17)",
     turn: -14,
   },
@@ -35,13 +36,13 @@ const BLOOMS = [
   {
     color: "#e77f23",
     left: "calc(100% - var(--u) * 14)",
-    top: "calc(var(--u) * 30)",
+    top: "calc(var(--u) * 34)",
     size: "calc(var(--u) * 25)",
     turn: -20,
   },
 ];
 const BLOOMS_SMALL = [
-  { color: "#e173ae", left: "5%", top: "6rem", size: "max(4.75rem, 11vw)", turn: -14 },
+  { color: "#e173ae", left: "5%", top: "7.5rem", size: "max(4.75rem, 11vw)", turn: -14 },
   { color: "#3883de", left: "78%", top: "8rem", size: "max(4.75rem, 11vw)", turn: 18 },
   { color: "#f3c11b", left: "-14%", top: "calc(100% - max(8.5rem, 21vw))", size: "max(10rem, 28vw)", turn: 0 },
   { color: "#e77f23", left: "84%", top: "calc(100% - max(9.5rem, 24vw))", size: "max(7.5rem, 19vw)", turn: -20 },
@@ -75,7 +76,7 @@ const NAV = [
   { label: "Contact", href: "/contact" },
 ];
 
-/** "Let's talk" footer on every page: blue sky, a green hill and big flowers. */
+/** "Let's talk" footer on every page: green, with big flowers; the hill edge comes from FooterHill. */
 export function SiteFooter() {
   const year = new Date().getFullYear();
   const links = (
@@ -102,19 +103,16 @@ export function SiteFooter() {
 
   return (
     <Reveal as="div" className="print:hidden" threshold={0.1}>
-      {/* Sky behind the pinned footer, so any gap while scrolling matches its sky */}
-      <StickyReveal className="bg-sky">
-        <footer className="relative overflow-hidden bg-sky text-cream">
+      {/* The section above curves up over the footer's green (FooterHill), so
+          the footer itself is just green */}
+      <StickyReveal className="bg-green" cover={<FooterHill />}>
+        <footer className="relative overflow-hidden bg-green text-cream">
           {/*
           ---------- Computers: the Figma layout ----------
           --u is 1% of the design's width: the screen width, but capped by the
           screen height so the whole footer always fits on screen.
         */}
           <div className="relative hidden h-[calc(var(--u)*71)] [--u:min(1vw,1.25svh)] lg:block">
-            <div
-              aria-hidden
-              className="absolute left-1/2 top-[calc(var(--u)*8)] h-[calc(var(--u)*105)] w-[max(calc(var(--u)*142.8),118vw)] -translate-x-1/2 rounded-[50%] bg-green"
-            />
             {BLOOMS.map((b, i) => (
               <Bloom key={i} b={b} />
             ))}
@@ -152,10 +150,6 @@ export function SiteFooter() {
 
           {/* ---------- Phones and tablets: same picture, stacked ---------- */}
           <div className="relative pt-16 lg:hidden">
-            <div
-              aria-hidden
-              className="absolute left-1/2 top-16 h-[200%] w-[260%] -translate-x-1/2 rounded-[50%] bg-green"
-            />
             {BLOOMS_SMALL.map((b, i) => (
               <Bloom key={i} b={b} />
             ))}
