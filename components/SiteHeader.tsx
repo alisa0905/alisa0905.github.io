@@ -71,6 +71,39 @@ export function SiteHeader() {
         : href === "/" && !onAbout
       : href !== "/" && !href.startsWith("/#") && pathname.startsWith(href);
 
+  // The highlight is one pill that glides sideways to the active link. It only
+  // ever moves left and right, so changing pages (which jumps the scroll)
+  // can't make it fly in from above or below.
+  const pill = useRef<HTMLSpanElement>(null);
+  const linkEls = useRef<(HTMLAnchorElement | null)[]>([]);
+  const active = LINKS.findIndex((l) => isActive(l.href));
+  useEffect(() => {
+    const el = pill.current;
+    if (!el) return;
+    const place = (animate: boolean) => {
+      const link = linkEls.current[active];
+      if (!link) {
+        el.style.opacity = "0";
+        return;
+      }
+      const wasHidden = el.style.opacity !== "1";
+      el.style.transition =
+        animate && !wasHidden
+          ? "transform 0.55s cubic-bezier(0.22, 1, 0.36, 1), width 0.55s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.5s"
+          : "opacity 0.3s";
+      el.style.transform = `translate(${link.offsetLeft}px, ${link.offsetTop}px)`;
+      el.style.width = `${link.offsetWidth}px`;
+      el.style.height = `${link.offsetHeight}px`;
+      el.style.opacity = "1";
+    };
+    place(true);
+    const onResize = () => place(false);
+    // Re-measure once the font has loaded and the words have their final width
+    document.fonts.ready.then(onResize);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [active]);
+
   // Home and About are on the same page, so glide there instead of jumping
   const onNavClick = (href: string) => (e: React.MouseEvent) => {
     if (href !== "/" && href !== "/#about") return;
@@ -106,23 +139,24 @@ export function SiteHeader() {
           Alisa Bakhareva
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
-          {LINKS.map((l) => (
+        <nav className="relative hidden items-center gap-1 md:flex" aria-label="Main">
+          <span
+            ref={pill}
+            aria-hidden
+            className={`pointer-events-none absolute left-0 top-0 rounded-full opacity-0 ${solid ? "bg-ink/8" : "bg-white/15"}`}
+          />
+          {LINKS.map((l, i) => (
             <Link
               key={l.href}
+              ref={(el) => {
+                linkEls.current[i] = el;
+              }}
               href={l.href}
               onClick={onNavClick(l.href)}
               className={`relative rounded-full px-4 py-2 text-[15px] font-semibold transition-colors ${
                 solid ? "text-ink/70 hover:text-ink" : "text-cream/85 hover:text-cream"
               } ${isActive(l.href) ? (solid ? "!text-ink" : "!text-cream") : ""}`}
             >
-              {isActive(l.href) && (
-                <motion.span
-                  layoutId="nav-active"
-                  className={`absolute inset-0 rounded-full ${solid ? "bg-ink/8" : "bg-white/15"}`}
-                  transition={{ type: "spring", stiffness: 260, damping: 30 }}
-                />
-              )}
               <span className="relative">{l.label}</span>
             </Link>
           ))}
