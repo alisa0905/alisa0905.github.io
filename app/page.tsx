@@ -7,7 +7,8 @@ import { Marquee } from "@/components/Marquee";
 import { ProjectCard } from "@/components/ProjectCard";
 import { ProximityHeadline } from "@/components/ProximityHeadline";
 import { Reveal } from "@/components/Reveal";
-import { ToolIcon, type Tool } from "@/components/ToolIcon";
+import { type Tool } from "@/components/ToolIcon";
+import { ToolLevel } from "@/components/ToolLevel";
 import { ASSETS } from "@/lib/assets";
 import { BOOKING_URL, getProject } from "@/lib/projects";
 
@@ -42,7 +43,19 @@ const PUBLICATIONS = [
   { name: "Mobile Spiralometry Application for Parkinson's Symptom Tracking", note: "ISDIA 2026", href: undefined },
 ];
 
-const TOOLS: Tool[] = ["figma", "illustrator", "photoshop", "premiere", "lightroom", "indesign", "gemini", "canva", "capcut", "notion"];
+/** How well Alisa knows each tool, out of 4 hearts (shown when you hover an icon) */
+const TOOLS: { tool: Tool; level: number }[] = [
+  { tool: "figma", level: 4 },
+  { tool: "illustrator", level: 4 },
+  { tool: "photoshop", level: 3 },
+  { tool: "premiere", level: 2 },
+  { tool: "lightroom", level: 3 },
+  { tool: "indesign", level: 1 },
+  { tool: "gemini", level: 2 },
+  { tool: "canva", level: 4 },
+  { tool: "capcut", level: 4 },
+  { tool: "notion", level: 4 },
+];
 
 const SKILLS = ["Social Media", "Ad Campaigns", "UI/UX Design", "Graphic Design", "Print Design", "Video Editing"];
 
@@ -219,8 +232,8 @@ export default function Home() {
             <p className="rv-text mt-10 text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Toolbox</p>
             <div className="mt-4 flex flex-wrap gap-3">
               {TOOLS.map((t, i) => (
-                <div key={t} className="rv h-12 w-12 sm:h-14 sm:w-14" style={{ "--d": 400 + i * 50 } as React.CSSProperties}>
-                  <ToolIcon tool={t} className="h-full w-full" />
+                <div key={t.tool} className="rv h-12 w-12 sm:h-14 sm:w-14" style={{ "--d": 400 + i * 50 } as React.CSSProperties}>
+                  <ToolLevel tool={t.tool} level={t.level} />
                 </div>
               ))}
             </div>

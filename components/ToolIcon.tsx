@@ -33,12 +33,12 @@ export const TOOLS: Record<Tool, { label: string; asset: AssetName; plate?: bool
   automation: { label: "Automation", asset: "tool-i26", round: true },
 };
 
-export function ToolIcon({ tool, className = "" }: { tool: Tool; className?: string }) {
+export function ToolIcon({ tool, className = "", title = true }: { tool: Tool; className?: string; title?: boolean }) {
   const t = TOOLS[tool];
   const a = ASSETS[t.asset];
   return (
     <span
-      title={t.label}
+      title={title ? t.label : undefined}
       className={`tool-icon relative inline-block shrink-0 overflow-hidden ${
         t.plate ? "rounded-[30%] bg-white p-[12%]" : t.round ? "rounded-[24%]" : ""
       } ${className}`}

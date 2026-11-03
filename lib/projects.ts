@@ -601,7 +601,7 @@ export const PROJECTS: Project[] = [
     color: "#deba38",
     ink: "#1e1e1e",
     cover: { asset: "s13-grid" },
-    links: [{ label: "instagram.com/esportsclubuowd", href: "https://www.instagram.com/esportsclubuowd/" }],
+    links: [{ label: "instagram.com/gamingclubuowd", href: "https://www.instagram.com/gamingclubuowd/" }],
     blocks: [
       {
         type: "text",
