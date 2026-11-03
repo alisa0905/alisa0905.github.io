@@ -21,12 +21,13 @@ const FEATURED_ORDER = [
   { slug: "cemex", span: "lg:col-span-6", size: "md" },
 ] as const;
 
+/** Each job shows its company's logo (in public/logos); freelance gets a pink flower instead */
 const ROLES = [
-  { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", color: "#e173ae" },
-  { role: "Product Designer", org: "Jabrni", when: "Mar 2026 – Aug 2026", color: "#f3c11b" },
-  { role: "Creative Marketing Intern", org: "Amana Homes Real Estate", when: "Jul 2025 – Mar 2026", color: "#b83244" },
-  { role: "President, Women in STEM Society", org: "UOWD", when: "Apr 2025 – Oct 2025", color: "#3883de" },
-  { role: "Designer", org: "UOWD Esports Club", when: "Jan 2024 – Jan 2025", color: "#518c2d" },
+  { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", logo: null },
+  { role: "Product Designer", org: "Jabrni", when: "Mar 2026 – Aug 2026", logo: "/logos/jabrni.webp" },
+  { role: "Creative Marketing Intern", org: "Amana Homes Real Estate", when: "Jul 2025 – Mar 2026", logo: "/logos/amana.webp" },
+  { role: "President, Women in STEM Society", org: "UOWD", when: "Apr 2025 – Oct 2025", logo: "/logos/women-in-stem.webp" },
+  { role: "Designer", org: "UOWD Gaming Club", when: "Jan 2024 – Jan 2025", logo: "/logos/gaming.webp" },
 ];
 
 const NUMBERS = [
@@ -164,9 +165,18 @@ export default function Home() {
             <p className="rv-text text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Experience</p>
             <ul className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
               {ROLES.map((r, i) => (
-                <li key={r.role} className="rv-text flex gap-3 py-5" style={{ "--d": 200 + i * 100 } as React.CSSProperties}>
-                  {/* The dot sits beside the first line; the date always goes under the title, lined up with it */}
-                  <span className="mt-[0.6rem] h-3 w-3 shrink-0 rounded-full sm:mt-[0.75rem]" style={{ backgroundColor: r.color }} />
+                <li key={r.role} className="rv-text flex items-center gap-4 py-5" style={{ "--d": 200 + i * 100 } as React.CSSProperties}>
+                  {r.logo ? (
+                    <Image
+                      src={r.logo}
+                      alt={`${r.org} logo`}
+                      width={56}
+                      height={56}
+                      className="h-12 w-12 shrink-0 rounded-full object-cover ring-1 ring-ink/10 sm:h-14 sm:w-14"
+                    />
+                  ) : (
+                    <Flower color="#e173ae" spin={false} filled className="h-12 w-12 shrink-0 sm:h-14 sm:w-14" />
+                  )}
                   <div>
                     <p className="text-xl font-semibold sm:text-2xl">
                       {r.role} <span className="font-normal opacity-80">· {r.org}</span>

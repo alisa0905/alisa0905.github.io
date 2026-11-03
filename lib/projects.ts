@@ -593,7 +593,7 @@ export const PROJECTS: Project[] = [
     slug: "uowd-clubs",
     title: "UOWD Clubs",
     type: "Posters · Social media",
-    client: "UOWD E-Sports Club · Women in STEM Society",
+    client: "UOWD Gaming Club · Women in STEM Society",
     category: "Personal & Uni",
     year: "2023–2025",
     role: ["Posters", "Social media", "Signage"],
@@ -607,12 +607,12 @@ export const PROJECTS: Project[] = [
         type: "text",
         body: [
           "Designing for these two clubs is where my graphic design journey started.",
-          "For Esports, I kept one consistent brand identity across Instagram, then broke from it for event posters and signage, going flashy with game character art and bold effects built to grab attention.",
+          "For the Gaming Club, I kept one consistent brand identity across Instagram, then broke from it for event posters and signage, going flashy with game character art and bold effects built to grab attention.",
           "For Women in STEM Society, I went softer: beige and pink tones inspired by the books we featured in our weekly recommendations, which shaped the club's editorial feel overall.",
           "These aren't my strongest pieces today, but I keep them in my portfolio to show where the work began and how far it's come.",
         ],
       },
-      { type: "image", asset: "s13-grid", alt: "E-sports and Women in STEM posters", span: "full", bg: "#3883de", pad: true },
+      { type: "image", asset: "s13-grid", alt: "Gaming Club and Women in STEM posters", span: "full", bg: "#3883de", pad: true },
     ],
   },
 ];

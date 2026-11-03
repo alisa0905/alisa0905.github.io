@@ -65,7 +65,7 @@ export const CV = {
       location: "Dubai, UAE",
       dates: "Jan 2024 - Oct 2025",
       href: "https://www.instagram.com/uowdwomeninstem/",
-      bullets: ["Branding for **20+ events** across 3 clubs (Women in STEM, E-Sports, Anime Club), reaching 300+ attendees."],
+      bullets: ["Branding for **20+ events** across 3 clubs (Women in STEM, Gaming, Anime Club), reaching 300+ attendees."],
     },
   ] satisfies CvEntry[],
 
