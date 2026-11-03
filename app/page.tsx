@@ -24,7 +24,7 @@ const FEATURED_ORDER = [
 const ROLES = [
   { role: "Freelance Graphic Designer", org: "Self-employed", when: "Aug 2026 – Present", color: "#e173ae" },
   { role: "Product Designer", org: "Jabrni", when: "Mar 2026 – Aug 2026", color: "#f3c11b" },
-  { role: "Creative Marketing & Media Intern", org: "Amana Homes Real Estate", when: "Jul 2025 – Mar 2026", color: "#b83244" },
+  { role: "Creative Marketing Intern", org: "Amana Homes Real Estate", when: "Jul 2025 – Mar 2026", color: "#b83244" },
   { role: "President, Women in STEM Society", org: "UOWD", when: "Apr 2025 – Oct 2025", color: "#3883de" },
   { role: "Designer", org: "UOWD Esports Club", when: "Jan 2024 – Jan 2025", color: "#518c2d" },
 ];
@@ -164,14 +164,15 @@ export default function Home() {
             <p className="rv-text text-sm font-bold uppercase tracking-[0.2em] text-ink/60">Experience</p>
             <ul className="mt-4 divide-y divide-ink/15 border-y border-ink/15">
               {ROLES.map((r, i) => (
-                <li key={r.role} className="rv-text flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-5" style={{ "--d": 200 + i * 100 } as React.CSSProperties}>
-                  <div className="flex items-center gap-3">
-                    <span className="h-3 w-3 shrink-0 rounded-full" style={{ backgroundColor: r.color }} />
+                <li key={r.role} className="rv-text flex gap-3 py-5" style={{ "--d": 200 + i * 100 } as React.CSSProperties}>
+                  {/* The dot sits beside the first line; the date always goes under the title, lined up with it */}
+                  <span className="mt-[0.6rem] h-3 w-3 shrink-0 rounded-full sm:mt-[0.75rem]" style={{ backgroundColor: r.color }} />
+                  <div>
                     <p className="text-xl font-semibold sm:text-2xl">
                       {r.role} <span className="font-normal opacity-80">· {r.org}</span>
                     </p>
+                    <p className="mt-1 text-sm font-semibold opacity-80">{r.when}</p>
                   </div>
-                  <p className="pl-6 text-sm font-semibold opacity-80 sm:pl-0">{r.when}</p>
                 </li>
               ))}
             </ul>

@@ -470,7 +470,7 @@ export const PROJECTS: Project[] = [
     client: "Amana Homes Real Estate",
     category: "Amana Homes",
     year: "2025–2026",
-    role: ["Creative Marketing & Media Intern", "Social media", "Meta ads", "Print"],
+    role: ["Creative Marketing Intern", "Social media", "Meta ads", "Print"],
     tools: ["figma", "photoshop", "gemini"],
     color: "#f1e8d6",
     ink: "#1e1e1e",

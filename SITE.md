@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-03: Home page Experience list: every date now sits on its own line under the job title (it used to jump between the right side and underneath). The Amana Homes role is now "Creative Marketing Intern" (dropped "& Media"), on the home page and the Amana Homes case study, matching the CV.
 - 2026-11-03: Rebuilt the nav highlight so it only ever slides sideways between Home, About, Work and CV. Before, switching pages after scrolling made it fly in from below.
 - 2026-11-03: New site icon (browser tab, bookmarks and iPhone home screen): Alisa's orange outline flower on sky blue with a green hill. Files: `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico`. To change it, replace those three images.
 - 2026-11-03: Every "Let's talk" button now opens Alisa's 30-minute Calendly booking page (https://calendly.com/alisabakhareva2902/30min). Fixed the nav highlight taking a detour through Home when going between About and Work or CV.
