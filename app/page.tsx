@@ -55,6 +55,10 @@ const TOOLS: { tool: Tool; level: number }[] = [
   { tool: "canva", level: 4 },
   { tool: "capcut", level: 4 },
   { tool: "notion", level: 4 },
+  { tool: "shopify", level: 4 },
+  { tool: "meta", level: 3 },
+  { tool: "figjam", level: 4 },
+  { tool: "claude", level: 4 },
 ];
 
 const SKILLS = ["Social Media", "Ad Campaigns", "UI/UX Design", "Graphic Design", "Print Design", "Video Editing"];

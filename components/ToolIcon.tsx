@@ -12,6 +12,10 @@ export type Tool =
   | "canva"
   | "capcut"
   | "notion"
+  | "shopify"
+  | "meta"
+  | "figjam"
+  | "claude"
   | "zoho"
   | "motion"
   | "automation";
@@ -28,6 +32,10 @@ export const TOOLS: Record<Tool, { label: string; asset: AssetName; plate?: bool
   canva: { label: "Canva", asset: "tool-canva", round: true },
   capcut: { label: "CapCut", asset: "tool-capcut" },
   notion: { label: "Notion", asset: "tool-notion", plate: true },
+  shopify: { label: "Shopify", asset: "tool-shopify", plate: true },
+  meta: { label: "Meta Business Suite", asset: "tool-meta", plate: true },
+  figjam: { label: "FigJam", asset: "tool-figjam", round: true },
+  claude: { label: "Claude", asset: "tool-claude", plate: true },
   zoho: { label: "Zoho", asset: "tool-i25", plate: true },
   motion: { label: "Motion design", asset: "tool-i42", plate: true },
   automation: { label: "Automation", asset: "tool-i26", round: true },

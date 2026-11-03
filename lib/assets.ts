@@ -640,6 +640,26 @@ export const ASSETS = {
   "w": 192,
   "h": 187
  },
+ "tool-claude": {
+  "src": "/work/tool-claude.svg",
+  "w": 24,
+  "h": 24
+ },
+ "tool-figjam": {
+  "src": "/work/tool-figjam.svg",
+  "w": 24,
+  "h": 24
+ },
+ "tool-meta": {
+  "src": "/work/tool-meta.svg",
+  "w": 24,
+  "h": 24
+ },
+ "tool-shopify": {
+  "src": "/work/tool-shopify.svg",
+  "w": 24,
+  "h": 24
+ },
  "tool-notion": {
   "src": "/work/tool-notion.webp",
   "w": 192,
