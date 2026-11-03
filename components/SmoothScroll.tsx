@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { useCalm } from "@/lib/a11y";
 
 declare global {
   interface Window {
@@ -13,6 +14,7 @@ declare global {
 /** Buttery smooth scrolling. Skipped for people who prefer reduced motion. */
 export function SmoothScroll() {
   const pathname = usePathname();
+  const calm = useCalm();
 
   // New page: start at the top (unless we're jumping to a #section).
   useEffect(() => {
@@ -20,7 +22,7 @@ export function SmoothScroll() {
   }, [pathname]);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (calm) return;
 
     const lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, anchors: true });
     window.__lenis = lenis;
@@ -37,7 +39,7 @@ export function SmoothScroll() {
       lenis.destroy();
       window.__lenis = undefined;
     };
-  }, []);
+  }, [calm]);
 
   return null;
 }

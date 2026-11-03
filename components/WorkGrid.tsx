@@ -34,6 +34,8 @@ export function WorkGrid() {
 
   return (
     <div>
+      {/* Keeps the heading order tidy for screen readers (project titles are h3) */}
+      <h2 className="sr-only">All projects</h2>
       <div className="sticky top-[76px] z-30 -mx-5 bg-paper/85 px-5 py-4 backdrop-blur-xl sm:-mx-8 sm:px-8">
         <div className="flex items-center gap-4">
           <div
@@ -89,7 +91,7 @@ export function WorkGrid() {
                 className={`rounded-full px-3 py-1.5 text-sm font-bold capitalize transition-colors sm:px-4 ${
                   view === v
                     ? "bg-ink text-cream"
-                    : "text-ink/60 hover:text-ink"
+                    : "text-ink/75 hover:text-ink"
                 }`}
               >
                 {v}
@@ -120,7 +122,10 @@ export function WorkGrid() {
           layout
           className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3"
         >
-          <AnimatePresence mode="popLayout">
+          {/* initial={false}: cards are visible straight away when the page opens
+              (they used to wait for the page's code to load before fading in,
+              which made phones show them seconds late); filtering still animates */}
+          <AnimatePresence mode="popLayout" initial={false}>
             {shown.map((p, i) => (
               <motion.div
                 key={p.slug}

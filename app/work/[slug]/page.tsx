@@ -66,7 +66,7 @@ export default async function CaseStudy({ params }: Params) {
 
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="rv-text flex flex-wrap items-center gap-3 text-sm font-bold">
-            <Link href="/work" className="rounded-full border-2 border-current px-4 py-1.5 opacity-80 transition-opacity hover:opacity-100">
+            <Link href="/work" className="rounded-full border-2 border-current px-4 py-1.5 opacity-95 transition-opacity hover:opacity-100">
               ← All work
             </Link>
             <span className="rounded-full px-4 py-2 uppercase tracking-wider text-ink" style={{ backgroundColor: accent }}>
@@ -81,13 +81,13 @@ export default async function CaseStudy({ params }: Params) {
           <dl className="mt-12 grid gap-6 border-t border-current/20 pt-8 sm:grid-cols-2 lg:grid-cols-4">
             {meta.map((m, i) => (
               <div key={m.label} className="rv-text" style={{ "--d": 300 + i * 80 } as React.CSSProperties}>
-                <dt className="text-xs font-bold uppercase tracking-[0.18em] opacity-60">{m.label}</dt>
+                <dt className="text-xs font-bold uppercase tracking-[0.18em] opacity-90">{m.label}</dt>
                 <dd className="mt-2 text-lg font-semibold leading-snug">{m.value}</dd>
               </div>
             ))}
             {(project.tools.length > 0 || project.stack) && (
             <div className="rv-text" style={{ "--d": 540 } as React.CSSProperties}>
-              <dt className="text-xs font-bold uppercase tracking-[0.18em] opacity-60">Tools</dt>
+              <dt className="text-xs font-bold uppercase tracking-[0.18em] opacity-90">Tools</dt>
               <dd className="mt-2 flex flex-wrap gap-2">
                 {project.tools.map((t) => (
                   <span key={t} className="flex items-center gap-2 rounded-full bg-white/90 py-1 pl-1 pr-3 text-sm font-semibold text-ink">
@@ -150,12 +150,12 @@ export default async function CaseStudy({ params }: Params) {
       >
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-5 py-16 sm:px-8 md:grid-cols-2 lg:py-24">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] opacity-60">Next project</p>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] opacity-90">Next project</p>
             <p className="mt-3 font-display text-[clamp(3rem,8vw,7rem)] font-black leading-[0.85]">
               {next.title}
               <span className="ml-3 inline-block transition-transform duration-500 group-hover:translate-x-3">→</span>
             </p>
-            <p className="mt-4 text-lg opacity-70">{next.type}</p>
+            <p className="mt-4 text-lg opacity-90">{next.type}</p>
           </div>
           <div
             className="relative aspect-[4/3] overflow-hidden rounded-[24px] transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:-rotate-2 group-hover:scale-[1.03]"

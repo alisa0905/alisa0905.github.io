@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
 import { FLOWER } from "@/lib/flower";
+import { useCalm } from "@/lib/a11y";
 
 /**
  * A little spinning flower that trails the mouse (desktop only).
@@ -10,6 +11,7 @@ import { FLOWER } from "@/lib/flower";
  */
 export function Cursor() {
   const [enabled, setEnabled] = useState(false);
+  const calm = useCalm();
   const [hover, setHover] = useState(false);
   const [down, setDown] = useState(false);
   const x = useMotionValue(-100);
@@ -19,7 +21,6 @@ export function Cursor() {
 
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
-    const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (!fine || calm) return;
     const frame = requestAnimationFrame(() => setEnabled(true));
 
@@ -40,9 +41,9 @@ export function Cursor() {
       window.removeEventListener("pointerdown", press);
       window.removeEventListener("pointerup", release);
     };
-  }, [x, y]);
+  }, [x, y, calm]);
 
-  if (!enabled) return null;
+  if (!enabled || calm) return null;
 
   return (
     <motion.div

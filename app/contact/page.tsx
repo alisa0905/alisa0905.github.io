@@ -29,15 +29,15 @@ export default function ContactPage() {
 
         <Reveal as="div" className="lg:col-span-4 lg:col-start-9" threshold={0.1}>
           <div className="rv rounded-[24px] bg-ink p-6 text-cream" style={{ "--d": 500 } as React.CSSProperties}>
-            <p className="text-sm text-cream/60">Email</p>
+            <p className="text-sm text-cream/80">Email</p>
             <a href={`mailto:${CONTACT_EMAIL}`} className="mt-1 block break-all text-lg font-semibold hover:text-pink">
               {CONTACT_EMAIL}
             </a>
-            <p className="mt-4 text-sm text-cream/60">LinkedIn</p>
+            <p className="mt-4 text-sm text-cream/80">LinkedIn</p>
             <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" className="mt-1 block text-lg font-semibold hover:text-pink">
               linkedin.com/in/alisa-bakhareva ↗
             </a>
-            <p className="mt-4 text-sm text-cream/60">Dubai, UAE</p>
+            <p className="mt-4 text-sm text-cream/80">Dubai, UAE</p>
           </div>
         </Reveal>
       </section>

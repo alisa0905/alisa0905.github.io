@@ -35,7 +35,7 @@
   --color-paper: var(--paper);
   --font-display: var(--font-londrina);
   --font-sans: var(--font-figtree);
-  --font-author: "Author", var(--font-figtree);
+  --font-author: var(--font-author-face), var(--font-figtree);
 }
 
 @layer base {
@@ -211,6 +211,68 @@ html.lenis body {
   .art-spin {
     animation: none;
   }
+}
+
+/* ------------------------------------------------------------------
+   Accessibility button settings (components/A11yButton.tsx adds these
+   classes to <html>)
+   ------------------------------------------------------------------ */
+/* Stop animations: everything jumps straight to its final state */
+html.a11y-calm *,
+html.a11y-calm *::before,
+html.a11y-calm *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0s !important;
+}
+html.a11y-calm :is(.rv, .rv-text, .art-blob, .art-shape, .art-title, .art-sub, .art-pop, .art-flower) {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  clip-path: none !important;
+  stroke-dashoffset: 0 !important;
+}
+html.a11y-calm .art-spin {
+  animation: none !important;
+}
+
+/* Bigger text: everything is sized from this, so the whole page grows */
+html.a11y-big {
+  font-size: 115%;
+}
+
+/* Underline links */
+html.a11y-links a {
+  text-decoration: underline !important;
+  text-underline-offset: 0.2em;
+}
+
+/* Stronger contrast: faded text goes solid, and the green and blue get darker
+   so light text on them is easier to read */
+html.a11y-contrast {
+  --green: #3a6b1e;
+  --blue: #2a63b8;
+}
+html.a11y-contrast [class*="text-ink/"] {
+  color: var(--ink) !important;
+}
+html.a11y-contrast [class*="text-cream/"] {
+  color: var(--cream) !important;
+}
+html.a11y-contrast [class*="opacity-"]:not([class*="opacity-0"]):not(svg):not(svg *) {
+  opacity: 1 !important;
+}
+
+/* Screen readers announce links that open a new tab; nobody else sees this */
+a[target="_blank"]::after {
+  content: " (opens in a new tab)";
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* CV page (/cv) prints onto one A4 sheet with no browser margins. */

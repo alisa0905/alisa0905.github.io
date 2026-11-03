@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useCalm } from "@/lib/a11y";
 import { BOOKING_URL } from "@/lib/projects";
 
 const TEXT = "Let's Talk →";
@@ -21,6 +22,7 @@ export function TalkArc({ id, className }: { id: string; className?: string }) {
   const pathText = useRef<SVGTextElement>(null);
   const [glyphs, setGlyphs] = useState<Glyph[] | null>(null);
   const letters = useRef<(SVGGElement | null)[]>([]);
+  const calm = useCalm();
 
   // Measure where each letter sits on the curve once the font has loaded and
   // the footer is actually on screen (the phone and computer versions are
@@ -54,9 +56,10 @@ export function TalkArc({ id, className }: { id: string; className?: string }) {
   useEffect(() => {
     if (!glyphs) return;
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (calm) return;
 
     const radius = 260;
+    const els = letters.current;
     const mouse = { x: -9999, y: -9999 };
     const amount = glyphs.map(() => 0);
     let frame = 0;
@@ -86,8 +89,14 @@ export function TalkArc({ id, className }: { id: string; className?: string }) {
     return () => {
       window.removeEventListener("pointermove", onMove);
       cancelAnimationFrame(frame);
+      // Back to plain letters
+      els.forEach((el) => {
+        if (!el) return;
+        el.style.strokeWidth = "";
+        el.style.transform = "";
+      });
     };
-  }, [glyphs]);
+  }, [glyphs, calm]);
 
   return (
     <a href={BOOKING_URL} target="_blank" rel="noreferrer" aria-label="Let's talk" className={`block ${className ?? ""}`}>

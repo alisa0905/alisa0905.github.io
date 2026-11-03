@@ -1,6 +1,17 @@
 import Link from "next/link";
 import { CardMedia } from "./CardMedia";
 import { categoryColor, type Project } from "@/lib/projects";
+
+/** Dark text on light chip colours and cream on dark ones, whichever is easier to read */
+function chipText(hex: string) {
+  const [r, g, b] = [1, 3, 5].map((i) => {
+    const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  // Contrast against ink (#1e1e1e) vs cream (#ecedd8)
+  return (lum + 0.05) / 0.0628 >= 0.8814 / (lum + 0.05) ? "#1e1e1e" : "#ecedd8";
+}
 import { Flower } from "./Flower";
 
 type Props = {
@@ -30,8 +41,8 @@ export function ProjectCard({ project, size = "md", sizes = "(min-width: 1024px)
         </span>
 
         <span
-          className="absolute bottom-4 left-4 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider text-ink"
-          style={{ backgroundColor: categoryColor(project.category) }}
+          className="absolute bottom-4 left-4 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider"
+          style={{ backgroundColor: categoryColor(project.category), color: chipText(categoryColor(project.category)) }}
         >
           {project.category}
         </span>
@@ -44,9 +55,9 @@ export function ProjectCard({ project, size = "md", sizes = "(min-width: 1024px)
               {project.title}
             </span>
           </h3>
-          <p className="mt-2 text-[15px] font-medium text-ink/55">{project.type}</p>
+          <p className="mt-2 text-[15px] font-medium text-ink/75">{project.type}</p>
         </div>
-        <span className="shrink-0 pt-1 text-sm font-semibold text-ink/45">{project.year}</span>
+        <span className="shrink-0 pt-1 text-sm font-semibold text-ink/70">{project.year}</span>
       </div>
     </Link>
   );

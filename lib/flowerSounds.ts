@@ -25,7 +25,10 @@ export function unlockSounds() {
   if (ctx.state === "suspended") ctx.resume().catch(() => {});
 }
 
-const ready = () => (ctx && ctx.state === "running" ? ctx : null);
+import { isMuted } from "./a11y";
+
+// Nothing plays if the visitor muted sounds with the accessibility button
+const ready = () => (ctx && ctx.state === "running" && !isMuted() ? ctx : null);
 
 /** Quick volume shape: snap up, then fade out over `length` seconds */
 function envelope(a: AudioContext, peak: number, length: number) {

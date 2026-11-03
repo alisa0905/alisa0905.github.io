@@ -143,7 +143,7 @@ export function SiteFooter() {
               {links}
             </nav>
 
-            <p className="absolute inset-x-0 top-[calc(var(--u)*66.5)] text-center text-[max(0.8rem,calc(var(--u)*1.2))] text-cream/60">
+            <p className="absolute inset-x-0 top-[calc(var(--u)*66.5)] text-center text-[max(0.8rem,calc(var(--u)*1.2))] text-cream/90">
               © {year} Alisa Bakhareva • alisabakhareva.me
             </p>
           </div>
@@ -173,7 +173,7 @@ export function SiteFooter() {
               >
                 {links}
               </nav>
-              <p className="mt-8 text-sm text-cream/60">
+              <p className="mt-8 text-sm text-cream/90">
                 © {year} Alisa Bakhareva • alisabakhareva.me
               </p>
             </div>

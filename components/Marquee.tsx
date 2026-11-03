@@ -29,6 +29,7 @@ export function Marquee({ items, bg = "#ecedd8", ink = "#111110" }: { items: str
     <div
       className="relative z-10 overflow-hidden py-4 font-display text-[clamp(2.2rem,6vw,6rem)] font-black uppercase leading-none lg:py-6"
       style={{ backgroundColor: bg, color: ink }}
+      role="marquee"
       aria-label={items.join(", ")}
     >
       <div className="flex w-max animate-[marquee_28s_linear_infinite] motion-reduce:animate-none" aria-hidden>

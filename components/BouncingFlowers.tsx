@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { FLOWER } from "@/lib/flower";
 import { boing, pop, unlockSounds, whee } from "@/lib/flowerSounds";
+import { isCalm, useCalm } from "@/lib/a11y";
 
 type Body = {
   x: number;
@@ -20,6 +21,8 @@ type Body = {
    */
   sq: [number, number, number];
   sqv: [number, number, number];
+  /** Where it first settled, so it can float back there after a while */
+  home?: [number, number];
   /** Has dropped into the box (the ceiling only applies after this) */
   inside: boolean;
   /** The flower pre-drawn once, so each frame just stamps it */
@@ -87,6 +90,8 @@ const PETAL_R =
  */
 export function BouncingFlowers({ className }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Turning on "Stop animations" (or the device setting) restarts them as a still picture
+  const calm = useCalm();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -96,7 +101,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
 
     const live =
       window.matchMedia("(min-width: 1024px) and (hover: hover) and (pointer: fine)").matches &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      !isCalm();
     const paths = FLOWER.petals.map((d) => new Path2D(d));
 
     let w = 0;
@@ -110,6 +115,19 @@ export function BouncingFlowers({ className }: { className?: string }) {
     // Once the phone has been shaken, the flowers can go anywhere in the hero,
     // not just their corner
     let free = false;
+    // After a few seconds of nobody touching them, the flowers float back to
+    // where they first settled
+    const REST_MS = 3000;
+    let returning = false;
+    let lastPoke = performance.now();
+    const poke = () => {
+      lastPoke = performance.now();
+      returning = false;
+    };
+    const markHomes = () => {
+      for (const b of bodies) b.home = [b.x, b.y];
+    };
+    const strayed = () => bodies.some((b) => b.home && Math.hypot(b.x - b.home[0], b.y - b.home[1]) > 3);
 
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -338,8 +356,14 @@ export function BouncingFlowers({ className }: { className?: string }) {
       }
 
       for (const b of bodies) {
-        b.vy += GRAVITY;
-        b.vx += tiltX;
+        if (returning && b.home) {
+          // Glide home: a soft pull with lots of damping, and no gravity
+          b.vx = b.vx * 0.8 + (b.home[0] - b.x) * 0.035;
+          b.vy = b.vy * 0.8 + (b.home[1] - b.y) * 0.035;
+        } else {
+          b.vy += GRAVITY;
+          b.vx += tiltX;
+        }
         b.vx *= DRAG;
         b.vy *= DRAG;
         b.x += b.vx;
@@ -368,6 +392,16 @@ export function BouncingFlowers({ className }: { className?: string }) {
           b.sqv[k] *= 0.76;
           b.sq[k] += b.sqv[k];
         }
+      }
+
+      // Home again: settle exactly into place and put the corner's wall back
+      if (returning && bodies.every((b) => !b.home || Math.hypot(b.x - b.home[0], b.y - b.home[1]) < 1.5)) {
+        for (const b of bodies) {
+          if (b.home) [b.x, b.y] = b.home;
+          b.vx = b.vy = 0;
+        }
+        returning = false;
+        free = false;
       }
 
       const before = bodies.map((b) => [b.x, b.y]);
@@ -453,26 +487,78 @@ export function BouncingFlowers({ className }: { className?: string }) {
         for (let i = 0; i < 400; i++) step();
       }
       for (const b of bodies) b.sq = [0, 0, 0];
+      markHomes();
       draw();
+    };
+
+    // Sounds: bumps only make noise for a couple of seconds after a tap or
+    // shake, not while just scrolling or hovering past
+    let noisyUntil = 0;
+    const playful = () => {
+      noisyUntil = performance.now() + 2500;
+    };
+    const hitSound = () =>
+      performance.now() < noisyUntil ? (b: Body, speed: number) => speed > 3 && boing(b.r, speed) : null;
+
+    // Flowers near a tap or click (x, y) hop away from it
+    const hopAt = (x: number, y: number) => {
+      poke();
+      const reach = Math.max(110, w * 0.3);
+      for (const b of bodies) {
+        const dx = b.x - x;
+        const dy = b.y - y;
+        const d = Math.hypot(dx, dy) || 1;
+        if (d > reach + b.r) continue;
+        const power = 9 * (1 - Math.min(1, d / (reach + b.r))) + 2;
+        b.vx += (dx / d) * power * 0.7;
+        b.vy += Math.min(-2, (dy / d) * power) - power * 0.5;
+        squish(b, power, -dx / d, -dy / d);
+      }
+    };
+    // A tap or click inside the hero (not on its buttons), in canvas px; null otherwise
+    const tapPoint = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x < 0 || y < 0 || x > w || y > h) return null;
+      if ((e.target as Element | null)?.closest("a, button")) return null;
+      return { x, y };
+    };
+
+    // Throws every flower about, like shaking a box, and lets them out of
+    // their corner to fly around the whole hero
+    const shakeAll = (kick: number) => {
+      poke();
+      free = true;
+      playful();
+      whee();
+      for (const b of bodies) {
+        b.vy -= kick * (0.5 + Math.random() * 0.7);
+        b.vx += (Math.random() - 0.5) * kick * 1.4;
+      }
+    };
+
+    // Scrolling jolts them a little, like shaking a box (dy = how far it scrolled)
+    const jolt = (dy: number) => {
+      poke();
+      const kick = Math.max(-6, Math.min(6, dy * 0.12));
+      for (const b of bodies) {
+        b.vy -= kick * (0.6 + Math.random() * 0.4);
+        b.vx += (Math.random() - 0.5) * Math.abs(kick) * 0.4;
+      }
     };
 
     if (!live) {
       settle();
       // Phones: scrolling gives the pile a little bounce. The animation only
       // runs until they settle again, then stops, so it costs almost nothing.
-      const calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const calm = isCalm();
       let lastScroll = window.scrollY;
       let still = 0;
       let ticks = 0;
-      // Bumps only make noise for a couple of seconds after a tap or shake,
-      // not while just scrolling past
-      let noisyUntil = 0;
-      const playful = () => {
-        noisyUntil = performance.now() + 2500;
-      };
       const run = () => {
         ticks++;
-        onHit = performance.now() < noisyUntil ? (b, speed) => speed > 3 && boing(b.r, speed) : null;
+        onHit = hitSound();
         step();
         onHit = null;
         draw();
@@ -481,12 +567,23 @@ export function BouncingFlowers({ className }: { className?: string }) {
         );
         still = moving ? 0 : still + 1;
         // Always switch off a few seconds after the last scroll, even if a flower is still creeping
-        frame = still > 20 || ticks > 240 ? 0 : requestAnimationFrame(run);
+        frame = !returning && (still > 20 || ticks > 240) ? 0 : requestAnimationFrame(run);
       };
+      let restTimer = 0;
       const wake = () => {
         still = 0;
         ticks = 0;
         if (!frame) frame = requestAnimationFrame(run);
+        // Float back home once things have been quiet for a few seconds
+        window.clearTimeout(restTimer);
+        restTimer = window.setTimeout(function check() {
+          const quiet = performance.now() - lastPoke;
+          if (quiet < REST_MS) restTimer = window.setTimeout(check, REST_MS - quiet + 50);
+          else if (strayed()) {
+            returning = true;
+            wake();
+          }
+        }, REST_MS + 50);
       };
       const onScreen = () => {
         const rect = canvas.getBoundingClientRect();
@@ -496,12 +593,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
         const dy = window.scrollY - lastScroll;
         lastScroll = window.scrollY;
         if (calm || !dy || !onScreen()) return;
-        // Scrolling down jolts them up a little, like shaking a box
-        const kick = Math.max(-6, Math.min(6, dy * 0.12));
-        for (const b of bodies) {
-          b.vy -= kick * (0.6 + Math.random() * 0.4);
-          b.vx += (Math.random() - 0.5) * Math.abs(kick) * 0.4;
-        }
+        jolt(dy);
         wake();
       };
       window.addEventListener("scroll", onScroll, { passive: true });
@@ -529,14 +621,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
         const now = performance.now();
         if (jolt > 13 && now - shakeAt > 120) {
           shakeAt = now;
-          free = true;
-          playful();
-          whee();
-          const kick = Math.min(14, 5 + (jolt - 13) * 0.5);
-          for (const b of bodies) {
-            b.vy -= kick * (0.5 + Math.random() * 0.7);
-            b.vx += (Math.random() - 0.5) * kick * 1.4;
-          }
+          shakeAll(Math.min(14, 5 + (jolt - 13) * 0.5));
           wake();
         }
       };
@@ -556,11 +641,8 @@ export function BouncingFlowers({ className }: { className?: string }) {
       // Tapping near the flowers makes them hop away from your finger
       const onTap = (e: MouseEvent) => {
         if (calm) return;
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        if (x < 0 || y < 0 || x > w || y > h) return;
-        if ((e.target as Element | null)?.closest("a, button")) return;
+        const at = tapPoint(e);
+        if (!at) return;
         // Phones only allow sound after a tap, so this tap switches it on
         unlockSounds();
         playful();
@@ -571,17 +653,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
             .then((s) => s === "granted" && listen())
             .catch(() => {});
         }
-        const reach = Math.max(110, w * 0.3);
-        for (const b of bodies) {
-          const dx = b.x - x;
-          const dy = b.y - y;
-          const d = Math.hypot(dx, dy) || 1;
-          if (d > reach + b.r) continue;
-          const power = 9 * (1 - Math.min(1, d / (reach + b.r))) + 2;
-          b.vx += (dx / d) * power * 0.7;
-          b.vy += Math.min(-2, (dy / d) * power) - power * 0.5;
-          squish(b, power, -dx / d, -dy / d);
-        }
+        hopAt(at.x, at.y);
         wake();
       };
       window.addEventListener("click", onTap);
@@ -598,6 +670,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
       ro.observe(canvas);
       return () => {
         cancelAnimationFrame(frame);
+        window.clearTimeout(restTimer);
         window.removeEventListener("scroll", onScroll);
         window.removeEventListener("click", onTap);
         window.removeEventListener("devicemotion", onMotion);
@@ -605,17 +678,57 @@ export function BouncingFlowers({ className }: { className?: string }) {
       };
     }
 
+    // Shaking the mouse quickly back and forth over the hero counts as
+    // shaking the phone: a few fast changes of direction in a short burst
+    let lastX = 0;
+    let lastDir = 0;
+    let turns: number[] = [];
+    let shookAt = 0;
     const onMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouse.tx = e.clientX - rect.left;
       mouse.ty = e.clientY - rect.top;
+      if (mouse.ty >= 0 && mouse.ty <= h) poke();
+      const dx = e.clientX - lastX;
+      lastX = e.clientX;
+      if (Math.abs(dx) < 12 || mouse.ty < 0 || mouse.ty > h) return;
+      const dir = Math.sign(dx);
+      const now = performance.now();
+      if (dir !== lastDir) {
+        lastDir = dir;
+        turns = turns.filter((t) => now - t < 700);
+        turns.push(now);
+        if (turns.length >= 4 && now - shookAt > 600) {
+          shookAt = now;
+          turns = [];
+          shakeAll(9);
+        }
+      }
     };
+    // A click near the flowers makes them hop, like a tap on phones
+    const onClick = (e: MouseEvent) => {
+      const at = tapPoint(e);
+      if (!at) return;
+      playful();
+      pop();
+      hopAt(at.x, at.y);
+    };
+    // Scrolling bounces the flowers, same as on phones
+    let lastScroll = window.scrollY;
+    const onScroll = () => {
+      const dy = window.scrollY - lastScroll;
+      lastScroll = window.scrollY;
+      if (dy && visible) jolt(dy);
+    };
+    // Browsers only allow sound after the visitor clicks or types somewhere
+    const onFirstInput = () => unlockSounds();
     const onLeave = () => {
       mouse.x = mouse.y = mouse.tx = mouse.ty = -9999;
       mouse.vx = mouse.vy = 0;
     };
 
     let visible = true;
+    let calmFrames = 0;
     let last = 0;
     let acc = 0;
     const io = new IntersectionObserver(([entry]) => {
@@ -633,10 +746,17 @@ export function BouncingFlowers({ className }: { className?: string }) {
       }
       acc += last ? Math.min(t - last, 100) : STEP_MS;
       last = t;
+      onHit = hitSound();
       while (acc >= STEP_MS) {
         step();
         acc -= STEP_MS;
       }
+      onHit = null;
+      // Their first resting spots (after dropping in) become "home"
+      const calmNow = bodies.every((b) => Math.hypot(b.vx, b.vy) < 0.3);
+      calmFrames = calmNow ? calmFrames + 1 : 0;
+      if (!bodies[0]?.home && !free && calmFrames > 60) markHomes();
+      if (!returning && bodies[0]?.home && performance.now() - lastPoke > REST_MS && strayed()) returning = true;
       draw();
       frame = requestAnimationFrame(loop);
     };
@@ -650,6 +770,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
       for (const b of bodies) {
         b.x *= w / oldW;
         b.y *= h / oldH;
+        if (b.home) b.home = [(b.home[0] * w) / oldW, (b.home[1] * h) / oldH];
       }
     };
 
@@ -659,6 +780,10 @@ export function BouncingFlowers({ className }: { className?: string }) {
     io.observe(canvas);
     window.addEventListener("pointermove", onMove, { passive: true });
     document.addEventListener("pointerleave", onLeave);
+    window.addEventListener("pointerdown", onFirstInput);
+    window.addEventListener("keydown", onFirstInput);
+    window.addEventListener("click", onClick);
+    window.addEventListener("scroll", onScroll, { passive: true });
     const ro = new ResizeObserver(onResize);
     ro.observe(canvas);
     frame = requestAnimationFrame(loop);
@@ -668,9 +793,13 @@ export function BouncingFlowers({ className }: { className?: string }) {
       io.disconnect();
       window.removeEventListener("pointermove", onMove);
       document.removeEventListener("pointerleave", onLeave);
+      window.removeEventListener("pointerdown", onFirstInput);
+      window.removeEventListener("keydown", onFirstInput);
+      window.removeEventListener("click", onClick);
+      window.removeEventListener("scroll", onScroll);
       ro.disconnect();
     };
-  }, []);
+  }, [calm]);
 
   return <canvas ref={canvasRef} aria-hidden className={`pointer-events-none ${className ?? ""}`} />;
 }

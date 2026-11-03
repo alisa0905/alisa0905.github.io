@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useCalm } from "@/lib/a11y";
 
 /**
  * A headline whose letters swell as the cursor gets close, like
@@ -20,12 +21,14 @@ export function ProximityHeadline({
   radius?: number;
 }) {
   const letters = useRef<(HTMLSpanElement | null)[]>([]);
+  const calm = useCalm();
 
   useEffect(() => {
     // Phones and people who prefer less motion get the plain headline
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (calm) return;
 
+    const els = letters.current;
     const mouse = { x: -9999, y: -9999 };
     // Eased amount (0–1) per letter, so they swell and settle smoothly
     const amount = letters.current.map(() => 0);
@@ -56,8 +59,14 @@ export function ProximityHeadline({
     return () => {
       window.removeEventListener("pointermove", onMove);
       cancelAnimationFrame(frame);
+      // Back to plain letters
+      els.forEach((el) => {
+        if (!el) return;
+        el.style.webkitTextStroke = "";
+        el.style.transform = "";
+      });
     };
-  }, [radius]);
+  }, [radius, calm]);
 
   const text = lines.join(" ");
   let i = 0;

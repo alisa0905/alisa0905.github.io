@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Figtree, Londrina_Solid } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AgentationProvider } from "@/components/AgentationProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
@@ -7,6 +8,7 @@ import { Cursor } from "@/components/Cursor";
 import { LightboxProvider } from "@/components/Lightbox";
 import { SiteHeader } from "@/components/SiteHeader";
 import { BrowserTint } from "@/components/BrowserTint";
+import { A11yButton } from "@/components/A11yButton";
 import { SiteFooter } from "@/components/SiteFooter";
 
 const figtree = Figtree({
@@ -20,6 +22,18 @@ const londrina = Londrina_Solid({
   weight: ["400", "900"],
   variable: "--font-londrina",
   display: "swap",
+});
+
+// Author (body copy font from the Figma portfolio), served from this site
+// rather than Fontshare, so pages don't wait on another website to show text
+const author = localFont({
+  src: [
+    { path: "./fonts/Author-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/Author-Medium.woff2", weight: "500", style: "normal" },
+  ],
+  variable: "--font-author-face",
+  display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -52,18 +66,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${figtree.variable} ${londrina.variable} print:bg-white`}>
+    <html lang="en" className={`${figtree.variable} ${londrina.variable} ${author.variable} print:bg-white`}>
       <body className="antialiased print:bg-white">
-        {/* Author (body copy font from the Figma portfolio). React moves this into <head>. */}
-        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=author@400,500&display=swap" precedence="default" />
+        {/* First thing keyboard users reach: jumps past the menu to the page itself */}
+        <a
+          href="#main"
+          className="sr-only z-[200] rounded-full bg-ink px-5 py-3 font-semibold text-cream focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+        >
+          Skip to content
+        </a>
         <SmoothScroll />
         <BrowserTint />
         <LightboxProvider>
           <SiteHeader />
-          <main>{children}</main>
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
           <SiteFooter />
         </LightboxProvider>
         <Cursor />
+        <A11yButton />
         <AgentationProvider />
       </body>
     </html>
