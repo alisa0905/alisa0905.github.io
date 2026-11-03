@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { FLOWER } from "@/lib/flower";
+import { boing, pop, unlockSounds, whee } from "@/lib/flowerSounds";
 
 type Body = {
   x: number;
@@ -209,9 +210,12 @@ export function BouncingFlowers({ className }: { className?: string }) {
     };
 
     // A hit flattens the whole flower along the hit and bulges it out sideways
+    // Phones play a sound on each bump for a little while after a tap or shake
+    let onHit: ((b: Body, speed: number) => void) | null = null;
     const squish = (b: Body, speed: number, towardX: number, towardY: number) => {
       // Ignore the tiny nudges of flowers resting in a pile
       if (speed < 2) return;
+      onHit?.(b, speed);
       const k = Math.min(speed, 12) * 0.008;
       const nx = towardX;
       const ny = towardY;
@@ -460,9 +464,17 @@ export function BouncingFlowers({ className }: { className?: string }) {
       let lastScroll = window.scrollY;
       let still = 0;
       let ticks = 0;
+      // Bumps only make noise for a couple of seconds after a tap or shake,
+      // not while just scrolling past
+      let noisyUntil = 0;
+      const playful = () => {
+        noisyUntil = performance.now() + 2500;
+      };
       const run = () => {
         ticks++;
+        onHit = performance.now() < noisyUntil ? (b, speed) => speed > 3 && boing(b.r, speed) : null;
         step();
+        onHit = null;
         draw();
         const moving = bodies.some(
           (b) => Math.hypot(b.vx, b.vy) > 0.3 || Math.abs(b.sq[0]) + Math.abs(b.sq[1]) + Math.abs(b.sq[2]) > 0.004,
@@ -518,6 +530,8 @@ export function BouncingFlowers({ className }: { className?: string }) {
         if (jolt > 13 && now - shakeAt > 120) {
           shakeAt = now;
           free = true;
+          playful();
+          whee();
           const kick = Math.min(14, 5 + (jolt - 13) * 0.5);
           for (const b of bodies) {
             b.vy -= kick * (0.5 + Math.random() * 0.7);
@@ -547,6 +561,10 @@ export function BouncingFlowers({ className }: { className?: string }) {
         const y = e.clientY - rect.top;
         if (x < 0 || y < 0 || x > w || y > h) return;
         if ((e.target as Element | null)?.closest("a, button")) return;
+        // Phones only allow sound after a tap, so this tap switches it on
+        unlockSounds();
+        playful();
+        pop();
         if (ask && !asked) {
           asked = true;
           ask.call(DeviceMotionEvent)
