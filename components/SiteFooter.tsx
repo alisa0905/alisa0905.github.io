@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Flower } from "./Flower";
 import { Reveal } from "./Reveal";
 import { StickyReveal } from "./StickyReveal";
-import { BOOKING_URL, CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
+import { TalkArc } from "./TalkArc";
+import { CONTACT_EMAIL, LINKEDIN_URL } from "@/lib/projects";
 
 /**
  * Big filled flowers on the hill, from Alisa's Figma footer (Things, node 989:1229).
@@ -46,7 +47,7 @@ const BLOOMS_SMALL = [
   { color: "#e77f23", left: "84%", top: "calc(100% - max(9.5rem, 24vw))", size: "max(7.5rem, 19vw)", turn: -20 },
 ];
 
-function Bloom({ b, i }: { b: (typeof BLOOMS)[number]; i: number }) {
+function Bloom({ b }: { b: (typeof BLOOMS)[number] }) {
   return (
     <div
       aria-hidden
@@ -62,38 +63,9 @@ function Bloom({ b, i }: { b: (typeof BLOOMS)[number]; i: number }) {
         color={b.color}
         spin={false}
         filled
-        pop
         className="block w-full"
-        style={{ "--d": 250 + i * 150 } as React.CSSProperties}
       />
     </div>
-  );
-}
-
-/** "Let's Talk" bent into a gentle rising curve, like the Figma text-on-path. */
-function TalkArc({ id, className }: { id: string; className?: string }) {
-  return (
-    <a
-      href={BOOKING_URL}
-      target="_blank"
-      rel="noreferrer"
-      aria-label="Let's talk"
-      className={`rv-text block transition-transform duration-700 ease-out hover:-translate-y-1 ${className ?? ""}`}
-      style={{ "--d": 150 } as React.CSSProperties}
-    >
-      <svg
-        viewBox="0 0 1000 215"
-        className="w-full overflow-visible font-display font-black"
-        aria-hidden
-      >
-        <path id={id} d="M 30 200 Q 500 100 970 200" fill="none" />
-        <text fill="currentColor" fontSize="168" textAnchor="middle">
-          <textPath href={`#${id}`} startOffset="50%">
-            Let&apos;s Talk →
-          </textPath>
-        </text>
-      </svg>
-    </a>
   );
 }
 
@@ -143,7 +115,7 @@ export function SiteFooter() {
               className="absolute left-1/2 top-[calc(var(--u)*8)] h-[calc(var(--u)*105)] w-[max(calc(var(--u)*142.8),118vw)] -translate-x-1/2 rounded-[50%] bg-green"
             />
             {BLOOMS.map((b, i) => (
-              <Bloom key={i} b={b} i={i} />
+              <Bloom key={i} b={b} />
             ))}
 
             <TalkArc
@@ -154,14 +126,12 @@ export function SiteFooter() {
             <div className="absolute inset-x-0 top-[calc(var(--u)*44.3)] text-center text-[max(1.1rem,calc(var(--u)*2.1))] leading-tight">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="rv-text inline-block transition-colors hover:text-sun"
-                style={{ "--d": 300 } as React.CSSProperties}
+                className="inline-block transition-colors hover:text-sun"
               >
                 {CONTACT_EMAIL}
               </a>
               <p
-                className="rv-text mt-[calc(var(--u)*1.2)]"
-                style={{ "--d": 380 } as React.CSSProperties}
+                className="mt-[calc(var(--u)*1.2)]"
               >
                 Based in Dubai, UAE
               </p>
@@ -169,8 +139,7 @@ export function SiteFooter() {
 
             <nav
               aria-label="Footer"
-              className="rv-text absolute left-1/2 top-[calc(var(--u)*60.3)] flex w-[calc(var(--u)*67.3)] -translate-x-1/2 justify-between text-[max(1.1rem,calc(var(--u)*2.1))]"
-              style={{ "--d": 460 } as React.CSSProperties}
+              className="absolute left-1/2 top-[calc(var(--u)*60.3)] flex w-[calc(var(--u)*67.3)] -translate-x-1/2 justify-between text-[max(1.1rem,calc(var(--u)*2.1))]"
             >
               {links}
             </nav>
@@ -187,28 +156,25 @@ export function SiteFooter() {
               className="absolute left-1/2 top-16 h-[200%] w-[260%] -translate-x-1/2 rounded-[50%] bg-green"
             />
             {BLOOMS_SMALL.map((b, i) => (
-              <Bloom key={i} b={b} i={i} />
+              <Bloom key={i} b={b} />
             ))}
 
             <div className="relative px-5 pb-32 pt-24 text-center sm:px-8">
               <TalkArc id="talk-arc-small" className="mx-auto max-w-xl" />
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="rv-text mt-12 inline-block break-all text-lg transition-colors hover:text-sun sm:text-xl"
-                style={{ "--d": 300 } as React.CSSProperties}
+                className="mt-12 inline-block break-all text-lg transition-colors hover:text-sun sm:text-xl"
               >
                 {CONTACT_EMAIL}
               </a>
               <p
-                className="rv-text mt-2 text-lg sm:text-xl"
-                style={{ "--d": 380 } as React.CSSProperties}
+                className="mt-2 text-lg sm:text-xl"
               >
                 Based in Dubai, UAE
               </p>
               <nav
                 aria-label="Footer"
-                className="rv-text mx-auto mt-12 flex max-w-md flex-wrap justify-center gap-x-7 gap-y-2 text-lg"
-                style={{ "--d": 460 } as React.CSSProperties}
+                className="mx-auto mt-12 flex max-w-md flex-wrap justify-center gap-x-7 gap-y-2 text-lg"
               >
                 {links}
               </nav>

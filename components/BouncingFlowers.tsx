@@ -106,6 +106,9 @@ export function BouncingFlowers({ className }: { className?: string }) {
     const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, tx: -9999, ty: -9999 };
     // Sideways pull from tilting the phone
     let tiltX = 0;
+    // Once the phone has been shaken, the flowers can go anywhere in the hero,
+    // not just their corner
+    let free = false;
 
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -253,7 +256,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
         b.y = h - b.r;
       }
       // The slanted edge of the flower area works like a wall
-      {
+      if (!free) {
         const len = Math.hypot(slope, 1);
         const d = (b.y - lineY(b.x)) / len;
         if (d < b.r) {
@@ -416,6 +419,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
     };
 
     const settle = () => {
+      free = false;
       resize();
       spawn();
       makeSprites();
@@ -513,6 +517,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
         const now = performance.now();
         if (jolt > 13 && now - shakeAt > 120) {
           shakeAt = now;
+          free = true;
           const kick = Math.min(14, 5 + (jolt - 13) * 0.5);
           for (const b of bodies) {
             b.vy -= kick * (0.5 + Math.random() * 0.7);

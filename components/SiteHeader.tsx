@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { BOOKING_URL } from "@/lib/projects";
+import { scrollToId } from "./SmoothScroll";
 
 const LINKS = [
   { href: "/", label: "Home" },
-  { href: "/work", label: "Work" },
   { href: "/#about", label: "About" },
+  { href: "/work", label: "Work" },
   { href: "/cv", label: "CV" },
 ];
 
@@ -38,8 +39,42 @@ export function SiteHeader() {
   }, [pathname]);
   const solid = scrolled || !darkHero;
 
+  // On the home page the highlight follows the scroll: "About" once the About
+  // section reaches the middle of the screen, "Home" above it
+  const [onAbout, setOnAbout] = useState(false);
+  const clickedAt = useRef(0);
+  useEffect(() => {
+    if (pathname !== "/") return;
+    const check = () => {
+      // Right after a click the highlight has already slid over; let the scroll catch up
+      if (performance.now() - clickedAt.current < 1600) return;
+      const about = document.getElementById("about");
+      setOnAbout(!!about && about.getBoundingClientRect().top < window.innerHeight / 2);
+    };
+    check();
+    window.addEventListener("scroll", check, { passive: true });
+    return () => window.removeEventListener("scroll", check);
+  }, [pathname]);
+
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : href.startsWith("/#") ? false : pathname.startsWith(href);
+    pathname === "/"
+      ? href === "/#about"
+        ? onAbout
+        : href === "/" && !onAbout
+      : href !== "/" && !href.startsWith("/#") && pathname.startsWith(href);
+
+  // Home and About are on the same page, so glide there instead of jumping
+  const onNavClick = (href: string) => (e: React.MouseEvent) => {
+    if (pathname !== "/" || (href !== "/" && href !== "/#about")) return;
+    e.preventDefault();
+    clickedAt.current = performance.now();
+    setOnAbout(href === "/#about");
+    setOpen(false);
+    if (href === "/") {
+      if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.4 });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    } else scrollToId("about");
+  };
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-3 pt-3 sm:px-5 sm:pt-4 print:hidden">
@@ -65,6 +100,7 @@ export function SiteHeader() {
             <Link
               key={l.href}
               href={l.href}
+              onClick={onNavClick(l.href)}
               className={`relative rounded-full px-4 py-2 text-[15px] font-semibold transition-colors ${
                 solid ? "text-ink/70 hover:text-ink" : "text-cream/85 hover:text-cream"
               } ${isActive(l.href) ? (solid ? "!text-ink" : "!text-cream") : ""}`}
@@ -73,7 +109,7 @@ export function SiteHeader() {
                 <motion.span
                   layoutId="nav-active"
                   className={`absolute inset-0 rounded-full ${solid ? "bg-ink/8" : "bg-white/15"}`}
-                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  transition={{ type: "spring", stiffness: 260, damping: 30 }}
                 />
               )}
               <span className="relative">{l.label}</span>
@@ -120,7 +156,10 @@ export function SiteHeader() {
               <motion.div key={l.href} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0, transition: { delay: i * 0.05 } }}>
                 <Link
                   href={l.href}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    setOpen(false);
+                    onNavClick(l.href)(e);
+                  }}
                   className="block rounded-2xl px-4 py-3 font-display text-3xl text-cream hover:bg-white/10"
                 >
                   {l.label}
