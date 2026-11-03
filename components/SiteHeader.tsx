@@ -42,10 +42,18 @@ export function SiteHeader() {
   // On the home page the highlight follows the scroll: "About" once the About
   // section reaches the middle of the screen, "Home" above it
   const [onAbout, setOnAbout] = useState(false);
-  const clickedAt = useRef(0);
+  const clickedAt = useRef(-Infinity);
   useEffect(() => {
     if (pathname !== "/") return;
+    // Arriving from another page via an About link: start on About so the
+    // highlight doesn't stop at Home on the way
+    let first = true;
     const check = () => {
+      if (first && window.location.hash === "#about" && performance.now() - clickedAt.current > 1600) {
+        clickedAt.current = performance.now();
+        setOnAbout(true);
+      }
+      first = false;
       // Right after a click the highlight has already slid over; let the scroll catch up
       if (performance.now() - clickedAt.current < 1600) return;
       const about = document.getElementById("about");
@@ -65,10 +73,13 @@ export function SiteHeader() {
 
   // Home and About are on the same page, so glide there instead of jumping
   const onNavClick = (href: string) => (e: React.MouseEvent) => {
-    if (pathname !== "/" || (href !== "/" && href !== "/#about")) return;
-    e.preventDefault();
+    if (href !== "/" && href !== "/#about") return;
+    // Decide Home or About right away, even from another page, so the
+    // highlight slides straight there
     clickedAt.current = performance.now();
     setOnAbout(href === "/#about");
+    if (pathname !== "/") return;
+    e.preventDefault();
     setOpen(false);
     if (href === "/") {
       if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.4 });

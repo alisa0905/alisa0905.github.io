@@ -623,5 +623,5 @@ export const categoryColor = (c: Category) => CATEGORIES.find((x) => x.name === 
 
 export const CONTACT_EMAIL = "alisabakhareva2902@gmail.com";
 /** Where every "Let's talk" button goes. */
-export const BOOKING_URL = "https://calendly.com/alisabakhareva2902/";
+export const BOOKING_URL = "https://calendly.com/alisabakhareva2902/30min";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/alisa-bakhareva/";
