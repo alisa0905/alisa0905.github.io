@@ -135,6 +135,11 @@ export const ASSETS = {
   "w": 1440,
   "h": 900
  },
+ "q-team": {
+  "src": "/work/q-team.webp",
+  "w": 1600,
+  "h": 900
+ },
  "s01-bg": {
   "src": "/work/s01-bg.webp",
   "w": 1920,

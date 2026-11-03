@@ -541,6 +541,7 @@ export const PROJECTS: Project[] = [
       { type: "image", asset: "s32-main", alt: "Brand sheet: type, logos, colours and tone", span: "full" },
       { type: "image", asset: "s32-a", alt: "T-shirt merch", span: "half" },
       { type: "image", asset: "s32-b", alt: "The team in branded t-shirts", span: "half" },
+      { type: "image", asset: "q-team", alt: "The Quotify team on stage at the University of Wollongong in Dubai, holding certificates", span: "full" },
       { type: "image", asset: "s09-main", alt: "Instagram campaign posts", span: "full", bg: "#56adf0", pad: true },
     ],
   },
