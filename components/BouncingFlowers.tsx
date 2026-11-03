@@ -33,8 +33,8 @@ type Body = {
  */
 const AREAS = {
   desktop: { a: [0.409, 1], b: [0.738, 0], size: 0.95, fill: 0.62 },
-  tablet: { a: [0, 0.96], b: [1, 0.2], size: 1.25, fill: 0.85 },
-  phone: { a: [0, 1], b: [1, 0.45], size: 1.6, fill: 0.95 },
+  tablet: { a: [0, 0.96], b: [1, 0.2], size: 1.25, fill: 0.66 },
+  phone: { a: [0, 1], b: [1, 0.45], size: 1.6, fill: 0.66 },
 };
 const MAX_COUNT = 60;
 const COLORS = ["#7cb9e4", "#f3c11b", "#3883de", "#ecedd8", "#518c2d", "#b83244"];
@@ -45,9 +45,8 @@ const DRAG = 0.992;
 const BOUNCE = 0.55;
 const CURSOR_R = 60;
 // Extra passes that untangle piles, so flowers in a corner settle instead of jittering
-const SOLVER_PASSES = 4;
-// Petals reach a little past the hit circle so neighbours tuck together
-const REACH = 1.12;
+// and never end up overlapping
+const SOLVER_PASSES = 20;
 
 // The petals' inner points meet in the middle: that's the flower's centre
 const PETAL_POINTS = FLOWER.petals.map((d) => (d.match(/-?\d+(\.\d+)?/g) ?? []).map(Number));
@@ -57,9 +56,27 @@ const CY = PETAL_POINTS.reduce((s, p) => s + p[1], 0) / PETAL_POINTS.length;
 const FLOWER_R =
   Math.max(...PETAL_POINTS.flatMap((n) => n.map((v, i) => Math.abs(v - (i % 2 ? CY : CX))))) +
   FLOWER.strokeWidth;
-// How big the flower looks, used to size it against its hit circle
-const [, , VB_W, VB_H] = FLOWER.viewBox.split(" ").map(Number);
-const FLOWER_LOOK_R = Math.max(VB_W, VB_H) / 2;
+// How far the furthest petal tip really reaches from the centre (walking along
+// each curve), so the drawn flower fits exactly inside its hit circle and two
+// flowers can never overlap
+const PETAL_R =
+  Math.max(
+    ...PETAL_POINTS.flatMap((n) => {
+      const out: number[] = [];
+      for (let k = 2; k + 5 < n.length; k += 6) {
+        const [x0, y0] = k === 2 ? [n[0], n[1]] : [n[k - 2], n[k - 1]];
+        for (let i = 0; i <= 40; i++) {
+          const t = i / 40;
+          const u = 1 - t;
+          const x = u * u * u * x0 + 3 * u * u * t * n[k] + 3 * u * t * t * n[k + 2] + t * t * t * n[k + 4];
+          const y = u * u * u * y0 + 3 * u * u * t * n[k + 1] + 3 * u * t * t * n[k + 3] + t * t * t * n[k + 5];
+          out.push(Math.hypot(x - CX, y - CY));
+        }
+      }
+      return out;
+    }),
+  ) +
+  FLOWER.strokeWidth / 2;
 
 /**
  * Ten colourful, squishy flowers in the home hero. On computers they drop in,
@@ -87,6 +104,8 @@ export function BouncingFlowers({ className }: { className?: string }) {
     let bodies: Body[] = [];
     let frame = 0;
     const mouse = { x: -9999, y: -9999, vx: 0, vy: 0, tx: -9999, ty: -9999 };
+    // Sideways pull from tilting the phone
+    let tiltX = 0;
 
     const resize = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -148,7 +167,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
         return {
           r,
           // Computers: drop in from above where the area meets the top
-          x: live ? topX + Math.random() * Math.max(1, w - topX - r * REACH) : sx,
+          x: live ? topX + Math.random() * Math.max(1, w - topX - r) : sx,
           y: live ? -r - i * r * 1.2 : sy,
           vx: (Math.random() - 0.5) * 3,
           vy: 0,
@@ -165,7 +184,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
     // Draw each flower once, so frames only stamp an image
     const makeSprites = () => {
       for (const b of bodies) {
-        const unitPx = (b.r * REACH) / FLOWER_LOOK_R; // screen px per flower unit
+        const unitPx = b.r / PETAL_R; // screen px per flower unit
         const px = Math.ceil(FLOWER_R * 2 * unitPx * dpr);
         const c = document.createElement("canvas");
         c.width = c.height = px;
@@ -202,7 +221,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
     // Keeps a flower inside the box. Only the first pass bounces and squishes;
     // later passes just nudge positions, which stops corner jitter.
     const walls = (b: Body, bounce: boolean) => {
-      const side = b.r * REACH;
+      const side = b.r;
       if (b.x < side) {
         if (bounce && b.vx < 0) {
           squish(b, -b.vx, -1, 0);
@@ -313,6 +332,7 @@ export function BouncingFlowers({ className }: { className?: string }) {
 
       for (const b of bodies) {
         b.vy += GRAVITY;
+        b.vx += tiltX;
         b.vx *= DRAG;
         b.vy *= DRAG;
         b.x += b.vx;
@@ -343,11 +363,25 @@ export function BouncingFlowers({ className }: { className?: string }) {
         }
       }
 
+      const before = bodies.map((b) => [b.x, b.y]);
       for (let pass = 0; pass < SOLVER_PASSES; pass++) {
         const first = pass === 0;
         collide(first);
         for (const b of bodies) walls(b, first);
       }
+      // A flower that got pushed back out of a neighbour stops moving that way,
+      // so resting flowers don't keep sinking into each other every frame
+      bodies.forEach((b, i) => {
+        const px = b.x - before[i][0];
+        const py = b.y - before[i][1];
+        const len = Math.hypot(px, py);
+        if (len < 0.01) return;
+        const into = (b.vx * px + b.vy * py) / len;
+        if (into < 0) {
+          b.vx -= (into * px) / len;
+          b.vy -= (into * py) / len;
+        }
+      });
 
       // Barely moving flowers come to rest instead of creeping
       for (const b of bodies) {
@@ -367,7 +401,14 @@ export function BouncingFlowers({ className }: { className?: string }) {
         const half = b.sprite.width / dpr / 2;
         ctx.save();
         ctx.translate(b.x, b.y);
-        ctx.transform(1 + lim(b.sq[0]), lim(b.sq[2]), lim(b.sq[2]), 1 + lim(b.sq[1]), 0, 0);
+        // Squishing flattens one way and bulges the other; shrink the whole
+        // flower so the bulge never pokes out of its circle into a neighbour
+        const sx = 1 + lim(b.sq[0]);
+        const sy = 1 + lim(b.sq[1]);
+        const sd = lim(b.sq[2]);
+        const most = (sx + sy) / 2 + Math.hypot((sx - sy) / 2, sd);
+        const fit = most > 1 ? 1 / most : 1;
+        ctx.transform(sx * fit, sd * fit, sd * fit, sy * fit, 0, 0);
         ctx.rotate(b.angle);
         ctx.drawImage(b.sprite, -half, -half, half * 2, half * 2);
         ctx.restore();
@@ -379,6 +420,30 @@ export function BouncingFlowers({ className }: { className?: string }) {
       spawn();
       makeSprites();
       for (let i = 0; i < 900; i++) step();
+      // If the pile came out too tight for every flower to fit, take out the
+      // most squeezed one and let the rest settle again, so none overlap
+      for (let tries = 0; tries < 24 && bodies.length > 3; tries++) {
+        const squeeze = bodies.map(() => 0);
+        for (let i = 0; i < bodies.length; i++)
+          for (let j = i + 1; j < bodies.length; j++) {
+            const o =
+              bodies[i].r + bodies[j].r - Math.hypot(bodies[i].x - bodies[j].x, bodies[i].y - bodies[j].y);
+            if (o > 1) {
+              squeeze[i] += o;
+              squeeze[j] += o;
+            }
+          }
+        const worst = squeeze.indexOf(Math.max(...squeeze));
+        if (squeeze[worst] === 0) break;
+        // First try jiggling the pile so it packs better; only then remove one
+        if (tries < 4) {
+          for (const b of bodies) {
+            b.vy -= 3 + Math.random() * 4;
+            b.vx += (Math.random() - 0.5) * 6;
+          }
+        } else bodies.splice(worst, 1);
+        for (let i = 0; i < 400; i++) step();
+      }
       for (const b of bodies) b.sq = [0, 0, 0];
       draw();
     };
@@ -402,23 +467,101 @@ export function BouncingFlowers({ className }: { className?: string }) {
         // Always switch off a few seconds after the last scroll, even if a flower is still creeping
         frame = still > 20 || ticks > 240 ? 0 : requestAnimationFrame(run);
       };
+      const wake = () => {
+        still = 0;
+        ticks = 0;
+        if (!frame) frame = requestAnimationFrame(run);
+      };
+      const onScreen = () => {
+        const rect = canvas.getBoundingClientRect();
+        return rect.bottom > 0 && rect.top < window.innerHeight;
+      };
       const onScroll = () => {
         const dy = window.scrollY - lastScroll;
         lastScroll = window.scrollY;
-        if (calm || !dy) return;
-        const rect = canvas.getBoundingClientRect();
-        if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+        if (calm || !dy || !onScreen()) return;
         // Scrolling down jolts them up a little, like shaking a box
         const kick = Math.max(-6, Math.min(6, dy * 0.12));
         for (const b of bodies) {
           b.vy -= kick * (0.6 + Math.random() * 0.4);
           b.vx += (Math.random() - 0.5) * Math.abs(kick) * 0.4;
         }
-        still = 0;
-        ticks = 0;
-        if (!frame) frame = requestAnimationFrame(run);
+        wake();
       };
       window.addEventListener("scroll", onScroll, { passive: true });
+
+      // Shaking the phone throws the flowers about, and tilting it rolls them
+      // to the lower side. A hidden extra: nothing on the page mentions it.
+      let shakeAt = 0;
+      let flip = 0; // phones disagree on which way is "up", so learn it from the first reading
+      const onMotion = (e: DeviceMotionEvent) => {
+        if (!onScreen()) return;
+        const g = e.accelerationIncludingGravity;
+        if (g?.x != null && g.y != null) {
+          if (!flip && Math.abs(g.y) > 4) flip = g.y > 0 ? 1 : -1;
+          // Turn the phone's sideways reading into the screen's sideways, in landscape too
+          const turn = ((screen.orientation?.angle ?? 0) * Math.PI) / 180;
+          const side = -(flip || 1) * (g.x * Math.cos(turn) + g.y * Math.sin(turn));
+          const next = GRAVITY * Math.max(-1, Math.min(1, side / 9.8));
+          if (Math.abs(next - tiltX) > 0.02) {
+            tiltX = next;
+            wake();
+          }
+        }
+        const a = e.acceleration;
+        const jolt = a?.x != null ? Math.hypot(a.x, a.y ?? 0, a.z ?? 0) : 0;
+        const now = performance.now();
+        if (jolt > 13 && now - shakeAt > 120) {
+          shakeAt = now;
+          const kick = Math.min(14, 5 + (jolt - 13) * 0.5);
+          for (const b of bodies) {
+            b.vy -= kick * (0.5 + Math.random() * 0.7);
+            b.vx += (Math.random() - 0.5) * kick * 1.4;
+          }
+          wake();
+        }
+      };
+      let listening = false;
+      const listen = () => {
+        if (listening) return;
+        listening = true;
+        window.addEventListener("devicemotion", onMotion);
+      };
+      type AskMotion = { requestPermission?: () => Promise<"granted" | "denied"> };
+      const ask = typeof DeviceMotionEvent !== "undefined" ? (DeviceMotionEvent as unknown as AskMotion).requestPermission : undefined;
+      let asked = false;
+      // Android lets the page feel motion straight away; iPhone has to ask
+      // first, which it only allows right after a tap
+      if (!calm && typeof DeviceMotionEvent !== "undefined" && !ask) listen();
+
+      // Tapping near the flowers makes them hop away from your finger
+      const onTap = (e: MouseEvent) => {
+        if (calm) return;
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        if (x < 0 || y < 0 || x > w || y > h) return;
+        if ((e.target as Element | null)?.closest("a, button")) return;
+        if (ask && !asked) {
+          asked = true;
+          ask.call(DeviceMotionEvent)
+            .then((s) => s === "granted" && listen())
+            .catch(() => {});
+        }
+        const reach = Math.max(110, w * 0.3);
+        for (const b of bodies) {
+          const dx = b.x - x;
+          const dy = b.y - y;
+          const d = Math.hypot(dx, dy) || 1;
+          if (d > reach + b.r) continue;
+          const power = 9 * (1 - Math.min(1, d / (reach + b.r))) + 2;
+          b.vx += (dx / d) * power * 0.7;
+          b.vy += Math.min(-2, (dy / d) * power) - power * 0.5;
+          squish(b, power, -dx / d, -dy / d);
+        }
+        wake();
+      };
+      window.addEventListener("click", onTap);
       // Redo the pile whenever the box changes size (not just the window), so the
       // picture is never stretched out of shape
       let lastSize = `${Math.round(w)}x${Math.round(h)}`;
@@ -433,6 +576,8 @@ export function BouncingFlowers({ className }: { className?: string }) {
       return () => {
         cancelAnimationFrame(frame);
         window.removeEventListener("scroll", onScroll);
+        window.removeEventListener("click", onTap);
+        window.removeEventListener("devicemotion", onMotion);
         ro.disconnect();
       };
     }
