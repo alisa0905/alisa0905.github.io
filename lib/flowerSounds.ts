@@ -1,10 +1,13 @@
 /**
  * Silly sound effects for the hero flowers, made on the fly with the
  * browser's audio synthesizer (no sound files). Phones only allow sound
- * after a tap, so `unlock()` must be called from a tap first.
+ * after a tap, so `unlockSounds()` must be called from a tap first.
  */
 
 let ctx: AudioContext | null = null;
+// Everything plays through this, so one number sets how loud the flowers are
+let master: GainNode | null = null;
+const VOLUME = 0.2;
 let lastBoing = 0;
 let lastWhee = 0;
 
@@ -15,6 +18,9 @@ export function unlockSounds() {
     const AC = window.AudioContext ?? (window as WithWebkit).webkitAudioContext;
     if (!AC) return;
     ctx = new AC();
+    master = ctx.createGain();
+    master.gain.value = VOLUME;
+    master.connect(ctx.destination);
   }
   if (ctx.state === "suspended") ctx.resume().catch(() => {});
 }
@@ -28,7 +34,7 @@ function envelope(a: AudioContext, peak: number, length: number) {
   g.gain.setValueAtTime(0.0001, t);
   g.gain.exponentialRampToValueAtTime(peak, t + 0.008);
   g.gain.exponentialRampToValueAtTime(0.0001, t + length);
-  g.connect(a.destination);
+  g.connect(master ?? a.destination);
   return g;
 }
 
@@ -66,19 +72,28 @@ export function boing(size: number, force: number) {
   wobble.stop(t + len);
 }
 
-/** A short "pop" for tapping the flowers */
+/** A soft, bubbly "bloop" for tapping the flowers: two gentle rising notes */
 export function pop() {
   const a = ready();
   if (!a) return;
   const t = a.currentTime;
-  const out = envelope(a, 0.25, 0.09);
-  const osc = a.createOscillator();
-  osc.type = "triangle";
-  osc.frequency.setValueAtTime(900, t);
-  osc.frequency.exponentialRampToValueAtTime(220, t + 0.08);
-  osc.connect(out);
-  osc.start(t);
-  osc.stop(t + 0.1);
+  [
+    { at: 0, from: 520, to: 760 },
+    { at: 0.07, from: 780, to: 1050 },
+  ].forEach(({ at, from, to }) => {
+    const g = a.createGain();
+    g.gain.setValueAtTime(0.0001, t + at);
+    g.gain.exponentialRampToValueAtTime(0.18, t + at + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + at + 0.16);
+    g.connect(master ?? a.destination);
+    const osc = a.createOscillator();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(from, t + at);
+    osc.frequency.exponentialRampToValueAtTime(to, t + at + 0.06);
+    osc.connect(g);
+    osc.start(t + at);
+    osc.stop(t + at + 0.18);
+  });
 }
 
 /** A rising slide whistle for shaking the phone, at most about once a second */

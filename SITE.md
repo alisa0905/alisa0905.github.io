@@ -43,6 +43,7 @@
 - **Ship Studio copy:** the same project also lives in [portfolio](https://github.com/alisa0905/portfolio) for editing in Ship Studio.
 
 ## Recent Changes
+- 2026-11-03: Flower sounds are now about 5 times quieter (change `VOLUME` at the top of `lib/flowerSounds.ts` to adjust), and the tap sound is a soft two-note "bloop" instead of a zappy pop.
 - 2026-11-03: Hero flowers on phones and tablets make silly sounds (`lib/flowerSounds.ts`, synthesized, no sound files): a "pop" when you tap them, a slide whistle when you shake the phone, and cartoon "boings" (big flowers lower, small ones higher) as they bump for a couple of seconds after. Sound only starts after the first tap on the flowers (phones require that), stays quiet while just scrolling, follows the phone's silent switch, and is off for reduced motion.
 - 2026-11-03: Phone browser bars now try to match the site instead of staying cream: as you scroll, the page tells the browser the colour of the section at the top of the screen (`components/BrowserTint.tsx`). How much of the bar each browser tints is up to the browser.
 - 2026-11-03: Footer hill reworked (Alisa's idea): the footer itself is now plain green, and the curved hill edge belongs to the last section of each page instead (`components/FooterHill.tsx`). It takes that section's colour automatically (sky on Home, cream on Work/CV, the project colour on case studies) and moves with the page, so scrolling down the section lifts off the green footer. Removed the thin line that could show where the page meets the footer.
