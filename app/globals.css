@@ -41,6 +41,9 @@
 @layer base {
   html {
     background: var(--paper);
+    /* No rubber-band bounce past the top or bottom of the page (it pulled the
+       page away from the pinned footer on iPhones and showed cream bars) */
+    overscroll-behavior-y: none;
   }
 
   body {

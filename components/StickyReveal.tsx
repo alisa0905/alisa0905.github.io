@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
  * content's height in the page and clips the pinned copy to that box. If the
  * content is taller than the screen it just scrolls normally.
  */
-export function StickyReveal({ children }: { children: React.ReactNode }) {
+export function StickyReveal({ children, className }: { children: React.ReactNode; className?: string }) {
   const inner = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState<number | null>(null);
 
@@ -31,7 +31,7 @@ export function StickyReveal({ children }: { children: React.ReactNode }) {
   const pinned = height !== null;
   return (
     <div
-      className="relative"
+      className={`relative ${className ?? ""}`}
       style={pinned ? { height, clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" } : undefined}
     >
       <div ref={inner} className={pinned ? "fixed bottom-0 left-0 w-full" : undefined}>

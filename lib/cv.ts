@@ -102,6 +102,7 @@ export const CV = {
   // "Adobe" kept in front so hiring software matches either way people search.
   tools: [
     "Figma",
+    "FigJam",
     "Adobe Photoshop",
     "Adobe Illustrator",
     "Adobe Lightroom",
@@ -109,6 +110,8 @@ export const CV = {
     "Canva",
     "CapCut",
     "Meta Business Suite",
+    "Shopify",
+    "Claude",
   ],
 
   languages: ["English (C1)", "Russian (Native)"],

@@ -102,7 +102,8 @@ export function SiteFooter() {
 
   return (
     <Reveal as="div" className="print:hidden" threshold={0.1}>
-      <StickyReveal>
+      {/* Sky behind the pinned footer, so any gap while scrolling matches its sky */}
+      <StickyReveal className="bg-sky">
         <footer className="relative overflow-hidden bg-sky text-cream">
           {/*
           ---------- Computers: the Figma layout ----------
