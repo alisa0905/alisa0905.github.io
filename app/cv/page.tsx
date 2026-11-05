@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
-import { Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import { Fragment } from "react";
 import { Flower } from "@/components/Flower";
 import { CV, type CvEntry } from "@/lib/cv";
 
-const grotesk = Space_Grotesk({ subsets: ["latin"], weight: ["300", "400", "500", "700"], display: "swap" });
+/*
+ * Fixed-weight files rather than Google's "variable" font: Chrome turns a variable
+ * font into Type 3 glyphs in the PDF, which Mac Preview crops (cut-off pill text).
+ */
+const grotesk = localFont({
+  src: [
+    { path: "../fonts/SpaceGrotesk-300.woff", weight: "300" },
+    { path: "../fonts/SpaceGrotesk-400.woff", weight: "400" },
+    { path: "../fonts/SpaceGrotesk-500.woff", weight: "500" },
+    { path: "../fonts/SpaceGrotesk-700.woff", weight: "700" },
+  ],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "CV",
