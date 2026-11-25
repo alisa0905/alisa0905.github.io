@@ -62,7 +62,7 @@ export const PROJECTS: Project[] = [
     slug: "good-buggies",
     title: "Good Buggies",
     type: "Website",
-    client: "Good Buggies · family business",
+    client: "Good Buggies",
     category: "Freelance",
     year: "2026",
     when: "Nov 2026",
@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
       {
         type: "text",
         body: [
-          "A showroom website for a family golf cart business in the UAE, in English, Arabic and Russian. The owner adds carts from his phone through a simple Russian-first admin page, and the site translates each listing into all three languages.",
+          "A showroom website for a golf cart business in the UAE, in English, Arabic and Russian. The owner adds carts from his phone through a simple Russian-first admin page, and the site translates each listing into all three languages.",
           "Built with Claude Code, with an accessibility button on every page and 156 automatic checks, all on free hosting.",
         ],
       },
@@ -105,7 +105,6 @@ export const PROJECTS: Project[] = [
       { type: "image", asset: "furchild-4", alt: "Task 3: Single Ingredient Treats freezer wobbler", span: "full" },
       { type: "image", asset: "furchild-5", alt: "Task 4: Switching to Furchild in 7 days, a WhatsApp guide", span: "full" },
       { type: "image", asset: "furchild-6", alt: "Task 5: reworking a transformation post", span: "full" },
-      { type: "image", asset: "furchild-7", alt: "Task 6: why Furchild", span: "full" },
     ],
   },
   {

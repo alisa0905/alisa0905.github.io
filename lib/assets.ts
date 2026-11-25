@@ -875,11 +875,6 @@ export const ASSETS = {
   "w": 2400,
   "h": 1350
  },
- "furchild-7": {
-  "src": "/work/furchild-7.webp",
-  "w": 2400,
-  "h": 1350
- },
  "nexus-1": {
   "src": "/work/nexus-1.webp",
   "w": 2400,
