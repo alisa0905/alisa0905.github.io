@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { BOOKING_URL } from "@/lib/projects";
@@ -19,6 +19,14 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+  // Which menu item was tapped, so it can show it's loading
+  const [going, setGoing] = useState<string | null>(null);
+
+  // Load every page in the background straight away, so tapping one is instant
+  useEffect(() => {
+    LINKS.forEach((l) => router.prefetch(l.href));
+  }, [router]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -34,6 +42,7 @@ export function SiteHeader() {
       const ink = document.querySelector("[data-hero-ink]")?.getAttribute("data-hero-ink");
       setDarkHero(ink !== "dark");
       setOpen(false);
+      setGoing(null);
     });
     return () => cancelAnimationFrame(frame);
   }, [pathname]);
@@ -203,12 +212,22 @@ export function SiteHeader() {
                 <Link
                   href={l.href}
                   onClick={(e) => {
-                    setOpen(false);
+                    // Going to another page: keep the menu open until that page
+                    // is ready, so extra taps land on the menu, not the new page
+                    const samePage = pathname === "/" && (l.href === "/" || l.href === "/#about");
+                    if (samePage || l.href === pathname) setOpen(false);
+                    else setGoing(l.href);
                     onNavClick(l.href)(e);
                   }}
-                  className="block rounded-2xl px-4 py-3 font-display text-3xl text-cream hover:bg-white/10"
+                  aria-busy={going === l.href}
+                  className={`flex items-center justify-between rounded-2xl px-4 py-3 font-display text-3xl text-cream hover:bg-white/10 ${
+                    going === l.href ? "bg-white/10" : ""
+                  }`}
                 >
                   {l.label}
+                  {going === l.href && (
+                    <span aria-hidden className="h-5 w-5 animate-spin rounded-full border-2 border-cream/30 border-t-cream" />
+                  )}
                 </Link>
               </motion.div>
             ))}

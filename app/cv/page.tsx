@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Fragment } from "react";
 import { Flower } from "@/components/Flower";
+import { TapGuard } from "@/components/TapGuard";
 import { CV, type CvEntry } from "@/lib/cv";
 
 /*
@@ -148,6 +149,7 @@ const bare = (url: string) => url.replace(/^https?:\/\/(www\.)?/, "").replace(/\
 export default function CvPage() {
   return (
     <div className="bg-paper px-3 pb-24 pt-28 sm:px-5 lg:pt-36 print:bg-white print:p-0" data-hero-ink="dark">
+      <TapGuard>
       <div className="mx-auto mb-6 flex max-w-[893px] items-center justify-between gap-4 print:hidden">
         <h1 className="font-display text-5xl leading-none">CV</h1>
         <a
@@ -255,6 +257,7 @@ export default function CvPage() {
           Click on my experience to find out more
         </p>
       </article>
+      </TapGuard>
     </div>
   );
 }

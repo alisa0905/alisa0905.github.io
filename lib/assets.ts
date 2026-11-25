@@ -844,6 +844,76 @@ export const ASSETS = {
   "src": "/work/latorta-mock-story.webp",
   "w": 2400,
   "h": 1500
+ },
+ "furchild-1": {
+  "src": "/work/furchild-1.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "furchild-2": {
+  "src": "/work/furchild-2.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "furchild-3": {
+  "src": "/work/furchild-3.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "furchild-4": {
+  "src": "/work/furchild-4.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "furchild-5": {
+  "src": "/work/furchild-5.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "furchild-6": {
+  "src": "/work/furchild-6.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "furchild-7": {
+  "src": "/work/furchild-7.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "nexus-1": {
+  "src": "/work/nexus-1.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "nexus-2": {
+  "src": "/work/nexus-2.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "nexus-3": {
+  "src": "/work/nexus-3.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "nexus-4": {
+  "src": "/work/nexus-4.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "nexus-5": {
+  "src": "/work/nexus-5.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "nexus-6": {
+  "src": "/work/nexus-6.webp",
+  "w": 2400,
+  "h": 1350
+ },
+ "golf-home": {
+  "src": "/work/golf-home.webp",
+  "w": 1440,
+  "h": 900
  }
 } as const;
 

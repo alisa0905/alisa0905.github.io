@@ -7,10 +7,11 @@ import type { Tool } from "@/components/ToolIcon";
    pages all read from it. Projects show in this order.
    ------------------------------------------------------------------ */
 
-export type Category = "Freelance" | "Jabrni" | "Amana Homes" | "Quotify" | "Personal & Uni";
+export type Category = "Freelance" | "Design Tests" | "Jabrni" | "Amana Homes" | "Quotify" | "Personal & Uni";
 
 export const CATEGORIES: { name: Category; color: string; dates: string }[] = [
   { name: "Freelance", color: "#e173ae", dates: "Aug 2026 – Present" },
+  { name: "Design Tests", color: "#7cb9e4", dates: "Nov 2026" },
   { name: "Jabrni", color: "#f3c11b", dates: "Mar 2026 – Aug 2026" },
   { name: "Amana Homes", color: "#b83244", dates: "2025 – 2026" },
   { name: "Quotify", color: "#e77f23", dates: "2025 – 2026" },
@@ -57,6 +58,79 @@ export type Project = {
 };
 
 export const PROJECTS: Project[] = [
+  {
+    slug: "good-buggies",
+    title: "Good Buggies",
+    type: "Website",
+    client: "Good Buggies · family business",
+    category: "Freelance",
+    year: "2026",
+    when: "Nov 2026",
+    start: "2026-11",
+    role: ["Website design", "Development"],
+    tools: ["claude"],
+    stack: ["Claude Code", "Supabase", "Cloudflare Pages"],
+    color: "#1f4d2b",
+    ink: "#ffffff",
+    cover: { asset: "golf-home" },
+    links: [{ label: "Visit the site", href: "https://alexey-golf-carts.pages.dev/" }],
+    blocks: [
+      {
+        type: "text",
+        body: [
+          "A showroom website for a family golf cart business in the UAE, in English, Arabic and Russian. The owner adds carts from his phone through a simple Russian-first admin page, and the site translates each listing into all three languages.",
+          "Built with Claude Code, with an accessibility button on every page and 156 automatic checks, all on free hosting.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "furchild-assessment",
+    title: "Furchild",
+    type: "Design test · Ads, print, social",
+    client: "Furchild Pet Nutrition · Graphic Designer test",
+    category: "Design Tests",
+    year: "2026",
+    when: "Nov 2026",
+    start: "2026-11",
+    role: ["Ad design", "Print", "Social media"],
+    tools: ["figma", "photoshop", "illustrator", "claude", "gemini"],
+    color: "#39674d",
+    ink: "#fff5e9",
+    cover: { asset: "furchild-2" },
+    blocks: [
+      { type: "image", asset: "furchild-1", alt: "Graphic Designer test assignment, cover", span: "full" },
+      { type: "image", asset: "furchild-2", alt: "Task 1: one ad idea in four versions, for the feed and Stories", span: "full" },
+      { type: "image", asset: "furchild-3", alt: "Task 2: reading the ad results", span: "full" },
+      { type: "image", asset: "furchild-4", alt: "Task 3: Single Ingredient Treats freezer wobbler", span: "full" },
+      { type: "image", asset: "furchild-5", alt: "Task 4: Switching to Furchild in 7 days, a WhatsApp guide", span: "full" },
+      { type: "image", asset: "furchild-6", alt: "Task 5: reworking a transformation post", span: "full" },
+      { type: "image", asset: "furchild-7", alt: "Task 6: why Furchild", span: "full" },
+    ],
+  },
+  {
+    slug: "nexus-solutions-assessment",
+    title: "Mullion Solutions",
+    type: "Design test · Brand identity",
+    client: "Nexus Solutions · Brand Designer test",
+    category: "Design Tests",
+    year: "2026",
+    when: "Nov 2026",
+    start: "2026-11",
+    role: ["Naming", "Brand identity"],
+    tools: ["figma", "claude"],
+    color: "#f4bc43",
+    ink: "#000000",
+    cover: { asset: "nexus-4" },
+    blocks: [
+      { type: "image", asset: "nexus-1", alt: "Brand Designer Assessment, cover", span: "full" },
+      { type: "image", asset: "nexus-2", alt: "Name and slogan: mullion, the team behind your team", span: "full" },
+      { type: "image", asset: "nexus-3", alt: "Colours and typography", span: "full" },
+      { type: "image", asset: "nexus-4", alt: "Logo and sub-brand marks", span: "full" },
+      { type: "image", asset: "nexus-5", alt: "Business card and an event post", span: "full" },
+      { type: "image", asset: "nexus-6", alt: "Process and thinking", span: "full" },
+    ],
+  },
   {
     slug: "cloud-castle",
     title: "Cloud Castle",
